@@ -1270,23 +1270,6 @@
               <div class="pwd-bar" id="sb4"></div>
             </div>
           </div>
-          <div class="form-group">
-            <label class="form-label">I am a…</label>
-            <div class="type-cards">
-              <label class="type-card selected" onclick="selectType(this)">
-                <input type="radio" name="mtype" value="passenger" checked />
-                <div class="type-icon">🧳</div>
-                <div class="type-label">Passenger</div>
-                <div class="type-desc">Book rides easily</div>
-              </label>
-              <label class="type-card" onclick="selectType(this)">
-                <input type="radio" name="mtype" value="driver" />
-                <div class="type-icon">🚗</div>
-                <div class="type-label">Driver</div>
-                <div class="type-desc">Earn by driving</div>
-              </label>
-            </div>
-          </div>
           <button class="btn-submit" type="submit" style="margin-top:18px;">Create Account →</button>
         </form>
 
@@ -1577,6 +1560,50 @@
     window.addEventListener('scroll', () => {
       document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
     });
+
+    /* — Authentication Logic — */
+
+async function handleSignup(event) {
+    event.preventDefault();
+    
+    const name = document.getElementById('signup-name').value;
+    const email = document.getElementById('signup-email').value;
+    const password = document.getElementById('signup-password').value;
+
+    const response = await fetch('http://localhost:3000/api/v4/user/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password, role: "Passenger" })
+    });
+
+    const result = await response.json();
+    alert(result.message);
+    
+    if(response.ok) {
+        window.location.href = '/dashboard.html'; 
+    }
+}
+
+async function handleLogin(event) {
+    event.preventDefault();
+    
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
+
+    const response = await fetch('http://localhost:3000/api/v4/user/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+    });
+
+    const result = await response.json();
+    
+    if(response.ok) {
+        window.location.href = '/dashboard.html';
+    } else {
+        alert(result.message);
+    }
+}
   </script>
 </body>
 </html>

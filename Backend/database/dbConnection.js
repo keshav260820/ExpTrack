@@ -1,5 +1,5 @@
 const databaseConnection = () => {
-    console.log("Database connection function loaded.");
+    console.log("Using JSON file as local database (Development Mode).");
 };
 
 export default databaseConnection;
