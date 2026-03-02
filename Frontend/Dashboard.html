@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RidePool — Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0c0f1a;
+    --surface: #131729;
+    --surface2: #1a2038;
+    --border: #232b44;
+    --accent: #4f8eff;
+    --accent2: #7c3aed;
+    --green: #22d3a0;
+    --red: #ff5e7a;
+    --yellow: #f59e0b;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --card-glow: 0 0 30px rgba(79,142,255,0.06);
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .sidebar {
+    width: 240px;
+    min-height: 100vh;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    padding: 28px 0;
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    z-index: 100;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 24px 32px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    color: #fff;
+  }
+
+  .logo-icon {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+
+  .nav-section {
+    padding: 0 12px;
+    margin-bottom: 24px;
+  }
+
+  .nav-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    text-transform: uppercase;
+    padding: 0 12px 10px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+    color: var(--muted);
+    font-weight: 500;
+    margin-bottom: 2px;
+  }
+
+  .nav-item:hover { background: var(--surface2); color: var(--text); }
+  .nav-item.active {
+    background: linear-gradient(90deg, rgba(79,142,255,0.15), rgba(124,58,237,0.1));
+    color: var(--accent);
+    border: 1px solid rgba(79,142,255,0.2);
+  }
+
+  .nav-item .icon { font-size: 16px; width: 20px; text-align: center; }
+
+  .badge {
+    margin-left: auto;
+    background: var(--accent);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 20px;
+  }
+
+  .badge.red { background: var(--red); }
+
+  .sidebar-bottom {
+    margin-top: auto;
+    padding: 0 12px;
+  }
+
+  .user-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    background: var(--surface2);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+  }
+
+  .avatar {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, #4f8eff, #7c3aed);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 13px;
+  }
+
+  .user-info { flex: 1; }
+  .user-name { font-size: 13px; font-weight: 600; }
+  .user-role { font-size: 11px; color: var(--muted); }
+
+  .main {
+    margin-left: 240px;
+    flex: 1;
+    padding: 32px;
+    max-width: calc(100vw - 240px);
+  }
+
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+  }
+
+  .page-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+  }
+
+  .breadcrumb {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .breadcrumb span { color: var(--accent); }
+
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .search-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 9px 14px;
+    font-size: 13px;
+    color: var(--muted);
+    width: 220px;
+  }
+
+  .notif-btn {
+    width: 40px; height: 40px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    position: relative;
+    font-size: 16px;
+  }
+
+  .notif-dot {
+    position: absolute; top: 8px; right: 8px;
+    width: 7px; height: 7px;
+    background: var(--red);
+    border-radius: 50%;
+    border: 1px solid var(--bg);
+  }
+
+  .date-range {
+    font-size: 12px;
+    color: var(--accent);
+    background: rgba(79,142,255,0.08);
+    border: 1px solid rgba(79,142,255,0.2);
+    padding: 7px 12px;
+    border-radius: 8px;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 24px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px;
+    box-shadow: var(--card-glow);
+    transition: transform 0.2s, border-color 0.2s;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .stat-card:hover { transform: translateY(-2px); border-color: rgba(79,142,255,0.3); }
+  .stat-card:nth-child(1) { animation-delay: 0.05s; }
+  .stat-card:nth-child(2) { animation-delay: 0.1s; }
+  .stat-card:nth-child(3) { animation-delay: 0.15s; }
+  .stat-card:nth-child(4) { animation-delay: 0.2s; }
+
+  .stat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .stat-label { font-size: 12px; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  .stat-icon {
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px;
+  }
+
+  .stat-value {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 6px;
+  }
+
+  .stat-change {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .up { color: var(--green); }
+  .down { color: var(--red); }
+
+  .mini-bar {
+    display: flex;
+    gap: 3px;
+    align-items: flex-end;
+    margin-top: 14px;
+    height: 32px;
+  }
+
+  .mini-bar-col {
+    flex: 1;
+    border-radius: 3px;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+
+  .mini-bar-col:hover { opacity: 1; }
+
+  .charts-row {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 18px;
+    margin-bottom: 24px;
+  }
+
+  .chart-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    animation: fadeUp 0.5s ease 0.25s both;
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 22px;
+  }
+
+  .card-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+  }
+
+  .card-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  .chart-tabs {
+    display: flex;
+    gap: 4px;
+    background: var(--surface2);
+    padding: 3px;
+    border-radius: 8px;
+  }
+
+  .chart-tab {
+    font-size: 11px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .chart-tab.active { background: var(--accent); color: #fff; }
+
+  .chart-wrap { position: relative; }
+
+  svg { overflow: visible; }
+
+  .y-labels {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 180px;
+    padding-right: 10px;
+    font-size: 11px;
+    color: var(--muted);
+    text-align: right;
+  }
+
+  .chart-with-labels { display: flex; gap: 8px; align-items: center; }
+
+  .x-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 8px;
+    padding-left: 38px;
+  }
+
+  .donut-wrap {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-top: 10px;
+  }
+
+  .donut-legend { flex: 1; }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    font-size: 13px;
+  }
+
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .legend-label { color: var(--muted); flex: 1; }
+  .legend-val { font-weight: 600; font-size: 13px; }
+
+  .bottom-row {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 18px;
+  }
+
+  .table-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    animation: fadeUp 0.5s ease 0.35s both;
+  }
+
+  table { width: 100%; border-collapse: collapse; }
+  th {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 600;
+    text-align: left;
+    padding: 0 0 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  td {
+    padding: 12px 0;
+    font-size: 13px;
+    border-bottom: 1px solid rgba(35,43,68,0.5);
+    vertical-align: middle;
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  .rider-info { display: flex; align-items: center; gap: 10px; }
+
+  .rider-avatar {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .rider-name { font-weight: 500; font-size: 13px; }
+  .rider-id { font-size: 11px; color: var(--muted); }
+
+  .status-badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    display: inline-block;
+  }
+
+  .status-active { background: rgba(34,211,160,0.1); color: var(--green); }
+  .status-pending { background: rgba(245,158,11,0.1); color: var(--yellow); }
+  .status-completed { background: rgba(79,142,255,0.1); color: var(--accent); }
+  .status-cancelled { background: rgba(255,94,122,0.1); color: var(--red); }
+
+  .stars { color: var(--yellow); font-size: 11px; letter-spacing: 1px; }
+
+  .activity-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    animation: fadeUp 0.5s ease 0.4s both;
+  }
+
+  .activity-item {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  .activity-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  .activity-text { font-size: 13px; line-height: 1.5; }
+  .activity-text strong { font-weight: 600; }
+  .activity-time { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .progress-bar {
+    height: 6px;
+    background: var(--surface2);
+    border-radius: 99px;
+    overflow: hidden;
+    margin-top: 6px;
+  }
+
+  .progress-fill {
+    height: 100%;
+    border-radius: 99px;
+    transition: width 1s ease;
+  }
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="logo">
+    <div class="logo-icon">🚗</div>
+    Mitra Ride
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Main</div>
+    <div class="nav-item active"><span class="icon">📊</span> Dashboard</div>
+    <div class="nav-item"><span class="icon">🗺️</span> Live Rides <span class="badge">3</span></div>
+    <div class="nav-item"><span class="icon">📅</span> Bookings</div>
+    <div class="nav-item"><span class="icon">💰</span> Payments</div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Users</div>
+    <div class="nav-item"><span class="icon">👤</span> Passengers</div>
+    <div class="nav-item"><span class="icon">🚙</span> Drivers <span class="badge red">2</span></div>
+    <div class="nav-item"><span class="icon">⭐</span> Reviews</div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">System</div>
+    <div class="nav-item"><span class="icon">📈</span> Analytics</div>
+    <div class="nav-item"><span class="icon">🔔</span> Notifications</div>
+    <div class="nav-item"><span class="icon">⚙️</span> Settings</div>
+  </div>
+
+  <div class="sidebar-bottom">
+    <div class="user-card">
+      <div class="avatar">SC</div>
+      <div class="user-info">
+        <div class="user-name">Shally C.</div>
+        <div class="user-role">Admin</div>
+      </div>
+      <span style="color:var(--muted); font-size:14px; cursor:pointer;">⋯</span>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+  <div class="topbar">
+    <div>
+      <div class="page-title">Dashboard</div>
+      <div class="breadcrumb">Home / <span>Dashboard</span></div>
+    </div>
+    <div class="topbar-right">
+      <div class="search-box">🔍 &nbsp; Search...</div>
+      <div class="notif-btn">🔔<div class="notif-dot"></div></div>
+      <div class="date-range">01 Mar 2026 → 02 Mar 2026</div>
+      <div class="user-card" style="padding:8px 12px; background:var(--surface); border:1px solid var(--border); border-radius:10px; display:flex; gap:10px; align-items:center;">
+        <div class="avatar" style="width:30px;height:30px;font-size:11px;">SC</div>
+        <span style="font-size:13px; font-weight:600;">Shally C.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STAT CARDS -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-header">
+        <div class="stat-label">Total Rides</div>
+        <div class="stat-icon" style="background:rgba(79,142,255,0.12);">🚗</div>
+      </div>
+      <div class="stat-value">1,284</div>
+      <div class="stat-change up">↑ 12.4% &nbsp;<span style="color:var(--muted)">vs last week</span></div>
+      <div class="mini-bar">
+        <div class="mini-bar-col" style="height:40%;background:var(--accent);"></div>
+        <div class="mini-bar-col" style="height:60%;background:var(--accent);"></div>
+        <div class="mini-bar-col" style="height:45%;background:var(--accent);"></div>
+        <div class="mini-bar-col" style="height:80%;background:var(--accent);"></div>
+        <div class="mini-bar-col" style="height:55%;background:var(--accent);"></div>
+        <div class="mini-bar-col" style="height:70%;background:var(--accent);"></div>
+        <div class="mini-bar-col" style="height:100%;background:var(--accent);opacity:1;"></div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-header">
+        <div class="stat-label">Active Drivers</div>
+        <div class="stat-icon" style="background:rgba(34,211,160,0.12);">👨‍✈️</div>
+      </div>
+      <div class="stat-value">87</div>
+      <div class="stat-change up">↑ 5.2% &nbsp;<span style="color:var(--muted)">vs last week</span></div>
+      <div class="mini-bar">
+        <div class="mini-bar-col" style="height:50%;background:var(--green);"></div>
+        <div class="mini-bar-col" style="height:75%;background:var(--green);"></div>
+        <div class="mini-bar-col" style="height:60%;background:var(--green);"></div>
+        <div class="mini-bar-col" style="height:90%;background:var(--green);"></div>
+        <div class="mini-bar-col" style="height:65%;background:var(--green);"></div>
+        <div class="mini-bar-col" style="height:80%;background:var(--green);"></div>
+        <div class="mini-bar-col" style="height:100%;background:var(--green);opacity:1;"></div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-header">
+        <div class="stat-label">Revenue</div>
+        <div class="stat-icon" style="background:rgba(124,58,237,0.12);">💰</div>
+      </div>
+      <div class="stat-value">₹52,340</div>
+      <div class="stat-change down">↓ 3.1% &nbsp;<span style="color:var(--muted)">vs last week</span></div>
+      <div class="mini-bar">
+        <div class="mini-bar-col" style="height:80%;background:var(--accent2);"></div>
+        <div class="mini-bar-col" style="height:95%;background:var(--accent2);"></div>
+        <div class="mini-bar-col" style="height:70%;background:var(--accent2);"></div>
+        <div class="mini-bar-col" style="height:85%;background:var(--accent2);"></div>
+        <div class="mini-bar-col" style="height:60%;background:var(--accent2);"></div>
+        <div class="mini-bar-col" style="height:75%;background:var(--accent2);"></div>
+        <div class="mini-bar-col" style="height:65%;background:var(--accent2);opacity:1;"></div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-header">
+        <div class="stat-label">Avg. Rating</div>
+        <div class="stat-icon" style="background:rgba(245,158,11,0.12);">⭐</div>
+      </div>
+      <div class="stat-value">4.76</div>
+      <div class="stat-change up">↑ 0.3 &nbsp;<span style="color:var(--muted)">vs last month</span></div>
+      <div class="mini-bar">
+        <div class="mini-bar-col" style="height:85%;background:var(--yellow);"></div>
+        <div class="mini-bar-col" style="height:90%;background:var(--yellow);"></div>
+        <div class="mini-bar-col" style="height:88%;background:var(--yellow);"></div>
+        <div class="mini-bar-col" style="height:95%;background:var(--yellow);"></div>
+        <div class="mini-bar-col" style="height:92%;background:var(--yellow);"></div>
+        <div class="mini-bar-col" style="height:94%;background:var(--yellow);"></div>
+        <div class="mini-bar-col" style="height:100%;background:var(--yellow);opacity:1;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHARTS -->
+  <div class="charts-row">
+    <!-- LINE CHART -->
+    <div class="chart-card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Rides Over Time</div>
+          <div class="card-sub">Daily ride activity for this week</div>
+        </div>
+        <div class="chart-tabs">
+          <div class="chart-tab">Day</div>
+          <div class="chart-tab active">Week</div>
+          <div class="chart-tab">Month</div>
+        </div>
+      </div>
+      <div class="chart-with-labels">
+        <div class="y-labels">
+          <div>200</div><div>150</div><div>100</div><div>50</div><div>0</div>
+        </div>
+        <div style="flex:1;">
+          <svg width="100%" height="180" viewBox="0 0 420 180">
+            <defs>
+              <linearGradient id="blueGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#4f8eff" stop-opacity="0.3"/>
+                <stop offset="100%" stop-color="#4f8eff" stop-opacity="0"/>
+              </linearGradient>
+              <linearGradient id="greenGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#22d3a0" stop-opacity="0.2"/>
+                <stop offset="100%" stop-color="#22d3a0" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+
+            <!-- Grid lines -->
+            <line x1="0" y1="0" x2="420" y2="0" stroke="#232b44" stroke-width="1"/>
+            <line x1="0" y1="45" x2="420" y2="45" stroke="#232b44" stroke-width="1"/>
+            <line x1="0" y1="90" x2="420" y2="90" stroke="#232b44" stroke-width="1"/>
+            <line x1="0" y1="135" x2="420" y2="135" stroke="#232b44" stroke-width="1"/>
+            <line x1="0" y1="180" x2="420" y2="180" stroke="#232b44" stroke-width="1"/>
+
+            <!-- Blue area (Rides) -->
+            <path d="M0,140 C60,120 90,80 140,70 C180,60 220,90 270,55 C310,25 360,40 420,30 L420,180 L0,180 Z"
+              fill="url(#blueGrad)"/>
+            <path d="M0,140 C60,120 90,80 140,70 C180,60 220,90 270,55 C310,25 360,40 420,30"
+              fill="none" stroke="#4f8eff" stroke-width="2.5" stroke-linecap="round"/>
+
+            <!-- Green area (Bookings) -->
+            <path d="M0,155 C60,145 90,130 140,120 C180,110 220,130 270,100 C310,75 360,95 420,80 L420,180 L0,180 Z"
+              fill="url(#greenGrad)"/>
+            <path d="M0,155 C60,145 90,130 140,120 C180,110 220,130 270,100 C310,75 360,95 420,80"
+              fill="none" stroke="#22d3a0" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="6,3"/>
+
+            <!-- Dots -->
+            <circle cx="140" cy="70" r="4" fill="#4f8eff" stroke="#0c0f1a" stroke-width="2"/>
+            <circle cx="270" cy="55" r="4" fill="#4f8eff" stroke="#0c0f1a" stroke-width="2"/>
+            <circle cx="420" cy="30" r="4" fill="#4f8eff" stroke="#0c0f1a" stroke-width="2"/>
+          </svg>
+          <div class="x-labels">
+            <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex; gap:18px; margin-top:14px; padding-left:38px;">
+        <div style="display:flex; align-items:center; gap:6px; font-size:12px; color:var(--muted);">
+          <div style="width:20px;height:3px;background:var(--accent);border-radius:99px;"></div> Total Rides
+        </div>
+        <div style="display:flex; align-items:center; gap:6px; font-size:12px; color:var(--muted);">
+          <div style="width:20px;height:3px;background:var(--green);border-radius:99px; border-top: 1px dashed var(--green);"></div> Bookings
+        </div>
+      </div>
+    </div>
+
+    <!-- DONUT -->
+    <div class="chart-card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Ride Status</div>
+          <div class="card-sub">Breakdown this week</div>
+        </div>
+        <div class="chart-tab active" style="background:rgba(79,142,255,0.1);color:var(--accent);padding:5px 10px;border-radius:8px;font-size:11px;">Weekly</div>
+      </div>
+      <div class="donut-wrap">
+        <svg width="140" height="140" viewBox="0 0 140 140">
+          <circle cx="70" cy="70" r="52" fill="none" stroke="#232b44" stroke-width="20"/>
+          <!-- Completed: 55% = ~204° -->
+          <circle cx="70" cy="70" r="52" fill="none" stroke="#4f8eff" stroke-width="20"
+            stroke-dasharray="179 327" stroke-dashoffset="82" stroke-linecap="round"/>
+          <!-- Active: 20% = ~74° -->
+          <circle cx="70" cy="70" r="52" fill="none" stroke="#22d3a0" stroke-width="20"
+            stroke-dasharray="65 327" stroke-dashoffset="-97" stroke-linecap="round"/>
+          <!-- Pending: 15% -->
+          <circle cx="70" cy="70" r="52" fill="none" stroke="#f59e0b" stroke-width="20"
+            stroke-dasharray="49 327" stroke-dashoffset="-162" stroke-linecap="round"/>
+          <!-- Cancelled: 10% -->
+          <circle cx="70" cy="70" r="52" fill="none" stroke="#ff5e7a" stroke-width="20"
+            stroke-dasharray="33 327" stroke-dashoffset="-211" stroke-linecap="round"/>
+          <text x="70" y="66" text-anchor="middle" fill="#e2e8f0" font-family="Syne" font-size="18" font-weight="800">1284</text>
+          <text x="70" y="82" text-anchor="middle" fill="#64748b" font-family="DM Sans" font-size="10">rides</text>
+        </svg>
+        <div class="donut-legend">
+          <div class="legend-item">
+            <div class="legend-dot" style="background:var(--accent);"></div>
+            <span class="legend-label">Completed</span>
+            <span class="legend-val">55%</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background:var(--green);"></div>
+            <span class="legend-label">Active</span>
+            <span class="legend-val">20%</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background:var(--yellow);"></div>
+            <span class="legend-label">Pending</span>
+            <span class="legend-val">15%</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background:var(--red);"></div>
+            <span class="legend-label">Cancelled</span>
+            <span class="legend-val">10%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM ROW -->
+  <div class="bottom-row">
+    <!-- RIDES TABLE -->
+    <div class="table-card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Recent Rides</div>
+          <div class="card-sub">Latest 5 bookings</div>
+        </div>
+        <div style="font-size:12px; color:var(--accent); cursor:pointer;">View all →</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Passenger</th>
+            <th>Route</th>
+            <th>Fare</th>
+            <th>Status</th>
+            <th>Rating</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="rider-info">
+              <div class="rider-avatar" style="background:linear-gradient(135deg,#4f8eff,#7c3aed);">AK</div>
+              <div><div class="rider-name">Aditya K.</div><div class="rider-id">#R1092</div></div>
+            </div></td>
+            <td style="color:var(--muted); font-size:12px;">Sector 18 → CP</td>
+            <td style="font-weight:600;">₹240</td>
+            <td><span class="status-badge status-completed">Completed</span></td>
+            <td><span class="stars">★★★★★</span></td>
+          </tr>
+          <tr>
+            <td><div class="rider-info">
+              <div class="rider-avatar" style="background:linear-gradient(135deg,#22d3a0,#059669);">PR</div>
+              <div><div class="rider-name">Priya R.</div><div class="rider-id">#R1091</div></div>
+            </div></td>
+            <td style="color:var(--muted); font-size:12px;">Dwarka → Gurgaon</td>
+            <td style="font-weight:600;">₹380</td>
+            <td><span class="status-badge status-active">Active</span></td>
+            <td><span class="stars">★★★★☆</span></td>
+          </tr>
+          <tr>
+            <td><div class="rider-info">
+              <div class="rider-avatar" style="background:linear-gradient(135deg,#f59e0b,#d97706);">MS</div>
+              <div><div class="rider-name">Manish S.</div><div class="rider-id">#R1090</div></div>
+            </div></td>
+            <td style="color:var(--muted); font-size:12px;">Noida → IGI Airport</td>
+            <td style="font-weight:600;">₹520</td>
+            <td><span class="status-badge status-pending">Pending</span></td>
+            <td><span class="stars">—</span></td>
+          </tr>
+          <tr>
+            <td><div class="rider-info">
+              <div class="rider-avatar" style="background:linear-gradient(135deg,#ff5e7a,#be123c);">TK</div>
+              <div><div class="rider-name">Tanvi K.</div><div class="rider-id">#R1089</div></div>
+            </div></td>
+            <td style="color:var(--muted); font-size:12px;">Vasant Kunj → Nehru Place</td>
+            <td style="font-weight:600;">₹160</td>
+            <td><span class="status-badge status-cancelled">Cancelled</span></td>
+            <td><span class="stars">—</span></td>
+          </tr>
+          <tr>
+            <td><div class="rider-info">
+              <div class="rider-avatar" style="background:linear-gradient(135deg,#8b5cf6,#6d28d9);">RV</div>
+              <div><div class="rider-name">Rahul V.</div><div class="rider-id">#R1088</div></div>
+            </div></td>
+            <td style="color:var(--muted); font-size:12px;">Rohini → Lajpat Nagar</td>
+            <td style="font-weight:600;">₹310</td>
+            <td><span class="status-badge status-completed">Completed</span></td>
+            <td><span class="stars">★★★★★</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ACTIVITY -->
+    <div class="activity-card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Live Activity</div>
+          <div class="card-sub">Real-time updates</div>
+        </div>
+        <div style="width:8px;height:8px;background:var(--green);border-radius:50%;box-shadow:0 0 6px var(--green);"></div>
+      </div>
+
+      <div class="activity-item">
+        <div class="activity-icon" style="background:rgba(34,211,160,0.1);">🚗</div>
+        <div>
+          <div class="activity-text"><strong>Priya R.</strong> started her ride to Gurgaon</div>
+          <div class="activity-time">Just now</div>
+        </div>
+      </div>
+
+      <div class="activity-item">
+        <div class="activity-icon" style="background:rgba(79,142,255,0.1);">✅</div>
+        <div>
+          <div class="activity-text"><strong>Ride #R1092</strong> completed successfully</div>
+          <div class="activity-time">2 min ago</div>
+        </div>
+      </div>
+
+      <div class="activity-item">
+        <div class="activity-icon" style="background:rgba(245,158,11,0.1);">👨‍✈️</div>
+        <div>
+          <div class="activity-text"><strong>Driver Ravi M.</strong> came online in Noida</div>
+          <div class="activity-time">5 min ago</div>
+        </div>
+      </div>
+
+      <div class="activity-item">
+        <div class="activity-icon" style="background:rgba(255,94,122,0.1);">❌</div>
+        <div>
+          <div class="activity-text"><strong>Tanvi K.</strong> cancelled booking #R1089</div>
+          <div class="activity-time">11 min ago</div>
+        </div>
+      </div>
+
+      <div class="activity-item">
+        <div class="activity-icon" style="background:rgba(124,58,237,0.1);">💳</div>
+        <div>
+          <div class="activity-text"><strong>₹380</strong> payment received from Rahul V.</div>
+          <div class="activity-time">18 min ago</div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;">
+        <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:6px;">
+          <span style="color:var(--muted);">Driver Utilization</span>
+          <span style="font-weight:600;">72%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width:72%; background:linear-gradient(90deg, var(--accent), var(--accent2));"></div>
+        </div>
+      </div>
+
+      <div style="margin-top:12px;">
+        <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:6px;">
+          <span style="color:var(--muted);">Seat Fill Rate</span>
+          <span style="font-weight:600;">84%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width:84%; background:linear-gradient(90deg, var(--green), #059669);"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+</body>
+</html>
