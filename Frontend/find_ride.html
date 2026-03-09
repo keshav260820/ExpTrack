@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Mitra Ride – Find a Ride</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #0D0F1A; }
+
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: #0D0F1A; }
+  ::-webkit-scrollbar-thumb { background: #2D3452; border-radius: 3px; }
+
+  body { display: flex; font-family: 'Syne', sans-serif; color: #E2E8F0; }
+
+  /* ── SIDEBAR ── */
+  #sidebar {
+    width: 240px; min-width: 240px; flex-shrink: 0;
+    background: #0B0D18; border-right: 1px solid #1A1F36;
+    display: flex; flex-direction: column; height: 100vh; overflow-y: auto;
+  }
+  .logo-box {
+    padding: 20px 20px 18px; display: flex; align-items: center; gap: 10px;
+    border-bottom: 1px solid #1A1F36;
+  }
+  .logo-icon {
+    width: 36px; height: 36px; background: linear-gradient(135deg,#7C3AED,#4F46E5);
+    border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;
+  }
+  .logo-text { font-size: 17px; font-weight: 800; }
+  .post-btn {
+    margin: 14px 12px 10px;
+    background: linear-gradient(135deg,#7C3AED,#4F46E5); border: none; color: white;
+    padding: 11px; border-radius: 12px; font-size: 13px; font-weight: 700;
+    cursor: pointer; font-family: 'Syne', sans-serif; width: calc(100% - 24px);
+  }
+  .section-label {
+    font-size: 10px; font-weight: 700; color: #4B5563; letter-spacing: 2px;
+    text-transform: uppercase; padding: 10px 20px 4px; font-family: 'DM Sans', sans-serif;
+  }
+  .nav-item {
+    display: flex; align-items: center; gap: 12px; padding: 9px 20px;
+    cursor: pointer; border-radius: 10px; margin: 2px 12px;
+    color: #94A3B8; font-size: 14px; font-family: 'DM Sans', sans-serif; transition: all .2s;
+  }
+  .nav-item:hover { background: #1A1F36; color: #E2E8F0; }
+  .nav-item.active { background: #1A1F36; color: #A78BFA; }
+  .nav-badge {
+    background: #7C3AED; color: white; font-size: 10px; font-weight: 700;
+    border-radius: 10px; padding: 1px 7px; margin-left: auto;
+  }
+  .user-row {
+    margin-top: auto; padding: 14px 20px; border-top: 1px solid #1A1F36;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .avatar {
+    width: 36px; height: 36px; border-radius: 50%; display: flex;
+    align-items: center; justify-content: center; font-size: 12px; font-weight: 700;
+    color: white; flex-shrink: 0; background: #6D28D9;
+  }
+
+  /* ── MAIN ── */
+  #main {
+    flex: 1; min-width: 0; overflow-y: auto; overflow-x: hidden; padding: 28px;
+  }
+  .page-title { font-size: 26px; font-weight: 800; margin-bottom: 4px; }
+  .page-sub { font-size: 13px; color: #64748B; margin-bottom: 22px; font-family: 'DM Sans', sans-serif; }
+  .page-sub span { color: #A78BFA; }
+
+  /* ── SEARCH CARD ── */
+  .search-card {
+    background: linear-gradient(135deg,#131629,#0F1220);
+    border: 1px solid #1E2340; border-radius: 20px;
+    padding: 22px 22px 18px; margin-bottom: 22px;
+  }
+  .search-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .input-wrap { position: relative; flex: 1; min-width: 130px; }
+  .input-icon {
+    position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+    font-size: 13px; pointer-events: none;
+  }
+  .search-input {
+    width: 100%; background: #0D0F1A; border: 1.5px solid #1E2340;
+    border-radius: 11px; padding: 11px 12px 11px 34px;
+    color: #E2E8F0; font-size: 13px; font-family: 'DM Sans', sans-serif;
+    outline: none; transition: border-color .2s;
+  }
+  .search-input:focus { border-color: #7C3AED; }
+  .search-input::placeholder { color: #374151; }
+  input[type=date]::-webkit-calendar-picker-indicator { filter: invert(0.5); cursor: pointer; }
+  .swap-btn {
+    width: 38px; height: 38px; background: #1A1F36; border: 1.5px solid #2D3452;
+    border-radius: 9px; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 15px; flex-shrink: 0; transition: all .2s;
+  }
+  .swap-btn:hover { border-color: #7C3AED; background: #252D4A; }
+  .seats-select {
+    background: #0D0F1A; border: 1.5px solid #1E2340; border-radius: 11px;
+    padding: 11px 12px; color: #E2E8F0; font-size: 13px;
+    font-family: 'DM Sans', sans-serif; outline: none; cursor: pointer; flex-shrink: 0;
+  }
+  .search-btn {
+    background: linear-gradient(135deg,#7C3AED,#4F46E5); border: none; color: white;
+    padding: 11px 22px; border-radius: 11px; font-size: 13px; font-weight: 700;
+    cursor: pointer; white-space: nowrap; font-family: 'Syne', sans-serif;
+    flex-shrink: 0; transition: opacity .2s;
+  }
+  .search-btn:hover { opacity: .85; }
+  .popular-row { margin-top: 14px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .popular-label { font-size: 12px; color: #4B5563; font-family: 'DM Sans', sans-serif; }
+  .chip {
+    background: #0D0F1A; border: 1px solid #1E2340; border-radius: 20px;
+    padding: 4px 11px; font-size: 12px; color: #94A3B8;
+    cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all .2s;
+  }
+  .chip:hover { border-color: #7C3AED; color: #A78BFA; }
+
+  /* ── RESULTS LAYOUT ── */
+  .results-layout { display: flex; gap: 18px; align-items: flex-start; }
+
+  /* ── FILTERS ── */
+  .filters-panel {
+    width: 205px; min-width: 205px; flex-shrink: 0;
+    background: #131629; border: 1px solid #1E2340;
+    border-radius: 16px; padding: 18px;
+  }
+  .filter-title { font-size: 14px; font-weight: 700; margin-bottom: 18px; }
+  .filter-section { margin-bottom: 18px; }
+  .filter-label {
+    font-size: 10px; color: #64748B; text-transform: uppercase;
+    letter-spacing: 1.5px; margin-bottom: 10px; font-family: 'DM Sans', sans-serif;
+  }
+  .toggle-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .toggle-name { font-size: 13px; color: #94A3B8; font-family: 'DM Sans', sans-serif; }
+  .toggle {
+    width: 34px; height: 19px; border-radius: 10px; background: #1E2340;
+    cursor: pointer; position: relative; transition: background .2s; flex-shrink: 0;
+  }
+  .toggle.on { background: #7C3AED; }
+  .toggle-knob {
+    position: absolute; width: 13px; height: 13px; border-radius: 50%;
+    background: white; top: 3px; left: 3px; transition: left .2s;
+  }
+  .toggle.on .toggle-knob { left: 18px; }
+  .range-input { width: 100%; accent-color: #7C3AED; cursor: pointer; }
+  .range-labels {
+    display: flex; justify-content: space-between; font-size: 11px;
+    color: #64748B; margin-top: 5px; font-family: 'DM Sans', sans-serif;
+  }
+  #fare-display { color: #A78BFA; font-weight: 600; }
+  .sort-option {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 9px; cursor: pointer;
+  }
+  .sort-option-label { font-size: 13px; color: #94A3B8; font-family: 'DM Sans', sans-serif; }
+  .sort-option.active .sort-option-label { color: #A78BFA; }
+  .sort-dot { width: 7px; height: 7px; border-radius: 50%; background: #1E2340; flex-shrink: 0; }
+  .sort-option.active .sort-dot { background: #7C3AED; }
+
+  /* ── RIDES LIST ── */
+  .rides-list { flex: 1; min-width: 0; }
+  .results-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .results-count { font-size: 13px; color: #64748B; font-family: 'DM Sans', sans-serif; }
+  .results-count span { color: #A78BFA; font-weight: 600; }
+  .sort-select {
+    background: #131629; border: 1px solid #1E2340; border-radius: 8px;
+    padding: 6px 10px; color: #94A3B8; font-size: 13px;
+    font-family: 'DM Sans', sans-serif; outline: none; cursor: pointer;
+  }
+
+  /* ── RIDE CARD ── */
+  .ride-card {
+    background: #131629; border: 1px solid #1E2340; border-radius: 16px;
+    padding: 18px; margin-bottom: 12px; cursor: pointer; transition: all .2s;
+  }
+  .ride-card:hover { border-color: #3D4A7A; transform: translateY(-1px); box-shadow: 0 6px 24px rgba(0,0,0,0.4); }
+  .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
+  .driver-info { display: flex; align-items: center; gap: 10px; }
+  .driver-avatar {
+    width: 44px; height: 44px; border-radius: 50%; display: flex;
+    align-items: center; justify-content: center; font-size: 14px; font-weight: 700;
+    color: white; flex-shrink: 0;
+  }
+  .driver-name { font-size: 15px; font-weight: 700; }
+  .driver-meta { font-size: 12px; color: #64748B; font-family: 'DM Sans', sans-serif; margin-top: 2px; }
+  .stars { color: #F59E0B; }
+  .fare-box { text-align: right; flex-shrink: 0; }
+  .fare-amt { font-size: 22px; font-weight: 800; color: #4ADE80; }
+  .fare-lbl { font-size: 11px; color: #64748B; font-family: 'DM Sans', sans-serif; }
+  .route-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .route-dots { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+  .route-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .route-line { width: 1px; height: 18px; background: #2D3452; }
+  .route-labels { display: flex; flex-direction: column; gap: 10px; }
+  .route-from { font-size: 13px; color: #C4B5FD; font-family: 'DM Sans', sans-serif; }
+  .route-to { font-size: 13px; color: #86EFAC; font-family: 'DM Sans', sans-serif; }
+  .meta-row { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; flex-wrap: wrap; }
+  .meta-item { display: flex; align-items: center; gap: 5px; font-size: 12px; color: #64748B; font-family: 'DM Sans', sans-serif; }
+  .tags-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+  .tag { padding: 4px 9px; border-radius: 6px; font-size: 11px; font-weight: 600; font-family: 'DM Sans', sans-serif; }
+  .tag-verified { background: rgba(74,222,128,0.1); color: #4ADE80; border: 1px solid rgba(74,222,128,0.2); }
+  .tag-ac       { background: rgba(56,189,248,0.1); color: #38BDF8; border: 1px solid rgba(56,189,248,0.2); }
+  .tag-music    { background: rgba(167,139,250,0.1); color: #A78BFA; border: 1px solid rgba(167,139,250,0.2); }
+  .tag-women    { background: rgba(244,114,182,0.1); color: #F472B6; border: 1px solid rgba(244,114,182,0.2); }
+  .tag-pets     { background: rgba(251,191,36,0.1);  color: #FBBF24; border: 1px solid rgba(251,191,36,0.2); }
+  .tag-nosmoking{ background: rgba(239,68,68,0.1);   color: #EF4444; border: 1px solid rgba(239,68,68,0.2); }
+  .card-bottom { display: flex; align-items: center; justify-content: space-between; }
+  .seats-badge { font-size: 12px; color: #94A3B8; font-family: 'DM Sans', sans-serif; }
+  .seats-badge span { color: #4ADE80; font-weight: 700; }
+  .book-btn {
+    background: linear-gradient(135deg,#7C3AED,#4F46E5); border: none; color: white;
+    padding: 9px 18px; border-radius: 10px; font-size: 13px; font-weight: 700;
+    cursor: pointer; font-family: 'Syne', sans-serif; transition: opacity .2s;
+  }
+  .book-btn:hover { opacity: .85; }
+  .book-btn.booked { opacity: 0.6; cursor: default; }
+
+  /* ── TOAST ── */
+  #toast {
+    display: none; position: fixed; bottom: 28px; right: 28px;
+    background: #131629; border: 1px solid #4ADE80; border-radius: 14px;
+    padding: 14px 20px; align-items: center; gap: 12px;
+    font-family: 'DM Sans', sans-serif; font-size: 14px; color: #E2E8F0; z-index: 100;
+    animation: slideUp .3s ease;
+  }
+  #toast.show { display: flex; }
+  @keyframes slideUp { from { transform: translateY(16px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+  .empty-state { text-align: center; padding: 60px 20px; }
+  .empty-state .icon { font-size: 44px; margin-bottom: 14px; }
+  .empty-state h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+  .empty-state p { font-size: 13px; color: #64748B; font-family: 'DM Sans', sans-serif; }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<div id="sidebar">
+  <div class="logo-box">
+    <div class="logo-icon">🚗</div>
+    <span class="logo-text">Mitra Ride</span>
+  </div>
+  <button class="post-btn">+ Post a Ride</button>
+
+  <div class="section-label">Main</div>
+  <a href="/Frontend/Dashboard.html"><div class="nav-item">🟥 &nbsp;Dashboard</div></a>
+  <div class="nav-item active">🔍 &nbsp;Find a Ride <span class="nav-badge">3</span></div>
+  <div class="nav-item">📅 &nbsp;My Rides</div>
+  <div class="nav-item">💰 &nbsp;Payments</div>
+
+  <div class="section-label" style="margin-top:10px">Account</div>
+  <div class="nav-item">👤 &nbsp;Profile</div>
+  <div class="nav-item">⭐ &nbsp;My Reviews</div>
+  <div class="nav-item">🔔 &nbsp;Notifications</div>
+  <div class="nav-item">⚙️ &nbsp;Settings</div>
+
+  <div class="user-row">
+    <div class="avatar">JD</div>
+    <div>
+      <div style="font-size:13px;font-weight:700">John Doe</div>
+      <div style="font-size:11px;color:#64748B;font-family:'DM Sans',sans-serif">Passenger</div>
+    </div>
+    <span style="margin-left:auto;color:#4B5563;cursor:pointer">···</span>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div id="main">
+  <div class="page-title">Find a Ride</div>
+  <div class="page-sub">Search from <span>thousands of daily rides</span> across Delhi NCR</div>
+
+  <!-- Search Card -->
+  <div class="search-card">
+    <div class="search-row">
+      <div class="input-wrap">
+        <span class="input-icon">📍</span>
+        <input class="search-input" id="inp-from" placeholder="From — pickup location" />
+      </div>
+      <div class="swap-btn" onclick="swapLocations()">⇄</div>
+      <div class="input-wrap">
+        <span class="input-icon">🏁</span>
+        <input class="search-input" id="inp-to" placeholder="To — destination" />
+      </div>
+      <div class="input-wrap" style="flex:0 0 148px">
+        <span class="input-icon">📅</span>
+        <input class="search-input" type="date" id="inp-date" style="padding-left:34px" />
+      </div>
+      <select class="seats-select" id="inp-seats">
+        <option value="1">1 seat</option>
+        <option value="2">2 seats</option>
+        <option value="3">3 seats</option>
+        <option value="4">4 seats</option>
+      </select>
+      <button class="search-btn" onclick="renderRides()">Search →</button>
+    </div>
+    <div class="popular-row">
+      <span class="popular-label">Popular:</span>
+      <span class="chip" onclick="setDest('Gurgaon')">📍 Gurgaon</span>
+      <span class="chip" onclick="setDest('IGI Airport')">✈️ IGI Airport</span>
+      <span class="chip" onclick="setDest('Connaught Place')">📍 Connaught Place</span>
+      <span class="chip" onclick="setDest('AIIMS')">🏥 AIIMS</span>
+      <span class="chip" onclick="setDest('Noida Sector 18')">📍 Noida Sector 18</span>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div class="results-layout">
+
+    <!-- Filters -->
+    <div class="filters-panel">
+      <div class="filter-title">🎛 Filters</div>
+
+      <div class="filter-section">
+        <div class="filter-label">Amenities</div>
+        <div class="toggle-row">
+          <span class="toggle-name">❄️ AC Only</span>
+          <div class="toggle" id="tog-ac" onclick="toggleFilter('ac')"><div class="toggle-knob"></div></div>
+        </div>
+        <div class="toggle-row">
+          <span class="toggle-name">✅ Verified Only</span>
+          <div class="toggle" id="tog-verified" onclick="toggleFilter('verified')"><div class="toggle-knob"></div></div>
+        </div>
+      </div>
+
+      <div class="filter-section">
+        <div class="filter-label">Max Fare</div>
+        <input type="range" min="50" max="500" step="10" value="500" class="range-input" oninput="updateFare(this.value)" />
+        <div class="range-labels">
+          <span>₹50</span><span id="fare-display">₹500</span><span>₹500</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="filter-label">Sort By</div>
+        <div class="sort-option active" id="sort-recommended" onclick="setSort('recommended')">
+          <span class="sort-option-label">⭐ Recommended</span><div class="sort-dot"></div>
+        </div>
+        <div class="sort-option" id="sort-fare" onclick="setSort('fare')">
+          <span class="sort-option-label">💰 Lowest Fare</span><div class="sort-dot"></div>
+        </div>
+        <div class="sort-option" id="sort-rating" onclick="setSort('rating')">
+          <span class="sort-option-label">👍 Highest Rated</span><div class="sort-dot"></div>
+        </div>
+        <div class="sort-option" id="sort-seats" onclick="setSort('seats')">
+          <span class="sort-option-label">💺 Most Seats</span><div class="sort-dot"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rides -->
+    <div class="rides-list">
+      <div class="results-header">
+        <div class="results-count"><span id="ride-count">5</span> rides found</div>
+        <select class="sort-select" onchange="setSort(this.value)">
+          <option value="recommended">Recommended</option>
+          <option value="fare">Lowest Fare</option>
+          <option value="rating">Highest Rated</option>
+          <option value="seats">Most Seats</option>
+        </select>
+      </div>
+      <div id="rides-container"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast">
+  <span style="font-size:20px">🎉</span>
+  <div>
+    <div style="font-weight:700">Seat Requested!</div>
+    <div style="font-size:12px;color:#64748B">Waiting for driver confirmation...</div>
+  </div>
+</div>
+
+<script>
+  const rides = [
+    { id:1, driver:"Amit Sharma",  avatar:"AS", color:"#7C3AED", rating:4.9, reviews:132, from:"Dwarka Sector 21",  to:"Connaught Place",     date:"Tomorrow, 8:30 AM", seats:2, fare:180, tags:["AC","Music OK","Verified"],              car:"Swift Dzire • DL 3C AB 1234",   duration:"45 min" },
+    { id:2, driver:"Priya Mehra",  avatar:"PM", color:"#059669", rating:4.7, reviews:89,  from:"Gurgaon Sector 14",to:"IGI Airport T3",       date:"Tomorrow, 6:00 AM", seats:3, fare:320, tags:["AC","No Smoking","Verified"],            car:"Honda City • HR 26 CX 5678",    duration:"35 min" },
+    { id:3, driver:"Rohit Verma",  avatar:"RV", color:"#D97706", rating:4.5, reviews:56,  from:"Noida Sector 62",  to:"AIIMS Delhi",          date:"Today, 9:00 AM",    seats:1, fare:250, tags:["AC","Pets OK"],                          car:"Maruti Baleno • UP 16 BT 9012", duration:"1 hr 10 min" },
+    { id:4, driver:"Sneha Kapoor", avatar:"SK", color:"#DB2777", rating:5.0, reviews:211, from:"Vasant Kunj",       to:"Cyber City, Gurgaon", date:"Tomorrow, 9:15 AM", seats:2, fare:210, tags:["AC","Music OK","Verified","Women Only"], car:"Hyundai i20 • DL 8C MN 3456",  duration:"50 min" },
+    { id:5, driver:"Karan Malhotra",avatar:"KM",color:"#0891B2", rating:4.6, reviews:74,  from:"Lajpat Nagar",     to:"Faridabad Sector 15", date:"Tomorrow, 7:45 AM", seats:3, fare:160, tags:["AC","No Smoking"],                       car:"Toyota Innova • DL 2C PQ 7890", duration:"55 min" },
+  ];
+
+  const tagClass = { "Verified":"tag-verified","AC":"tag-ac","Music OK":"tag-music","Women Only":"tag-women","Pets OK":"tag-pets","No Smoking":"tag-nosmoking" };
+  const tagIcon  = { "Verified":"✓","AC":"❄","Music OK":"♪","Women Only":"♀","Pets OK":"🐾","No Smoking":"🚭" };
+
+  let filterAC = false, filterVerified = false, maxFare = 500, sortBy = "recommended";
+
+  function swapLocations() {
+    const f = document.getElementById('inp-from');
+    const t = document.getElementById('inp-to');
+    [f.value, t.value] = [t.value, f.value];
+  }
+
+  function setDest(d) {
+    document.getElementById('inp-to').value = d;
+    renderRides();
+  }
+
+  function toggleFilter(f) {
+    if (f === 'ac') {
+      filterAC = !filterAC;
+      document.getElementById('tog-ac').classList.toggle('on', filterAC);
+    } else {
+      filterVerified = !filterVerified;
+      document.getElementById('tog-verified').classList.toggle('on', filterVerified);
+    }
+    renderRides();
+  }
+
+  function updateFare(v) {
+    maxFare = +v;
+    document.getElementById('fare-display').textContent = '₹' + v;
+    renderRides();
+  }
+
+  function setSort(s) {
+    sortBy = s;
+    document.querySelectorAll('.sort-option').forEach(el => el.classList.remove('active'));
+    const el = document.getElementById('sort-' + s);
+    if (el) el.classList.add('active');
+    renderRides();
+  }
+
+  function showToast() {
+    const t = document.getElementById('toast');
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  function renderRides() {
+    let list = rides
+      .filter(r => !filterAC || r.tags.includes("AC"))
+      .filter(r => !filterVerified || r.tags.includes("Verified"))
+      .filter(r => r.fare <= maxFare);
+
+    if (sortBy === 'fare')   list.sort((a,b) => a.fare - b.fare);
+    if (sortBy === 'rating') list.sort((a,b) => b.rating - a.rating);
+    if (sortBy === 'seats')  list.sort((a,b) => b.seats - a.seats);
+
+    document.getElementById('ride-count').textContent = list.length;
+    const container = document.getElementById('rides-container');
+
+    if (list.length === 0) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <div class="icon">🔍</div>
+          <h3>No rides match your filters</h3>
+          <p>Try adjusting filters or increasing max fare</p>
+        </div>`;
+      return;
+    }
+
+    container.innerHTML = list.map(r => `
+      <div class="ride-card">
+        <div class="card-top">
+          <div class="driver-info">
+            <div class="driver-avatar" style="background:${r.color}">${r.avatar}</div>
+            <div>
+              <div class="driver-name">${r.driver}</div>
+              <div class="driver-meta"><span class="stars">${'★'.repeat(Math.floor(r.rating))}</span> ${r.rating} · ${r.reviews} reviews</div>
+              <div class="driver-meta">${r.car}</div>
+            </div>
+          </div>
+          <div class="fare-box">
+            <div class="fare-amt">₹${r.fare}</div>
+            <div class="fare-lbl">per seat</div>
+          </div>
+        </div>
+
+        <div class="route-row">
+          <div class="route-dots">
+            <div class="route-dot" style="background:#7C3AED"></div>
+            <div class="route-line"></div>
+            <div class="route-dot" style="background:#4ADE80"></div>
+          </div>
+          <div class="route-labels">
+            <span class="route-from">${r.from}</span>
+            <span class="route-to">${r.to}</span>
+          </div>
+        </div>
+
+        <div class="meta-row">
+          <div class="meta-item">🕐 ${r.date}</div>
+          <div class="meta-item">⏱ ${r.duration}</div>
+          <div class="meta-item">💺 ${r.seats} seat${r.seats>1?'s':''} left</div>
+        </div>
+
+        <div class="tags-row">
+          ${r.tags.map(t => `<span class="tag ${tagClass[t]}">${tagIcon[t]} ${t}</span>`).join('')}
+        </div>
+
+        <div class="card-bottom">
+          <div class="seats-badge"><span>${r.seats}</span> seat${r.seats>1?'s':''} available</div>
+          <button class="book-btn" onclick="showToast()">Request Seat →</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // Init
+  renderRides();
+</script>
+</body>
+</html>
