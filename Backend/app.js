@@ -26,7 +26,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/api/v4/user', router)
 
 app.get('/', (req, res) => {
-    const dashboardPath = path.join(__dirname, '../Frontend/Dashboard.html');
+    const dashboardPath = path.join(__dirname, '../Frontend/login.html');
     res.sendFile(dashboardPath);
 });
 
