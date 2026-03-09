@@ -1,43 +1,35 @@
-// CHO 21-24: Express Framework
-const express    = require('express');
-const path       = require('path');
-const app        = express();
+import express from 'express'
+import databaseConnection from "./database/dbConnection.js"
+import cors from 'cors'
+import dotenv from 'dotenv'
+import cookieParser from 'cookie-parser'
+import router from './routes/userAuthRoute.js'
+import path from 'path'
+import { fileURLToPath } from 'url'
 
-// Import routes (CHO 17-20: require modules)
-const userRoutes = require('./routes/userRoutes');
-const rideRoutes = require('./routes/rideRoutes');
+dotenv.config({ path: './config/config.env' })
 
-// ── MIDDLEWARE ────────────────────────────────────────────────────
-// Parse incoming JSON body (like express.json())
-app.use(express.json());
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
-// Serve Frontend HTML files as static files (CHO 21-24)
-app.use(express.static(path.join(__dirname, '..', 'Frontend')));
+export const staticPath = path.join(__dirname, 'public')
+const app = express()
 
-// Request logger middleware
-app.use(function(req, res, next) {
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
-  next();
+app.use(express.static(staticPath))
+
+app.set('view engine', 'jsx')
+app.use(cors())
+app.use(cookieParser())
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+
+app.use('/api/v4/user', router)
+
+app.get('/', (req, res) => {
+    const dashboardPath = path.join(__dirname, '../Frontend/login.html');
+    res.sendFile(dashboardPath);
 });
 
-// ── ROUTES ───────────────────────────────────────────────────────
-app.use('/api/users', userRoutes);  // All user routes
-app.use('/api/rides', rideRoutes);  // All ride routes
+databaseConnection()
 
-// Root → serve login page
-app.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname, '..', 'Frontend', 'login.html'));
-});
-
-// 404 handler (CHO 21-24: Handling exceptions)
-app.use(function(req, res) {
-  res.status(404).json({ success: false, message: 'Route not found: ' + req.url });
-});
-
-// Error handler
-app.use(function(err, req, res, next) {
-  console.error('Error:', err.message);
-  res.status(500).json({ success: false, message: err.message });
-});
-
-module.exports = app;
+export default app;

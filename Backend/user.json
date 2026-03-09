@@ -1,1 +1,11 @@
-[]
+{
+  "users": [
+    {
+      "id": 1773035227389,
+      "name": "Shally chauhan",
+      "email": "shallychauhan127@gmail.com",
+      "password": "Shally@3003",
+      "role": "Passenger"
+    }
+  ]
+}
