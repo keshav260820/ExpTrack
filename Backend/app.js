@@ -4,6 +4,7 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
 import router from './routes/userAuthRoute.js'
+import rideRouter from './routes/rideRoute.js'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
@@ -16,6 +17,7 @@ export const staticPath = path.join(__dirname, 'public')
 const app = express()
 
 app.use(express.static(staticPath))
+app.use(express.static(path.join(__dirname, '../Frontend')))
 
 app.set('view engine', 'jsx')
 app.use(cors())
@@ -24,6 +26,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 app.use('/api/v4/user', router)
+app.use('/api/v4/rides', rideRouter)
 
 app.get('/', (req, res) => {
     const dashboardPath = path.join(__dirname, '../Frontend/login.html');

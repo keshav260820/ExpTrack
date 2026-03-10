@@ -431,60 +431,101 @@ input[type=range]:focus{box-shadow:none}
 </div>
 
 <script>
-  let seats = 3;
+  // Global variable to track seats (Syllabus 21: UI State)
+  let seats = 3; 
 
-  // init dates
-  const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate() + 1);
-  document.getElementById('f-date').valueAsDate = tomorrow;
-  sync();
+  // Function to handle seat selection
+  function pickSeat(btn, count) {
+    // 1. Remove 'on' class from all buttons
+    const buttons = document.querySelectorAll('.s-btn');
+    buttons.forEach(b => b.classList.remove('on'));
+    
+    // 2. Add 'on' class to the clicked button
+    btn.classList.add('on');
+    
+    // 3. Update global variable and UI
+    seats = count;
+    document.getElementById('s-seats').textContent = count;
+    
+    // 4. Recalculate earnings
+    calcEarn();
+  }
 
+  // Function to sync inputs with the Right Summary Sidebar (Syllabus 21: Serving Static Data)
   function sync() {
-    const from = document.getElementById('f-from').value || '—';
-    const to   = document.getElementById('f-to').value   || '—';
+    document.getElementById('s-from').textContent = document.getElementById('f-from').value || '—';
+    document.getElementById('s-to').textContent = document.getElementById('f-to').value || '—';
+    
     const date = document.getElementById('f-date').value;
     const time = document.getElementById('f-time').value;
-    const veh  = document.getElementById('f-vtype').value;
-    const price= parseInt(document.getElementById('priceRange').value);
-
-    document.getElementById('s-from').textContent = from;
-    document.getElementById('s-to').textContent   = to;
-    document.getElementById('s-veh').textContent  = veh;
-    document.getElementById('s-price').textContent= price;
-    document.getElementById('s-seats').textContent= seats;
-    document.getElementById('s-earn').textContent = price * seats;
-
-    let dt = '—';
-    if (date) {
-      const d = new Date(date);
-      dt = d.toLocaleDateString('en-IN', {weekday:'short', day:'numeric', month:'short'});
-    }
-    if (time) dt += (date ? ', ' : '') + time;
-    document.getElementById('s-dt').textContent = dt;
+    document.getElementById('s-dt').textContent = (date || time) ? `${date} ${time}` : '—';
+    
+    document.getElementById('s-veh').textContent = document.getElementById('f-vtype').value;
+    document.getElementById('s-price').textContent = document.getElementById('priceRange').value;
   }
 
+  // Sync the range slider color and price label
+  function syncRange(el) {
+    const val = (el.value - el.min) / (el.max - el.min) * 100;
+    el.style.background = `linear-gradient(to right, var(--amber) ${val}%, var(--card2) ${val}%)`;
+    document.getElementById('s-price').textContent = el.value;
+  }
+
+  // Calculate potential earnings
   function calcEarn() {
     const price = parseInt(document.getElementById('priceRange').value);
-    document.getElementById('s-price').textContent = price;
-    document.getElementById('s-earn').textContent  = price * seats;
+    const total = price * seats;
+    document.getElementById('s-earn').textContent = total;
   }
 
-  function pickSeat(btn, n) {
-    document.querySelectorAll('.s-btn').forEach(b => b.classList.remove('on'));
-    btn.classList.add('on');
-    seats = n;
+  // THE BACKEND CALL (Syllabus 13 & 24)
+  async function postRide() {
+    const rideData = {
+        pickup: document.getElementById('f-from').value,
+        dropoff: document.getElementById('f-to').value,
+        date: document.getElementById('f-date').value,
+        time: document.getElementById('f-time').value,
+        vehicleType: document.getElementById('f-vtype').value,
+        seats: seats, 
+        price: parseInt(document.getElementById('priceRange').value),
+        amenities: Array.from(document.querySelectorAll('.chip.on')).map(c => c.innerText.trim())
+    };
+
+    // Validation (Handling Exceptions)
+    if (!rideData.pickup || !rideData.dropoff || !rideData.date) {
+        alert("Please fill in the pickup, drop-off, and date!");
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/v4/rides/post-ride', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(rideData)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            // Show Success Toast
+            const t = document.getElementById('toast');
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 4000);
+        } else {
+            alert("Error: " + result.message);
+        }
+    } catch (error) {
+        console.error("Fetch error:", error);
+        alert("Check your console. Ensure the Backend server is running!");
+    }
+  }
+
+  // Initialize display on load
+  window.onload = () => {
     sync();
-  }
-
-  function syncRange(el) {
-    const pct = (el.value - el.min) / (el.max - el.min) * 100;
-    el.style.background = `linear-gradient(to right,var(--amber) ${pct}%,var(--card2) ${pct}%)`;
-  }
-
-  function postRide() {
-    const t = document.getElementById('toast');
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 4000);
-  }
+    calcEarn();
+  };
 </script>
+
 </body>
 </html>
