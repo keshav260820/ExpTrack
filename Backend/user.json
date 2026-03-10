@@ -13,6 +13,13 @@
       "email": "keshavangra282@gmail.com",
       "password": "Keshav20#",
       "role": "Passenger"
+    },
+    {
+      "id": 1773134515748,
+      "name": "Shubhi Govil",
+      "email": "shubhigovil@gmail.com",
+      "password": "Shubhi@123",
+      "role": "Passenger"
     }
   ]
 }

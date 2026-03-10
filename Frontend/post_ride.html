@@ -498,7 +498,7 @@ input[type=range]:focus{box-shadow:none}
     }
 
     try {
-        const response = await fetch('/api/v4/rides/post-ride', {
+        const response = await fetch('http://localhost:3000/api/v4/rides/post-ride', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(rideData)

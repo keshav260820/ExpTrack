@@ -1,41 +1,35 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-// Syllabus 5-8: File handling module
-const ridesFilePath = path.join(__dirname, '..', 'rides.json');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-exports.postRide = (req, res) => {
+// Path: go UP one level from controller, then into database
+const ridesFilePath = path.join(__dirname, '..', 'database', 'rides.json');
+
+export const postRide = (req, res) => {
     const newRide = req.body;
 
-    // 1. Read existing rides (File Handling)
     fs.readFile(ridesFilePath, 'utf8', (err, data) => {
         let rides = [];
         if (!err && data) {
-            rides = JSON.parse(data);
+            try { rides = JSON.parse(data); } catch (e) { rides = []; }
         }
 
-        // 2. Add the new ride
+        // Add unique ID and save
         rides.push({ id: Date.now(), ...newRide });
 
-        // 3. Save back to file (Syllabus 5-8: Writing files)
         fs.writeFile(ridesFilePath, JSON.stringify(rides, null, 2), (err) => {
-            if (err) {
-                return res.status(500).json({ message: "Error saving ride" });
-            }
-            // Syllabus 24: Response Method
+            if (err) return res.status(500).json({ message: "Error saving to JSON" });
             res.status(201).json({ message: "Ride posted successfully!" });
         });
     });
 };
 
 export const getAllRides = (req, res) => {
-    // Syllabus 5-8: Reading the file
-    fs.readFile(userFilePath, 'utf8', (err, data) => {
-        if (err) {
-            return res.status(500).json({ message: "Failed to load rides" });
-        }
-        
-        // Syllabus 24: Sending a JSON response
+    fs.readFile(ridesFilePath, 'utf8', (err, data) => {
+        if (err) return res.status(200).json([]);
         const rides = JSON.parse(data || "[]");
         res.status(200).json(rides);
     });
