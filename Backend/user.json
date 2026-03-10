@@ -6,6 +6,13 @@
       "email": "shallychauhan127@gmail.com",
       "password": "Shally@3003",
       "role": "Passenger"
+    },
+    {
+      "id": 1773126377750,
+      "name": "Keshav Angra",
+      "email": "keshavangra282@gmail.com",
+      "password": "Keshav20#",
+      "role": "Passenger"
     }
   ]
 }
