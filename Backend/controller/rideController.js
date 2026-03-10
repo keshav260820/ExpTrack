@@ -5,7 +5,6 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Path: go UP one level from controller, then into database
 const ridesFilePath = path.join(__dirname, '..', 'database', 'rides.json');
 
 export const postRide = (req, res) => {

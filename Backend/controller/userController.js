@@ -1,14 +1,12 @@
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url'; // Required to recreate __dirname
+import { fileURLToPath } from 'url'; 
 import fetch from 'node-fetch'; 
 import { OAuth2Client } from 'google-auth-library';
 
-// 1. Recreate __dirname for ES Modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// 2. Define path to user.json
 const filePath = path.join(__dirname, "../user.json");
 
 export const registerUser = (req, res) => {

@@ -4,9 +4,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mitra Ride — Your Daily Commute, Reimagined</title>
+  <title>Ride मित्र — Har Safar Ke Liye, Sahi मित्र</title>
   <link
-    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Noto+Sans+Devanagari:wght@700;900&family=Rozha+One&display=swap"
     rel="stylesheet" />
   <style>
     *,
@@ -18,18 +18,20 @@
     }
 
     :root {
-      --bg: #0c0f1a;
-      --surface: #131729;
-      --surface2: #1a2038;
-      --border: #232b44;
-      --accent: #4f8eff;
-      --accent2: #7c3aed;
-      --green: #22d3a0;
-      --red: #ff5e7a;
-      --yellow: #f59e0b;
-      --text: #e2e8f0;
-      --muted: #64748b;
-      --card-glow: 0 0 30px rgba(79, 142, 255, 0.06);
+      --bg: #FAFAF8;
+      --surface: #FFFFFF;
+      --surface2: #F4F3EF;
+      --border: #E8E5DF;
+      --accent: #FF8C00;
+      --accent2: #E67300;
+      --green: #2ECC71;
+      --green2: #27AE60;
+      --red: #E74C3C;
+      --yellow: #F1C40F;
+      --text: #1A1A1A;
+      --muted: #7A7567;
+      --card-shadow: 0 2px 16px rgba(0,0,0,0.07), 0 1px 3px rgba(0,0,0,0.04);
+      --card-shadow-hover: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
     }
 
     html {
@@ -37,7 +39,7 @@
     }
 
     body {
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
@@ -57,12 +59,13 @@
       user-select: none;
     }
 
+    /* Mesh gradient backgrounds replacing dark blobs */
     .bg-grid {
       position: fixed;
       inset: 0;
       background-image:
-        linear-gradient(rgba(79, 142, 255, 0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(79, 142, 255, 0.025) 1px, transparent 1px);
+        linear-gradient(rgba(255, 140, 0, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 140, 0, 0.04) 1px, transparent 1px);
       background-size: 72px 72px;
       pointer-events: none;
       z-index: 0;
@@ -72,14 +75,14 @@
       position: fixed;
       border-radius: 50%;
       pointer-events: none;
-      filter: blur(90px);
+      filter: blur(80px);
       z-index: 0;
     }
 
     .blob-1 {
       width: 700px;
       height: 700px;
-      background: radial-gradient(circle, rgba(79, 142, 255, 0.18), transparent 70%);
+      background: radial-gradient(circle, rgba(255, 140, 0, 0.18) 0%, rgba(255, 200, 80, 0.12) 40%, transparent 70%);
       top: -200px;
       left: -200px;
       animation: float 14s ease-in-out infinite alternate;
@@ -88,7 +91,7 @@
     .blob-2 {
       width: 600px;
       height: 600px;
-      background: radial-gradient(circle, rgba(124, 58, 237, 0.15), transparent 70%);
+      background: radial-gradient(circle, rgba(46, 204, 113, 0.15) 0%, rgba(46, 204, 113, 0.07) 45%, transparent 70%);
       bottom: -150px;
       right: -150px;
       animation: float 18s ease-in-out infinite alternate-reverse;
@@ -97,7 +100,7 @@
     .blob-3 {
       width: 400px;
       height: 400px;
-      background: radial-gradient(circle, rgba(34, 211, 160, 0.08), transparent 70%);
+      background: radial-gradient(circle, rgba(255, 200, 50, 0.12) 0%, rgba(255, 140, 0, 0.06) 50%, transparent 70%);
       top: 40%;
       left: 50%;
       transform: translate(-50%, -50%);
@@ -105,15 +108,13 @@
     }
 
     @keyframes float {
-      from {
-        transform: translate(0, 0);
-      }
-
-      to {
-        transform: translate(40px, 30px);
-      }
+      from { transform: translate(0, 0); }
+      to { transform: translate(40px, 30px); }
     }
 
+    /* ═══════════════════════════════════════
+       NAVBAR
+    ═══════════════════════════════════════ */
     .navbar {
       position: fixed;
       top: 0;
@@ -125,15 +126,16 @@
       justify-content: space-between;
       padding: 0 60px;
       height: 72px;
-      background: rgba(13, 15, 26, 0.75);
+      background: rgba(250, 250, 248, 0.82);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(35, 43, 68, 0.6);
+      border-bottom: 1px solid rgba(232, 229, 223, 0.8);
       transition: background 0.3s;
     }
 
     .navbar.scrolled {
-      background: rgba(13, 15, 26, 0.95);
+      background: rgba(250, 250, 248, 0.97);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.06);
     }
 
     .nav-logo {
@@ -146,20 +148,28 @@
     .nav-logo-icon {
       width: 38px;
       height: 38px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      background: linear-gradient(135deg, var(--accent), #FF6B00);
       border-radius: 11px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 19px;
-      box-shadow: 0 0 18px rgba(79, 142, 255, 0.35);
+      box-shadow: 0 4px 14px rgba(255, 140, 0, 0.35);
     }
 
     .nav-logo-name {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       font-weight: 800;
-      font-size: 20px;
-      color: #fff;
+      font-size: 18px;
+      color: var(--text);
+      letter-spacing: -0.3px;
+    }
+
+    .nav-logo-name .hindi {
+      font-family: 'Rozha One', 'Noto Sans Devanagari', serif;
+      font-weight: 900;
+      color: var(--accent);
+      letter-spacing: 0;
     }
 
     .nav-links {
@@ -193,12 +203,12 @@
     .btn-nav-login {
       padding: 9px 22px;
       border-radius: 10px;
-      border: 1px solid var(--border);
+      border: 1.5px solid var(--border);
       background: transparent;
       color: var(--text);
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 14px;
-      font-weight: 500;
+      font-weight: 600;
       cursor: pointer;
       transition: all 0.2s;
     }
@@ -206,34 +216,37 @@
     .btn-nav-login:hover {
       border-color: var(--accent);
       color: var(--accent);
-      background: rgba(79, 142, 255, 0.06);
+      background: rgba(255, 140, 0, 0.05);
     }
 
     .btn-nav-cta {
       padding: 9px 22px;
       border-radius: 10px;
       border: none;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      background: linear-gradient(135deg, var(--accent), #FF6B00);
       color: #fff;
-      font-family: 'Syne', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 14px;
       font-weight: 700;
       cursor: pointer;
       transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
-      box-shadow: 0 4px 16px rgba(79, 142, 255, 0.3);
-      letter-spacing: 0.3px;
+      box-shadow: 0 4px 16px rgba(255, 140, 0, 0.35);
+      letter-spacing: 0.2px;
     }
 
     .btn-nav-cta:hover {
       opacity: 0.9;
       transform: translateY(-1px);
-      box-shadow: 0 8px 24px rgba(79, 142, 255, 0.4);
+      box-shadow: 0 8px 24px rgba(255, 140, 0, 0.42);
     }
 
     .btn-nav-cta:active {
       transform: translateY(0);
     }
 
+    /* ═══════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════ */
     .hero {
       position: relative;
       z-index: 1;
@@ -250,13 +263,13 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: rgba(79, 142, 255, 0.1);
-      border: 1px solid rgba(79, 142, 255, 0.25);
+      background: rgba(255, 140, 0, 0.09);
+      border: 1px solid rgba(255, 140, 0, 0.22);
       border-radius: 40px;
       padding: 6px 16px 6px 10px;
       font-size: 12px;
-      color: var(--accent);
-      font-weight: 600;
+      color: var(--accent2);
+      font-weight: 700;
       margin-bottom: 28px;
       letter-spacing: 0.3px;
       animation: fadeUp 0.7s ease both;
@@ -271,32 +284,38 @@
     }
 
     @keyframes pulse-dot {
-
-      0%,
-      100% {
-        opacity: 1;
-        transform: scale(1);
-      }
-
-      50% {
-        opacity: 0.5;
-        transform: scale(0.7);
-      }
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.7); }
     }
 
     .hero-heading {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: clamp(42px, 7vw, 80px);
       font-weight: 800;
       line-height: 1.05;
-      letter-spacing: -1.5px;
+      letter-spacing: -2px;
       max-width: 820px;
       margin-bottom: 24px;
       animation: fadeUp 0.7s ease 0.1s both;
+      color: var(--text);
     }
 
     .hero-heading .gradient-word {
-      background: linear-gradient(135deg, var(--accent) 30%, var(--accent2));
+      background: linear-gradient(135deg, var(--accent) 20%, #FF6B00 60%, #E65C00);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* मित्र word always uses Rozha One wherever it appears in headings */
+    .mitra-word {
+      font-family: 'Rozha One', 'Noto Sans Devanagari', serif;
+    }
+
+    .hero-heading .hindi-word {
+      font-family: 'Rozha One', 'Noto Sans Devanagari', serif;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--green) 20%, var(--green2));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -312,19 +331,31 @@
       font-weight: 400;
     }
 
+    .hero-sub .hinglish {
+      font-weight: 700;
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    /* Premium floating pill search bar */
     .hero-search {
       width: 100%;
-      max-width: 680px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 18px;
+      max-width: 700px;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1.5px solid rgba(255, 140, 0, 0.15);
+      border-radius: 24px;
       padding: 10px 10px 10px 22px;
       display: flex;
       align-items: center;
       gap: 12px;
-      box-shadow: 0 0 0 1px rgba(79, 142, 255, 0.06), 0 24px 60px rgba(0, 0, 0, 0.5), var(--card-glow);
+      box-shadow: 
+        0 8px 32px rgba(255, 140, 0, 0.10),
+        0 24px 60px rgba(0,0,0,0.08),
+        0 2px 8px rgba(0,0,0,0.04);
       animation: fadeUp 0.7s ease 0.3s both;
       position: relative;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
     }
 
     .hero-search::before {
@@ -334,7 +365,7 @@
       left: 10%;
       right: 10%;
       height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(79, 142, 255, 0.4), rgba(124, 58, 237, 0.3), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255, 140, 0, 0.4), rgba(46, 204, 113, 0.3), transparent);
     }
 
     .search-divider-v {
@@ -363,7 +394,7 @@
       border: none;
       outline: none;
       color: var(--text);
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 14px;
     }
 
@@ -373,10 +404,10 @@
 
     .search-input-label {
       font-size: 10px;
-      color: var(--muted);
+      color: var(--accent);
       text-transform: uppercase;
       letter-spacing: 0.8px;
-      font-weight: 600;
+      font-weight: 700;
       display: block;
       margin-bottom: 2px;
     }
@@ -388,30 +419,32 @@
 
     .btn-hero-search {
       padding: 14px 28px;
-      border-radius: 12px;
+      border-radius: 16px;
       border: none;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      background: linear-gradient(135deg, var(--accent), #FF6B00);
       color: #fff;
-      font-family: 'Syne', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 15px;
       font-weight: 700;
       cursor: pointer;
       transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
-      box-shadow: 0 4px 18px rgba(79, 142, 255, 0.35);
+      box-shadow: 0 4px 18px rgba(255, 140, 0, 0.4);
       white-space: nowrap;
-      letter-spacing: 0.3px;
+      letter-spacing: 0.2px;
       flex-shrink: 0;
     }
 
     .btn-hero-search:hover {
       opacity: 0.9;
       transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(255, 140, 0, 0.5);
     }
 
     .btn-hero-search:active {
       transform: translateY(0);
     }
 
+    /* Trust strip */
     .trust-strip {
       display: flex;
       align-items: center;
@@ -426,6 +459,7 @@
       gap: 8px;
       font-size: 13px;
       color: var(--muted);
+      font-weight: 500;
     }
 
     .trust-icon {
@@ -438,6 +472,9 @@
       background: var(--border);
     }
 
+    /* ═══════════════════════════════════════
+       STATS BAR
+    ═══════════════════════════════════════ */
     .stats-bar {
       position: relative;
       z-index: 1;
@@ -454,25 +491,31 @@
       background: var(--surface);
       padding: 36px 20px;
       text-align: center;
+      transition: background 0.2s;
+    }
+
+    .stat-cell:hover {
+      background: #FFFAF5;
     }
 
     .stat-val {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 36px;
       font-weight: 800;
       margin-bottom: 6px;
-      background: linear-gradient(135deg, #fff 60%, rgba(255, 255, 255, 0.5));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: var(--accent);
+      letter-spacing: -1px;
     }
 
     .stat-label {
       font-size: 13px;
       color: var(--muted);
+      font-weight: 500;
     }
 
-
+    /* ═══════════════════════════════════════
+       SECTIONS
+    ═══════════════════════════════════════ */
     .section {
       position: relative;
       z-index: 1;
@@ -489,15 +532,20 @@
       text-transform: uppercase;
       color: var(--accent);
       margin-bottom: 14px;
+      background: rgba(255, 140, 0, 0.08);
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 140, 0, 0.15);
     }
 
     .section-title {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: clamp(28px, 4vw, 42px);
       font-weight: 800;
       line-height: 1.1;
-      letter-spacing: -0.5px;
+      letter-spacing: -1px;
       margin-bottom: 16px;
+      color: var(--text);
     }
 
     .section-sub {
@@ -508,6 +556,9 @@
       margin-bottom: 60px;
     }
 
+    /* ═══════════════════════════════════════
+       STEPS GRID — Bento style
+    ═══════════════════════════════════════ */
     .steps-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -516,17 +567,19 @@
 
     .step-card {
       background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 20px;
+      border: 1.5px solid var(--border);
+      border-radius: 24px;
       padding: 32px 28px;
       position: relative;
       overflow: hidden;
-      transition: transform 0.25s, border-color 0.25s;
+      transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+      box-shadow: var(--card-shadow);
     }
 
     .step-card:hover {
       transform: translateY(-5px);
-      border-color: rgba(79, 142, 255, 0.3);
+      border-color: rgba(255, 140, 0, 0.3);
+      box-shadow: var(--card-shadow-hover);
     }
 
     .step-card::before {
@@ -536,12 +589,12 @@
       bottom: -30px;
       width: 150px;
       height: 150px;
-      background: radial-gradient(circle, rgba(79, 142, 255, 0.1), transparent 70%);
+      background: radial-gradient(circle, rgba(255, 140, 0, 0.07), transparent 70%);
       border-radius: 50%;
     }
 
     .step-num {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 11px;
       font-weight: 700;
       letter-spacing: 1.5px;
@@ -553,20 +606,22 @@
     .step-icon {
       width: 52px;
       height: 52px;
-      background: rgba(79, 142, 255, 0.1);
+      background: linear-gradient(135deg, rgba(255, 140, 0, 0.10), rgba(255, 140, 0, 0.05));
       border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 24px;
       margin-bottom: 20px;
+      border: 1px solid rgba(255, 140, 0, 0.12);
     }
 
     .step-title {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 18px;
       font-weight: 700;
       margin-bottom: 10px;
+      color: var(--text);
     }
 
     .step-desc {
@@ -575,6 +630,9 @@
       line-height: 1.7;
     }
 
+    /* ═══════════════════════════════════════
+       FEATURES GRID — Bento cards with soft shadows
+    ═══════════════════════════════════════ */
     .features-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -583,32 +641,34 @@
 
     .feature-card {
       background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 20px;
+      border: 1.5px solid var(--border);
+      border-radius: 24px;
       padding: 32px;
       display: flex;
       align-items: flex-start;
       gap: 20px;
-      transition: transform 0.2s, border-color 0.2s;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
       position: relative;
       overflow: hidden;
+      box-shadow: var(--card-shadow);
     }
 
     .feature-card:hover {
       transform: translateY(-3px);
-      border-color: rgba(79, 142, 255, 0.25);
+      border-color: rgba(255, 140, 0, 0.25);
+      box-shadow: var(--card-shadow-hover);
     }
 
     .feature-card.accent-green:hover {
-      border-color: rgba(34, 211, 160, 0.3);
+      border-color: rgba(46, 204, 113, 0.3);
     }
 
     .feature-card.accent-purple:hover {
-      border-color: rgba(124, 58, 237, 0.3);
+      border-color: rgba(255, 140, 0, 0.3);
     }
 
     .feature-card.accent-yellow:hover {
-      border-color: rgba(245, 158, 11, 0.25);
+      border-color: rgba(46, 204, 113, 0.25);
     }
 
     .feature-icon-wrap {
@@ -623,26 +683,31 @@
     }
 
     .bg-blue {
-      background: rgba(79, 142, 255, 0.12);
+      background: rgba(255, 140, 0, 0.10);
+      border: 1px solid rgba(255, 140, 0, 0.12);
     }
 
     .bg-green {
-      background: rgba(34, 211, 160, 0.12);
+      background: rgba(46, 204, 113, 0.10);
+      border: 1px solid rgba(46, 204, 113, 0.15);
     }
 
     .bg-purple {
-      background: rgba(124, 58, 237, 0.12);
+      background: rgba(255, 140, 0, 0.10);
+      border: 1px solid rgba(255, 140, 0, 0.12);
     }
 
     .bg-yellow {
-      background: rgba(245, 158, 11, 0.12);
+      background: rgba(46, 204, 113, 0.10);
+      border: 1px solid rgba(46, 204, 113, 0.12);
     }
 
     .feature-content h3 {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 16px;
       font-weight: 700;
       margin-bottom: 8px;
+      color: var(--text);
     }
 
     .feature-content p {
@@ -651,23 +716,27 @@
       line-height: 1.7;
     }
 
+    /* ═══════════════════════════════════════
+       CTA BANNER
+    ═══════════════════════════════════════ */
     .cta-banner {
       position: relative;
       z-index: 1;
       margin: 0 60px 100px;
-      background: var(--surface);
-      border: 1px solid var(--border);
+      background: linear-gradient(135deg, #FFF8EF 0%, #FFFEF5 50%, #F0FDF8 100%);
+      border: 1.5px solid rgba(255, 140, 0, 0.15);
       border-radius: 24px;
       padding: 60px;
       text-align: center;
       overflow: hidden;
+      box-shadow: 0 4px 24px rgba(255, 140, 0, 0.08), 0 1px 4px rgba(0,0,0,0.04);
     }
 
     .cta-banner::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(79, 142, 255, 0.07), rgba(124, 58, 237, 0.06), transparent);
+      background: linear-gradient(135deg, rgba(255, 140, 0, 0.04), rgba(46, 204, 113, 0.03), transparent);
       pointer-events: none;
     }
 
@@ -682,25 +751,26 @@
     }
 
     .cta-blob-l {
-      background: rgba(79, 142, 255, 0.15);
+      background: rgba(255, 140, 0, 0.15);
       left: -100px;
       top: -100px;
     }
 
     .cta-blob-r {
-      background: rgba(124, 58, 237, 0.12);
+      background: rgba(46, 204, 113, 0.12);
       right: -100px;
       bottom: -100px;
     }
 
     .cta-banner h2 {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: clamp(28px, 4vw, 44px);
       font-weight: 800;
-      letter-spacing: -0.5px;
+      letter-spacing: -1px;
       margin-bottom: 14px;
       position: relative;
       z-index: 1;
+      color: var(--text);
     }
 
     .cta-banner p {
@@ -724,15 +794,15 @@
       padding: 15px 36px;
       border-radius: 12px;
       border: none;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      background: linear-gradient(135deg, var(--accent), #FF6B00);
       color: #fff;
-      font-family: 'Syne', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 15px;
       font-weight: 700;
       cursor: pointer;
       transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
-      box-shadow: 0 6px 24px rgba(79, 142, 255, 0.35);
-      letter-spacing: 0.3px;
+      box-shadow: 0 6px 24px rgba(255, 140, 0, 0.35);
+      letter-spacing: 0.2px;
     }
 
     .btn-cta-primary:hover {
@@ -743,12 +813,12 @@
     .btn-cta-ghost {
       padding: 15px 36px;
       border-radius: 12px;
-      border: 1px solid var(--border);
+      border: 1.5px solid var(--border);
       background: transparent;
       color: var(--text);
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 15px;
-      font-weight: 500;
+      font-weight: 600;
       cursor: pointer;
       transition: all 0.2s;
     }
@@ -756,9 +826,12 @@
     .btn-cta-ghost:hover {
       border-color: var(--accent);
       color: var(--accent);
-      background: rgba(79, 142, 255, 0.05);
+      background: rgba(255, 140, 0, 0.05);
     }
 
+    /* ═══════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════ */
     .footer {
       position: relative;
       z-index: 1;
@@ -767,6 +840,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      background: var(--surface);
     }
 
     .footer-logo {
@@ -778,7 +852,7 @@
     .footer-logo-icon {
       width: 32px;
       height: 32px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      background: linear-gradient(135deg, var(--accent), #FF6B00);
       border-radius: 9px;
       display: flex;
       align-items: center;
@@ -787,10 +861,16 @@
     }
 
     .footer-logo-name {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 16px;
       font-weight: 800;
-      color: #fff;
+      color: var(--text);
+    }
+
+    .footer-logo-name .hindi {
+      font-family: 'Rozha One', 'Noto Sans Devanagari', serif;
+      font-weight: 900;
+      color: var(--accent);
     }
 
     .footer-copy {
@@ -808,6 +888,7 @@
       color: var(--muted);
       text-decoration: none;
       transition: color 0.2s;
+      font-weight: 500;
     }
 
     .footer-links a:hover {
@@ -815,22 +896,18 @@
     }
 
     @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(24px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
+    /* ═══════════════════════════════════════
+       MODAL
+    ═══════════════════════════════════════ */
     .modal-overlay {
       position: fixed;
       inset: 0;
       z-index: 200;
-      background: rgba(7, 9, 18, 0.72);
+      background: rgba(20, 15, 5, 0.45);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       display: flex;
@@ -851,14 +928,14 @@
       width: 100%;
       max-width: 460px;
       background: var(--surface);
-      border: 1px solid var(--border);
+      border: 1.5px solid var(--border);
       border-radius: 24px;
       padding: 36px;
       position: relative;
       box-shadow:
-        0 0 0 1px rgba(79, 142, 255, 0.07),
-        0 30px 80px rgba(0, 0, 0, 0.6),
-        0 0 60px rgba(79, 142, 255, 0.08);
+        0 0 0 1px rgba(255, 140, 0, 0.06),
+        0 30px 80px rgba(0, 0, 0, 0.18),
+        0 8px 24px rgba(0, 0, 0, 0.08);
       transform: translateY(20px) scale(0.97);
       transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
       opacity: 0;
@@ -877,14 +954,14 @@
       left: 10%;
       right: 10%;
       height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(79, 142, 255, 0.5), rgba(124, 58, 237, 0.4), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255, 140, 0, 0.5), rgba(46, 204, 113, 0.4), transparent);
     }
 
     .modal-card::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(79, 142, 255, 0.04) 0%, rgba(124, 58, 237, 0.03) 50%, transparent 80%);
+      background: linear-gradient(135deg, rgba(255, 140, 0, 0.025) 0%, rgba(46, 204, 113, 0.015) 50%, transparent 80%);
       pointer-events: none;
     }
 
@@ -895,7 +972,7 @@
       width: 32px;
       height: 32px;
       background: var(--surface2);
-      border: 1px solid var(--border);
+      border: 1.5px solid var(--border);
       border-radius: 8px;
       display: flex;
       align-items: center;
@@ -910,8 +987,8 @@
 
     .modal-close:hover {
       color: var(--text);
-      border-color: rgba(79, 142, 255, 0.3);
-      background: rgba(79, 142, 255, 0.08);
+      border-color: rgba(255, 140, 0, 0.3);
+      background: rgba(255, 140, 0, 0.06);
     }
 
     .modal-brand {
@@ -926,26 +1003,32 @@
     .modal-brand-icon {
       width: 38px;
       height: 38px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      background: linear-gradient(135deg, var(--accent), #FF6B00);
       border-radius: 11px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 18px;
-      box-shadow: 0 0 16px rgba(79, 142, 255, 0.3);
+      box-shadow: 0 4px 14px rgba(255, 140, 0, 0.3);
     }
 
     .modal-brand-name {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       font-weight: 800;
       font-size: 18px;
-      color: #fff;
+      color: var(--text);
+    }
+
+    .modal-brand-name .hindi {
+      font-family: 'Rozha One', 'Noto Sans Devanagari', serif;
+      font-weight: 900;
+      color: var(--accent);
     }
 
     .modal-tabs {
       display: flex;
       background: var(--surface2);
-      border: 1px solid var(--border);
+      border: 1.5px solid var(--border);
       border-radius: 12px;
       padding: 4px;
       margin-bottom: 26px;
@@ -960,7 +1043,7 @@
       border-radius: 9px;
       background: transparent;
       color: var(--muted);
-      font-family: 'Syne', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 13px;
       font-weight: 700;
       cursor: pointer;
@@ -969,9 +1052,9 @@
     }
 
     .modal-tab.active {
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      background: linear-gradient(135deg, var(--accent), #FF6B00);
       color: #fff;
-      box-shadow: 0 4px 14px rgba(79, 142, 255, 0.3);
+      box-shadow: 0 4px 14px rgba(255, 140, 0, 0.3);
     }
 
     .modal-panel {
@@ -986,22 +1069,16 @@
     }
 
     @keyframes panelIn {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .modal-heading {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 20px;
       font-weight: 800;
       margin-bottom: 6px;
+      color: var(--text);
     }
 
     .modal-sub {
@@ -1019,10 +1096,10 @@
       gap: 10px;
       padding: 12px 16px;
       border-radius: 12px;
-      border: 1px solid var(--border);
+      border: 1.5px solid var(--border);
       background: var(--surface2);
       color: var(--text);
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 14px;
       font-weight: 500;
       cursor: pointer;
@@ -1031,8 +1108,8 @@
     }
 
     .btn-google:hover {
-      border-color: rgba(79, 142, 255, 0.35);
-      background: rgba(79, 142, 255, 0.06);
+      border-color: rgba(255, 140, 0, 0.35);
+      background: rgba(255, 140, 0, 0.04);
       color: var(--accent);
     }
 
@@ -1070,7 +1147,7 @@
     .form-label {
       display: block;
       font-size: 11px;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--muted);
       text-transform: uppercase;
       letter-spacing: 0.7px;
@@ -1096,11 +1173,11 @@
     .form-select {
       width: 100%;
       background: var(--surface2);
-      border: 1px solid var(--border);
+      border: 1.5px solid var(--border);
       border-radius: 11px;
       padding: 12px 14px 12px 40px;
       color: var(--text);
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 14px;
       outline: none;
       transition: border-color 0.2s, box-shadow 0.2s;
@@ -1109,7 +1186,7 @@
 
     .form-select {
       cursor: pointer;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2364748b' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237A7567' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
       background-position: right 14px center;
       padding-right: 36px;
@@ -1117,6 +1194,7 @@
 
     .form-select option {
       background: var(--surface2);
+      color: var(--text);
     }
 
     .form-input::placeholder {
@@ -1126,7 +1204,8 @@
     .form-input:focus,
     .form-select:focus {
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(79, 142, 255, 0.12);
+      box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.10);
+      background: #fff;
     }
 
     .form-row {
@@ -1207,6 +1286,7 @@
       color: var(--accent);
       text-decoration: none;
       transition: opacity 0.2s;
+      font-weight: 600;
     }
 
     .forgot-link:hover {
@@ -1218,14 +1298,14 @@
       padding: 14px;
       border-radius: 12px;
       border: none;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      background: linear-gradient(135deg, var(--accent), #FF6B00);
       color: #fff;
-      font-family: 'Syne', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 15px;
       font-weight: 800;
       cursor: pointer;
       transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
-      box-shadow: 0 6px 22px rgba(79, 142, 255, 0.35);
+      box-shadow: 0 6px 22px rgba(255, 140, 0, 0.35);
       letter-spacing: 0.4px;
       margin-bottom: 18px;
       position: relative;
@@ -1236,13 +1316,13 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent 60%);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), transparent 60%);
     }
 
     .btn-submit:hover {
       opacity: 0.92;
       transform: translateY(-1px);
-      box-shadow: 0 10px 28px rgba(79, 142, 255, 0.42);
+      box-shadow: 0 10px 28px rgba(255, 140, 0, 0.42);
     }
 
     .btn-submit:active {
@@ -1257,7 +1337,7 @@
 
     .switch-row a {
       color: var(--accent);
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
       text-decoration: none;
       transition: opacity 0.2s;
@@ -1284,13 +1364,13 @@
     }
 
     .type-card:hover {
-      border-color: rgba(79, 142, 255, 0.35);
+      border-color: rgba(255, 140, 0, 0.35);
     }
 
     .type-card.selected {
       border-color: var(--accent);
-      background: rgba(79, 142, 255, 0.08);
-      box-shadow: 0 0 0 1px rgba(79, 142, 255, 0.2);
+      background: rgba(255, 140, 0, 0.06);
+      box-shadow: 0 0 0 1px rgba(255, 140, 0, 0.2);
     }
 
     .type-card input[type="radio"] {
@@ -1303,9 +1383,10 @@
     }
 
     .type-label {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 13px;
       font-weight: 700;
+      color: var(--text);
     }
 
     .type-desc {
@@ -1351,6 +1432,7 @@
     .terms-text a {
       color: var(--accent);
       text-decoration: none;
+      font-weight: 600;
     }
   </style>
 </head>
@@ -1364,7 +1446,7 @@
 
       <div class="modal-brand">
         <div class="modal-brand-icon">🚗</div>
-        <span class="modal-brand-name">Mitra Ride</span>
+        <span class="modal-brand-name">Ride <span class="hindi">मित्र</span></span>
       </div>
 
       <div class="modal-tabs">
@@ -1374,8 +1456,8 @@
 
       <!-- ── SIGN IN ── -->
       <div class="modal-panel active" id="mpanel-signin">
-        <div class="modal-heading">Welcome back 👋</div>
-        <div class="modal-sub">Sign in to manage your rides and track your journey.</div>
+        <div class="modal-heading">Welcome back! 👋</div>
+        <div class="modal-sub">Sign in to manage your rides and connect with travelers on your route.</div>
 
         <button type="button" class="btn-google" id="custom-google-btn">
           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -1529,7 +1611,7 @@
     <nav class="navbar" id="navbar">
       <a class="nav-logo" href="#">
         <div class="nav-logo-icon">🚗</div>
-        <span class="nav-logo-name">Mitra Ride</span>
+        <span class="nav-logo-name">Ride <span class="hindi">मित्र</span></span>
       </a>
 
       <ul class="nav-links">
@@ -1546,18 +1628,12 @@
 
     <!-- ── HERO ── -->
     <section class="hero">
-      <!-- <div class="hero-badge">
-        <span class="badge-dot"></span>
-        Now available in 50+ cities across India
-      </div> -->
-
       <h1 class="hero-heading">
-        Your Daily Commute,<br><span class="gradient-word">Reimagined.</span>
+        Har Safar Ke Liye,<br><span class="gradient-word">Sahi <span class="mitra-word">मित्र</span> Dhundo.</span>
       </h1>
 
       <p class="hero-sub">
-        Share rides with verified commuters on your route. Split costs, reduce traffic, and make your journey more
-        enjoyable — every single day.
+        Share rides with verified people going your way — college, work, market, or anywhere across the city. Split costs, skip the traffic, and travel smarter every single day.
       </p>
 
       <div class="hero-search">
@@ -1622,7 +1698,7 @@
       </div>
       <div class="stat-cell">
         <div class="stat-val">180K+</div>
-        <div class="stat-label">Active Commuters</div>
+        <div class="stat-label">Active Travelers</div>
       </div>
       <div class="stat-cell">
         <div class="stat-val">50+</div>
@@ -1636,70 +1712,63 @@
 
     <div class="section">
       <div class="section-tag">How It Works</div>
-      <h2 class="section-title">Three steps to your<br>perfect commute.</h2>
-      <p class="section-sub">Getting started with Mitra Ride is effortless. Be on your way in minutes.</p>
+      <h2 class="section-title">Three Easy Steps ,<br> and start your JOURNEY</h2>
+      <p class="section-sub">Getting started with Ride मित्र takes less than two minutes — whether you're a student, a daily traveler, or going on a weekend trip.</p>
 
       <div class="steps-grid">
         <div class="step-card">
           <div class="step-num">Step 01</div>
           <div class="step-icon">🔍</div>
           <div class="step-title">Search Your Route</div>
-          <p class="step-desc">Enter your pickup and drop-off location. We'll instantly show you available rides
-            matching your route and schedule.</p>
+          <p class="step-desc">Enter your pickup and drop-off location. We instantly show you available rides that match your route — for daily commutes, college runs, or one-off trips.</p>
         </div>
         <div class="step-card">
           <div class="step-num">Step 02</div>
           <div class="step-icon">🤝</div>
-          <div class="step-title">Match & Connect</div>
-          <p class="step-desc">Browse verified driver profiles, check ratings and reviews, then book your seat in just
-            two taps.</p>
+          <div class="step-title">Pick Your मित्र</div>
+          <p class="step-desc">Browse verified traveler profiles, check ratings and past reviews, then book your seat in just two taps. No calls, no hassle.</p>
         </div>
         <div class="step-card">
           <div class="step-num">Step 03</div>
           <div class="step-icon">🚀</div>
-          <div class="step-title">Ride & Save</div>
-          <p class="step-desc">Meet your carpool partner, enjoy the journey, and pay automatically. It's that simple —
-            every day.</p>
+          <div class="step-title">Ride, Save, Repeat</div>
+          <p class="step-desc">Meet your travel partner, enjoy the journey, and pay automatically. Safe, affordable, and reliable — every single trip.</p>
         </div>
       </div>
     </div>
 
     <div class="section" style="padding-top: 0;">
       <div class="section-tag">Features</div>
-      <h2 class="section-title">Everything you need<br>in one place.</h2>
-      <p class="section-sub">Mitra Ride is built around your safety, savings, and comfort.</p>
+      <h2 class="section-title">Everything built for<br>every kind of traveler.</h2>
+      <p class="section-sub">Ride मित्र is designed around your safety, savings, and the freedom to go wherever you need.</p>
 
       <div class="features-grid">
         <div class="feature-card">
           <div class="feature-icon-wrap bg-blue">🛡️</div>
           <div class="feature-content">
             <h3>Verified Profiles</h3>
-            <p>Every driver and passenger is identity-verified with Aadhaar or PAN. You always know exactly who you're
-              riding with.</p>
+            <p>Every driver and passenger is identity-verified with Aadhaar or PAN. Safety and trust for every traveler, on every trip.</p>
           </div>
         </div>
         <div class="feature-card accent-green">
           <div class="feature-icon-wrap bg-green">💸</div>
           <div class="feature-content">
             <h3>Smart Cost Splitting</h3>
-            <p>Our algorithm automatically calculates the fairest fare split based on distance, fuel prices, and your
-              route overlap.</p>
+            <p>Our algorithm calculates the fairest fare split based on distance, fuel prices, and route overlap. The right price, every time.</p>
           </div>
         </div>
         <div class="feature-card accent-purple">
           <div class="feature-icon-wrap bg-purple">📍</div>
           <div class="feature-content">
             <h3>Live Ride Tracking</h3>
-            <p>Share your live location with family. Real-time GPS tracking and SOS button ensures you're always safe on
-              the road.</p>
+            <p>Share your live location with family or friends. Real-time GPS tracking and a one-tap SOS button keep you safe on every journey.</p>
           </div>
         </div>
         <div class="feature-card accent-yellow">
           <div class="feature-icon-wrap bg-yellow">🔔</div>
           <div class="feature-content">
             <h3>Smart Notifications</h3>
-            <p>Get notified when your regular ride partner is available. Never miss a carpool opportunity on your daily
-              commute again.</p>
+            <p>Get notified the moment a ride on your route becomes available. Never miss a match — whether it's your daily run or a one-time trip.</p>
           </div>
         </div>
       </div>
@@ -1708,10 +1777,10 @@
     <div class="cta-banner">
       <div class="cta-blob-l"></div>
       <div class="cta-blob-r"></div>
-      <h2>Ready to reimagine<br>your commute?</h2>
-      <!-- <p>Join 180,000+ commuters already saving time and money with Mitra Ride.</p> -->
+      <h2>Har Safar Ke Liye,<br>ek Sahi मित्र।</h2>
+      <p>Join 1,80,000+ travelers already saving time and money with Ride मित्र.</p>
       <div class="cta-btns">
-        <button class="btn-cta-primary" onclick="openModal('signup')">Get Started Free →</button>
+        <button class="btn-cta-primary" onclick="openModal('signup')">Start for Free →</button>
         <button class="btn-cta-ghost" onclick="openModal('signin')">Sign In</button>
       </div>
     </div>
@@ -1720,9 +1789,9 @@
     <footer class="footer">
       <div class="footer-logo">
         <div class="footer-logo-icon">🚗</div>
-        <span class="footer-logo-name">Mitra Ride</span>
+        <span class="footer-logo-name">Ride <span class="hindi">मित्र</span></span>
       </div>
-      <div class="footer-copy">© 2026 Mitra Ride. All rights reserved.</div>
+      <div class="footer-copy">© 2026 Ride मित्र. All rights reserved.</div>
       <div class="footer-links">
         <a href="#">Privacy</a>
         <a href="#">Terms</a>

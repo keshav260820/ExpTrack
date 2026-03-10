@@ -3,28 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mitra Ride — My Dashboard</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<title>Ride मित्र — My Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Rozha+One&family=Noto+Sans+Devanagari:wght@700;900&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg: #0c0f1a;
-    --surface: #131729;
-    --surface2: #1a2038;
-    --border: #232b44;
-    --accent: #4f8eff;
-    --accent2: #7c3aed;
-    --green: #22d3a0;
-    --red: #ff5e7a;
-    --yellow: #f59e0b;
-    --text: #e2e8f0;
-    --muted: #64748b;
-    --card-glow: 0 0 30px rgba(79,142,255,0.06);
+    --bg: #FAFAF8;
+    --surface: #FFFFFF;
+    --surface2: #F5F3EE;
+    --border: #E8E5DF;
+    --accent: #FF8C00;
+    --accent2: #E07000;
+    --green: #2ECC71;
+    --red: #E74C3C;
+    --yellow: #F39C12;
+    --text: #1A1A2E;
+    --muted: #8A8A9A;
+    --card-shadow: 0 2px 16px rgba(0,0,0,0.07);
+    --card-shadow-hover: 0 8px 32px rgba(0,0,0,0.11);
   }
 
   body {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     background: var(--bg);
     color: var(--text);
     display: flex;
@@ -36,7 +37,9 @@
   .sidebar {
     width: 240px;
     min-height: 100vh;
-    background: var(--surface);
+    background: rgba(255,255,255,0.82);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
     border-right: 1px solid var(--border);
     display: flex;
     flex-direction: column;
@@ -44,25 +47,35 @@
     position: fixed;
     top: 0; left: 0; bottom: 0;
     z-index: 100;
+    box-shadow: 2px 0 24px rgba(0,0,0,0.04);
   }
 
+  /* UPDATED LOGO STYLE */
   .logo {
     display: flex;
     align-items: center;
     gap: 10px;
     padding: 0 24px 32px;
-    font-family: 'Syne', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-weight: 800;
     font-size: 20px;
-    color: #fff;
+    color: var(--text);
+    letter-spacing: -0.3px;
+  }
+
+  .logo .hindi {
+    font-family: 'Rozha One', 'Noto Sans Devanagari', serif;
+    font-weight: 900;
+    color: var(--accent);
   }
 
   .logo-icon {
     width: 36px; height: 36px;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    background: linear-gradient(135deg, var(--accent), #FF6B00);
     border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
     font-size: 18px;
+    box-shadow: 0 4px 12px rgba(255,140,0,0.3);
   }
 
   .nav-section {
@@ -72,7 +85,7 @@
 
   .nav-label {
     font-size: 10px;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 1.5px;
     color: var(--muted);
     text-transform: uppercase;
@@ -84,21 +97,23 @@
     align-items: center;
     gap: 12px;
     padding: 10px 14px;
-    border-radius: 10px;
+    border-radius: 12px;
     cursor: pointer;
     transition: all 0.2s;
     font-size: 14px;
     color: var(--muted);
     font-weight: 500;
     margin-bottom: 2px;
+    text-decoration: none;
   }
 
   .nav-item:hover { background: var(--surface2); color: var(--text); }
 
   .nav-item.active {
-    background: linear-gradient(90deg, rgba(79,142,255,0.15), rgba(124,58,237,0.1));
+    background: linear-gradient(90deg, rgba(255,140,0,0.12), rgba(255,140,0,0.05));
     color: var(--accent);
-    border: 1px solid rgba(79,142,255,0.2);
+    border: 1px solid rgba(255,140,0,0.2);
+    font-weight: 600;
   }
 
   .nav-item .icon { font-size: 16px; width: 20px; text-align: center; }
@@ -113,7 +128,6 @@
     border-radius: 20px;
   }
 
-  /* Post a Ride CTA in sidebar */
   .sidebar-cta {
     margin: 0 12px 24px;
   }
@@ -125,16 +139,16 @@
     gap: 8px;
     width: 100%;
     padding: 12px 16px;
-    border-radius: 12px;
+    border-radius: 14px;
     border: none;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    background: linear-gradient(135deg, var(--accent), #FF6B00);
     color: #fff;
-    font-family: 'Syne', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 14px;
     font-weight: 700;
     cursor: pointer;
     transition: opacity 0.2s, transform 0.15s;
-    box-shadow: 0 4px 20px rgba(79,142,255,0.3);
+    box-shadow: 0 4px 20px rgba(255,140,0,0.35);
     letter-spacing: 0.3px;
   }
 
@@ -152,20 +166,22 @@
     gap: 10px;
     padding: 12px 14px;
     background: var(--surface2);
-    border-radius: 12px;
+    border-radius: 14px;
     border: 1px solid var(--border);
+    box-shadow: var(--card-shadow);
   }
 
   .avatar {
     width: 36px; height: 36px;
-    background: linear-gradient(135deg, #4f8eff, #7c3aed);
+    background: linear-gradient(135deg, var(--accent), #FF6B00);
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     font-weight: 700; font-size: 13px;
+    color: #fff;
   }
 
   .user-info { flex: 1; }
-  .user-name { font-size: 13px; font-weight: 600; }
+  .user-name { font-size: 13px; font-weight: 600; color: var(--text); }
   .user-role { font-size: 11px; color: var(--muted); }
 
   /* ── Main ── */
@@ -184,18 +200,21 @@
   }
 
   .page-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 26px;
-    font-weight: 800;
+    font-family: 'Rozha One', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--text);
+    letter-spacing: 0.3px;
   }
 
   .breadcrumb {
     font-size: 12px;
     color: var(--muted);
     margin-top: 2px;
+    font-weight: 500;
   }
 
-  .breadcrumb span { color: var(--accent); }
+  .breadcrumb span { color: var(--accent); font-weight: 600; }
 
   .topbar-right {
     display: flex;
@@ -207,24 +226,28 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    background: var(--surface);
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(10px);
     border: 1px solid var(--border);
-    border-radius: 10px;
+    border-radius: 12px;
     padding: 9px 14px;
     font-size: 13px;
     color: var(--muted);
     width: 220px;
+    box-shadow: var(--card-shadow);
   }
 
   .notif-btn {
     width: 40px; height: 40px;
-    background: var(--surface);
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(10px);
     border: 1px solid var(--border);
-    border-radius: 10px;
+    border-radius: 12px;
     display: flex; align-items: center; justify-content: center;
     cursor: pointer;
     position: relative;
     font-size: 16px;
+    box-shadow: var(--card-shadow);
   }
 
   .notif-dot {
@@ -239,7 +262,7 @@
   .greeting-banner {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 20px;
+    border-radius: 24px;
     padding: 28px 32px;
     margin-bottom: 24px;
     display: flex;
@@ -248,13 +271,14 @@
     position: relative;
     overflow: hidden;
     animation: fadeUp 0.5s ease both;
+    box-shadow: var(--card-shadow);
   }
 
   .greeting-banner::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(120deg, rgba(79,142,255,0.07) 0%, rgba(124,58,237,0.05) 50%, transparent 80%);
+    background: linear-gradient(120deg, rgba(255,140,0,0.06) 0%, rgba(255,107,0,0.03) 50%, transparent 80%);
     pointer-events: none;
   }
 
@@ -262,7 +286,7 @@
     position: absolute;
     right: -60px; top: -60px;
     width: 260px; height: 260px;
-    background: radial-gradient(circle, rgba(79,142,255,0.12), transparent 70%);
+    background: radial-gradient(circle, rgba(255,140,0,0.1), transparent 70%);
     border-radius: 50%;
     pointer-events: none;
   }
@@ -271,19 +295,23 @@
     font-size: 13px;
     color: var(--muted);
     margin-bottom: 4px;
+    font-weight: 500;
   }
 
   .greeting-text h2 {
-    font-family: 'Syne', sans-serif;
-    font-size: 22px;
-    font-weight: 800;
+    font-family: 'Rozha One', serif;
+    font-size: 24px;
+    font-weight: 400;
     margin-bottom: 6px;
+    color: var(--text);
+    letter-spacing: 0.3px;
   }
 
   .greeting-text p {
     font-size: 13px;
     color: var(--muted);
     line-height: 1.6;
+    font-weight: 400;
   }
 
   .greeting-stats {
@@ -293,14 +321,12 @@
     z-index: 1;
   }
 
-  .greet-stat {
-    text-align: center;
-  }
+  .greet-stat { text-align: center; }
 
   .greet-stat-val {
-    font-family: 'Syne', sans-serif;
-    font-size: 22px;
-    font-weight: 800;
+    font-family: 'Rozha One', serif;
+    font-size: 24px;
+    font-weight: 400;
     margin-bottom: 2px;
   }
 
@@ -309,6 +335,7 @@
     color: var(--muted);
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    font-weight: 600;
   }
 
   .greet-divider {
@@ -329,30 +356,27 @@
   .action-card {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 20px;
+    border-radius: 24px;
     padding: 32px;
     position: relative;
     overflow: hidden;
-    transition: transform 0.2s, border-color 0.2s;
+    transition: transform 0.22s, box-shadow 0.22s, border-color 0.2s;
     animation: fadeUp 0.5s ease both;
-    box-shadow: var(--card-glow);
+    box-shadow: var(--card-shadow);
   }
 
-  .action-card:hover { transform: translateY(-3px); }
-
+  .action-card:hover { transform: translateY(-4px); box-shadow: var(--card-shadow-hover); }
   .action-card.search-card { animation-delay: 0.1s; }
   .action-card.sell-card  { animation-delay: 0.18s; }
+  .action-card.search-card:hover { border-color: rgba(255,140,0,0.35); }
+  .action-card.sell-card:hover   { border-color: rgba(46,204,113,0.35); }
 
-  .action-card.search-card:hover { border-color: rgba(79,142,255,0.35); }
-  .action-card.sell-card:hover   { border-color: rgba(34,211,160,0.35); }
-
-  /* decorative background gradients per card */
   .action-card.search-card::before {
     content: '';
     position: absolute;
     right: -40px; bottom: -40px;
     width: 200px; height: 200px;
-    background: radial-gradient(circle, rgba(79,142,255,0.12), transparent 70%);
+    background: radial-gradient(circle, rgba(255,140,0,0.08), transparent 70%);
     border-radius: 50%;
     pointer-events: none;
   }
@@ -362,37 +386,40 @@
     position: absolute;
     right: -40px; bottom: -40px;
     width: 200px; height: 200px;
-    background: radial-gradient(circle, rgba(34,211,160,0.12), transparent 70%);
+    background: radial-gradient(circle, rgba(46,204,113,0.08), transparent 70%);
     border-radius: 50%;
     pointer-events: none;
   }
 
   .action-card-icon {
     width: 52px; height: 52px;
-    border-radius: 14px;
+    border-radius: 16px;
     display: flex; align-items: center; justify-content: center;
     font-size: 24px;
     margin-bottom: 20px;
   }
 
-  .search-card .action-card-icon { background: rgba(79,142,255,0.12); }
-  .sell-card   .action-card-icon { background: rgba(34,211,160,0.12); }
+  .search-card .action-card-icon { background: rgba(255,140,0,0.1); }
+  .sell-card   .action-card-icon { background: rgba(46,204,113,0.1); }
 
   .action-card-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 20px;
-    font-weight: 800;
+    font-family: 'Rozha One', serif;
+    font-size: 22px;
+    font-weight: 400;
     margin-bottom: 6px;
+    color: var(--text);
+    letter-spacing: 0.3px;
+    line-height: 1.4;
   }
 
   .action-card-sub {
     font-size: 13px;
     color: var(--muted);
-    line-height: 1.6;
+    line-height: 1.7;
     margin-bottom: 24px;
+    font-weight: 400;
   }
 
-  /* Search input row */
   .search-row {
     display: flex;
     gap: 10px;
@@ -416,38 +443,37 @@
   .ride-input {
     width: 100%;
     background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
     padding: 12px 14px 12px 38px;
     color: var(--text);
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 14px;
     outline: none;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s;
   }
 
   .ride-input::placeholder { color: var(--muted); }
-  .ride-input:focus { border-color: var(--accent); }
+  .ride-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(255,140,0,0.12); }
 
   .btn-search {
     padding: 12px 22px;
-    border-radius: 10px;
+    border-radius: 12px;
     border: none;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    background: linear-gradient(135deg, var(--accent), #FF6B00);
     color: #fff;
-    font-family: 'Syne', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 14px;
     font-weight: 700;
     cursor: pointer;
     transition: opacity 0.2s, transform 0.15s;
     white-space: nowrap;
-    box-shadow: 0 4px 16px rgba(79,142,255,0.25);
+    box-shadow: 0 4px 16px rgba(255,140,0,0.3);
   }
 
   .btn-search:hover { opacity: 0.9; transform: translateY(-1px); }
   .btn-search:active { transform: translateY(0); }
 
-  /* Quick filter chips */
   .quick-chips {
     display: flex;
     gap: 8px;
@@ -459,16 +485,16 @@
     font-size: 12px;
     color: var(--muted);
     background: var(--surface2);
-    border: 1px solid var(--border);
+    border: 1.5px solid var(--border);
     padding: 5px 12px;
     border-radius: 20px;
     cursor: pointer;
     transition: all 0.2s;
+    font-weight: 500;
   }
 
-  .chip:hover { color: var(--accent); border-color: rgba(79,142,255,0.3); background: rgba(79,142,255,0.05); }
+  .chip:hover { color: var(--accent); border-color: rgba(255,140,0,0.4); background: rgba(255,140,0,0.05); }
 
-  /* Sell card */
   .feature-pills {
     display: flex;
     flex-direction: column;
@@ -482,6 +508,7 @@
     gap: 10px;
     font-size: 13px;
     color: var(--muted);
+    font-weight: 400;
   }
 
   .feature-pill-dot {
@@ -496,16 +523,16 @@
     align-items: center;
     gap: 8px;
     padding: 13px 28px;
-    border-radius: 12px;
+    border-radius: 14px;
     border: none;
-    background: linear-gradient(135deg, var(--green), #059669);
+    background: linear-gradient(135deg, var(--green), #27AE60);
     color: #fff;
-    font-family: 'Syne', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 14px;
     font-weight: 700;
     cursor: pointer;
     transition: opacity 0.2s, transform 0.15s;
-    box-shadow: 0 4px 20px rgba(34,211,160,0.25);
+    box-shadow: 0 4px 20px rgba(46,204,113,0.3);
     letter-spacing: 0.3px;
   }
 
@@ -516,9 +543,10 @@
   .table-card {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 16px;
+    border-radius: 20px;
     padding: 24px;
     animation: fadeUp 0.5s ease 0.3s both;
+    box-shadow: var(--card-shadow);
   }
 
   .card-header {
@@ -529,30 +557,32 @@
   }
 
   .card-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 15px;
+    font-family: 'Rozha One', serif;
+    font-weight: 400;
+    font-size: 17px;
+    color: var(--text);
+    letter-spacing: 0.2px;
   }
 
-  .card-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .card-sub { font-size: 11px; color: var(--muted); margin-top: 3px; font-weight: 500; }
 
   table { width: 100%; border-collapse: collapse; }
 
   th {
     font-size: 11px;
     color: var(--muted);
-    font-weight: 600;
+    font-weight: 700;
     text-align: left;
     padding: 0 0 12px;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    border-bottom: 1px solid var(--border);
+    letter-spacing: 0.6px;
+    border-bottom: 1.5px solid var(--border);
   }
 
   td {
     padding: 12px 0;
     font-size: 13px;
-    border-bottom: 1px solid rgba(35,43,68,0.5);
+    border-bottom: 1px solid rgba(232,229,223,0.7);
     vertical-align: middle;
   }
 
@@ -567,23 +597,25 @@
     font-size: 12px;
     font-weight: 700;
     flex-shrink: 0;
+    color: #fff;
   }
 
-  .rider-name { font-weight: 500; font-size: 13px; }
-  .rider-id   { font-size: 11px; color: var(--muted); }
+  .rider-name { font-weight: 600; font-size: 13px; color: var(--text); }
+  .rider-id   { font-size: 11px; color: var(--muted); font-weight: 500; }
 
   .status-badge {
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 700;
     padding: 3px 10px;
     border-radius: 20px;
     display: inline-block;
+    letter-spacing: 0.2px;
   }
 
-  .status-active    { background: rgba(34,211,160,0.1);  color: var(--green); }
-  .status-pending   { background: rgba(245,158,11,0.1);  color: var(--yellow); }
-  .status-completed { background: rgba(79,142,255,0.1);  color: var(--accent); }
-  .status-cancelled { background: rgba(255,94,122,0.1);  color: var(--red); }
+  .status-active    { background: rgba(46,204,113,0.1);  color: #27AE60; }
+  .status-pending   { background: rgba(243,156,18,0.12); color: #E67E22; }
+  .status-completed { background: rgba(255,140,0,0.1);   color: var(--accent); }
+  .status-cancelled { background: rgba(231,76,60,0.1);   color: var(--red); }
 
   .stars { color: var(--yellow); font-size: 11px; letter-spacing: 1px; }
 
@@ -591,77 +623,82 @@
   .profile-card {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 16px;
+    border-radius: 20px;
     padding: 28px;
     animation: fadeUp 0.5s ease 0.3s both;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
+    box-shadow: var(--card-shadow);
   }
 
   .profile-avatar-lg {
     width: 72px; height: 72px;
-    background: linear-gradient(135deg, #4f8eff, #7c3aed);
+    background: linear-gradient(135deg, var(--accent), #FF6B00);
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     font-weight: 800; font-size: 22px;
     margin-bottom: 14px;
-    box-shadow: 0 0 0 4px rgba(79,142,255,0.15);
+    box-shadow: 0 0 0 5px rgba(255,140,0,0.12), 0 4px 20px rgba(255,140,0,0.2);
+    color: #fff;
   }
 
   .profile-name {
-    font-family: 'Syne', sans-serif;
-    font-size: 18px;
-    font-weight: 800;
+    font-family: 'Rozha One', serif;
+    font-size: 20px;
+    font-weight: 400;
     margin-bottom: 3px;
+    color: var(--text);
+    letter-spacing: 0.3px;
   }
 
-  .profile-email { font-size: 12px; color: var(--muted); margin-bottom: 20px; }
+  .profile-email { font-size: 12px; color: var(--muted); margin-bottom: 20px; font-weight: 500; }
 
   .profile-stats {
     display: flex;
     gap: 0;
     width: 100%;
-    border: 1px solid var(--border);
-    border-radius: 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
     overflow: hidden;
     margin-bottom: 20px;
+    background: var(--surface2);
   }
 
   .p-stat {
     flex: 1;
     padding: 14px 10px;
     text-align: center;
-    border-right: 1px solid var(--border);
+    border-right: 1.5px solid var(--border);
   }
 
   .p-stat:last-child { border-right: none; }
 
   .p-stat-val {
-    font-family: 'Syne', sans-serif;
-    font-size: 18px;
-    font-weight: 800;
+    font-family: 'Rozha One', serif;
+    font-size: 20px;
+    font-weight: 400;
     margin-bottom: 3px;
   }
 
-  .p-stat-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+  .p-stat-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; }
 
   .btn-edit-profile {
     width: 100%;
     padding: 11px;
-    border-radius: 10px;
-    border: 1px solid var(--border);
+    border-radius: 12px;
+    border: 1.5px solid var(--border);
     background: var(--surface2);
     color: var(--text);
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
-    transition: border-color 0.2s, background 0.2s;
+    transition: border-color 0.2s, background 0.2s, color 0.2s;
   }
 
-  .btn-edit-profile:hover { border-color: var(--accent); background: rgba(79,142,255,0.05); color: var(--accent); }
+  .btn-edit-profile:hover { border-color: var(--accent); background: rgba(255,140,0,0.05); color: var(--accent); }
 
   /* ── Layout helpers ── */
   .bottom-row {
@@ -669,6 +706,8 @@
     grid-template-columns: 1.4fr 1fr;
     gap: 20px;
   }
+
+  a { text-decoration: none; color: inherit; }
 
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(18px); }
@@ -678,18 +717,14 @@
 </head>
 <body>
 
-<!-- ════════════════════ SIDEBAR ════════════════════ -->
 <aside class="sidebar">
   <div class="logo">
     <div class="logo-icon">🚗</div>
-    Mitra Ride
+    Ride <span class="hindi">मित्र</span>
   </div>
 
-  <!-- Post a Ride CTA -->
   <div class="sidebar-cta">
-    <button class="cta-btn-sidebar">
-      ＋ &nbsp;Post a Ride
-    </button>
+    <button class="cta-btn-sidebar"><a href="post_ride.html">＋ &nbsp;Post a Ride</a></button>
   </div>
 
   <div class="nav-section">
@@ -707,7 +742,6 @@
     <div class="nav-item"><span class="icon">🔔</span> Notifications</div>
     <div class="nav-item"><span class="icon">⚙️</span> Settings</div>
     <a href="login.html"><div class="nav-item">🔐<span class="icon"></span> Logout</div></a>
-
   </div>
 
   <div class="sidebar-bottom">
@@ -722,10 +756,8 @@
   </div>
 </aside>
 
-<!-- ════════════════════ MAIN ════════════════════ -->
 <main class="main">
 
-  <!-- Topbar -->
   <div class="topbar">
     <div>
       <div class="page-title">Dashboard</div>
@@ -734,20 +766,19 @@
     <div class="topbar-right">
       <div class="search-box">🔍 &nbsp; Search...</div>
       <div class="notif-btn">🔔<div class="notif-dot"></div></div>
-      <div style="padding:8px 12px; background:var(--surface); border:1px solid var(--border); border-radius:10px; display:flex; gap:10px; align-items:center;">
+      <div style="padding:8px 12px; background:rgba(255,255,255,0.9); backdrop-filter:blur(10px); border:1px solid var(--border); border-radius:10px; display:flex; gap:10px; align-items:center; box-shadow:var(--card-shadow);">
         <div class="avatar" style="width:30px;height:30px;font-size:11px;">SC</div>
-        <span style="font-size:13px; font-weight:600;">Shally C.</span>
+        <span style="font-size:13px; font-weight:600; color:var(--text);">Shally C.</span>
       </div>
     </div>
   </div>
 
-  <!-- Greeting Banner -->
   <div class="greeting-banner">
     <div class="greeting-bg-blob"></div>
     <div class="greeting-text" style="position:relative;z-index:1;">
       <div class="hello">Good morning 👋</div>
       <h2>Welcome back, John!</h2>
-      <p>You have 1 upcoming ride tomorrow. <span style="color:var(--accent); cursor:pointer;">View details →</span></p>
+      <p>You have 1 upcoming ride tomorrow. <span style="color:var(--accent); cursor:pointer; font-weight:600;">View details →</span></p>
     </div>
     <div class="greeting-stats">
       <div class="greet-stat">
@@ -767,13 +798,11 @@
     </div>
   </div>
 
-  <!-- Action Cards -->
   <div class="action-grid">
 
-    <!-- Search for a Ride -->
     <div class="action-card search-card">
       <div class="action-card-icon">🔍</div>
-      <div class="action-card-title">Search for a Ride</div>
+      <div class="action-card-title">Find Your<span style="font-family: 'Rozha One'; color: #FF8C00;"> सारथी</span></div>
       <div class="action-card-sub">Find affordable shared rides near you. Enter your destination and we'll match you with drivers heading the same way.</div>
 
       <div class="search-row">
@@ -782,12 +811,12 @@
           <input class="ride-input" type="text" placeholder="Where are you going?" />
         </div>
         <a href="find_ride.html">
-  <button class="btn-search">Search →</button>
-</a>
+          <button class="btn-search">Search →</button>
+        </a>
       </div>
 
       <div class="quick-chips">
-        <span style="font-size:11px; color:var(--muted); align-self:center;">Popular:</span>
+        <span style="font-size:11px; color:var(--muted); align-self:center; font-weight:600;">Popular:</span>
         <div class="chip">🏢 Gurgaon</div>
         <div class="chip">✈️ IGI Airport</div>
         <div class="chip">🏛️ Connaught Place</div>
@@ -795,7 +824,6 @@
       </div>
     </div>
 
-    <!-- Drive with Us -->
     <div class="action-card sell-card">
       <div class="action-card-icon">🚙</div>
       <div class="action-card-title">Drive with Us</div>
@@ -817,25 +845,23 @@
       </div>
 
       <a href="post_ride.html">
-  <button class="btn-post">🚗 &nbsp; Post a Ride</button>
-</a>
+        <button class="btn-post">🚗 &nbsp; Post a Ride</button>
+      </a>
     </div>
 
   </div>
 
-  <!-- Bottom Row: My Rides + Profile -->
   <div class="bottom-row">
 
-    <!-- My Recent Rides -->
     <div class="table-card">
       <div class="card-header">
         <div>
           <div class="card-title">My Recent Rides</div>
           <div class="card-sub">Your last 5 bookings</div>
         </div>
-        <div style="font-size:12px; color:var(--accent); cursor:pointer;">View all →</div>
+        <div style="font-size:12px; color:var(--accent); cursor:pointer; font-weight:700;">View all →</div>
       </div>
-      <table> 
+      <table>
         <thead>
           <tr>
             <th>Driver</th>
@@ -848,41 +874,41 @@
         <tbody>
           <tr>
             <td><div class="rider-info">
-              <div class="rider-avatar" style="background:linear-gradient(135deg,#4f8eff,#7c3aed);">AK</div>
+              <div class="rider-avatar" style="background:linear-gradient(135deg,#FF8C00,#FF6B00);">AK</div>
               <div><div class="rider-name">Aditya K.</div><div class="rider-id">#R1092</div></div>
             </div></td>
-            <td style="color:var(--muted); font-size:12px;">Sector 18 → CP</td>
-            <td style="font-weight:600;">₹240</td>
+            <td style="color:var(--muted); font-size:12px; font-weight:500;">Sector 18 → CP</td>
+            <td style="font-weight:700; color:var(--text);">₹240</td>
             <td><span class="status-badge status-completed">Completed</span></td>
             <td><span class="stars">★★★★★</span></td>
           </tr>
           <tr>
             <td><div class="rider-info">
-              <div class="rider-avatar" style="background:linear-gradient(135deg,#22d3a0,#059669);">PR</div>
+              <div class="rider-avatar" style="background:linear-gradient(135deg,#2ECC71,#27AE60);">PR</div>
               <div><div class="rider-name">Priya R.</div><div class="rider-id">#R1091</div></div>
             </div></td>
-            <td style="color:var(--muted); font-size:12px;">Dwarka → Gurgaon</td>
-            <td style="font-weight:600;">₹380</td>
+            <td style="color:var(--muted); font-size:12px; font-weight:500;">Dwarka → Gurgaon</td>
+            <td style="font-weight:700; color:var(--text);">₹380</td>
             <td><span class="status-badge status-active">Active</span></td>
             <td><span class="stars">★★★★☆</span></td>
           </tr>
           <tr>
             <td><div class="rider-info">
-              <div class="rider-avatar" style="background:linear-gradient(135deg,#f59e0b,#d97706);">MS</div>
+              <div class="rider-avatar" style="background:linear-gradient(135deg,#F39C12,#E67E22);">MS</div>
               <div><div class="rider-name">Manish S.</div><div class="rider-id">#R1090</div></div>
             </div></td>
-            <td style="color:var(--muted); font-size:12px;">Noida → IGI Airport</td>
-            <td style="font-weight:600;">₹520</td>
+            <td style="color:var(--muted); font-size:12px; font-weight:500;">Noida → IGI Airport</td>
+            <td style="font-weight:700; color:var(--text);">₹520</td>
             <td><span class="status-badge status-pending">Pending</span></td>
             <td><span class="stars">—</span></td>
           </tr>
           <tr>
             <td><div class="rider-info">
-              <div class="rider-avatar" style="background:linear-gradient(135deg,#ff5e7a,#be123c);">TK</div>
+              <div class="rider-avatar" style="background:linear-gradient(135deg,#E74C3C,#C0392B);">TK</div>
               <div><div class="rider-name">Tanvi K.</div><div class="rider-id">#R1089</div></div>
             </div></td>
-            <td style="color:var(--muted); font-size:12px;">Vasant Kunj → Nehru Place</td>
-            <td style="font-weight:600;">₹160</td>
+            <td style="color:var(--muted); font-size:12px; font-weight:500;">Vasant Kunj → Nehru Place</td>
+            <td style="font-weight:700; color:var(--text);">₹160</td>
             <td><span class="status-badge status-cancelled">Cancelled</span></td>
             <td><span class="stars">—</span></td>
           </tr>
@@ -891,8 +917,8 @@
               <div class="rider-avatar" style="background:linear-gradient(135deg,#8b5cf6,#6d28d9);">RV</div>
               <div><div class="rider-name">Rahul V.</div><div class="rider-id">#R1088</div></div>
             </div></td>
-            <td style="color:var(--muted); font-size:12px;">Rohini → Lajpat Nagar</td>
-            <td style="font-weight:600;">₹310</td>
+            <td style="color:var(--muted); font-size:12px; font-weight:500;">Rohini → Lajpat Nagar</td>
+            <td style="font-weight:700; color:var(--text);">₹310</td>
             <td><span class="status-badge status-completed">Completed</span></td>
             <td><span class="stars">★★★★★</span></td>
           </tr>
@@ -900,7 +926,6 @@
       </table>
     </div>
 
-    <!-- Profile Snapshot -->
     <div class="profile-card">
       <div class="profile-avatar-lg">SC</div>
       <div class="profile-name">John Doe</div>
@@ -923,11 +948,11 @@
 
       <div style="width:100%; margin-bottom:12px;">
         <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:6px;">
-          <span style="color:var(--muted);">Profile Completion</span>
-          <span style="font-weight:600; color:var(--accent);">80%</span>
+          <span style="color:var(--muted); font-weight:500;">Profile Completion</span>
+          <span style="font-weight:700; color:var(--accent);">80%</span>
         </div>
-        <div style="height:6px; background:var(--surface2); border-radius:99px; overflow:hidden;">
-          <div style="width:80%; height:100%; border-radius:99px; background:linear-gradient(90deg, var(--accent), var(--accent2));"></div>
+        <div style="height:6px; background:var(--surface2); border-radius:99px; overflow:hidden; border:1px solid var(--border);">
+          <div style="width:80%; height:100%; border-radius:99px; background:linear-gradient(90deg, var(--accent), #FF6B00);"></div>
         </div>
       </div>
 

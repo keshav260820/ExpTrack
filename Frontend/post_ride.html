@@ -1,531 +1,1404 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Post a Ride – Mitra Ride</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
-<style>
-:root{
-  --bg:#0d0f1a;--sb:#111320;--card:#141626;--card2:#1a1e32;
-  --border:rgba(255,255,255,0.07);
-  --purple:#7c5cfc;--purple2:#9b7dff;
-  --green:#00d67a;--amber:#f5a623;--red:#ff5c7a;--blue:#4da6ff;
-  --t1:#e8eaf6;--t2:#7c82a0;--t3:#3e4460;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t1);display:flex;min-height:100vh;font-size:14px}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Post a Ride – Mitra Ride</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Rozha+One&family=Noto+Sans+Devanagari:wght@400;700&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #FAFAF8;
+      --bg2: #F5F3EE;
+      --white: #FFFFFF;
+      --sb-bg: rgba(255, 255, 255, 0.85);
+      --card: #FFFFFF;
+      --card2: #F9F8F5;
+      --border: #E8E5DF;
+      --border2: rgba(232, 229, 223, 0.7);
+      --orange: #FF8C00;
+      --orange-light: #FFF3E0;
+      --orange-mid: #FFDFA0;
+      --orange-deep: #FF6B00;
+      --emerald: #2ECC71;
+      --emerald-light: #E8FAF1;
+      --emerald-dark: #1DAF5F;
+      --amber: #E8860A;
+      --red: #EF4444;
+      --blue: #0EA5E9;
+      --navy: #1A1A2E;
+      --charcoal: #2C2C3E;
+      --t2: #6B7280;
+      --t3: #9CA3AF;
+      --shadow-sm: 0 2px 8px rgba(26, 26, 46, 0.05), 0 1px 3px rgba(26, 26, 46, 0.04);
+      --shadow-card: 0 4px 20px rgba(26, 26, 46, 0.06), 0 1px 4px rgba(26, 26, 46, 0.04);
+      --shadow-float: 0 8px 30px rgba(0, 0, 0, 0.04), 0 2px 8px rgba(0, 0, 0, 0.03);
+      --shadow-orange: 0 6px 20px rgba(255, 140, 0, 0.28);
+      --shadow-orange-hover: 0 12px 32px rgba(255, 140, 0, 0.38);
+    }
 
-/* ── SIDEBAR ── */
-.sb{width:185px;min-height:100vh;background:var(--sb);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:50}
-.sb-logo{display:flex;align-items:center;gap:9px;padding:18px 16px 20px;border-bottom:1px solid var(--border)}
-.sb-logo-icon{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#5c3fcf,var(--purple2));display:grid;place-items:center;font-size:17px;flex-shrink:0}
-.sb-logo-text{font-family:'Syne',sans-serif;font-weight:800;font-size:14px;line-height:1.15}
-.sb-logo-text em{color:var(--purple2);font-style:normal}
-.sb-post{margin:14px 12px;padding:11px;background:var(--purple);border:none;border-radius:10px;color:#fff;font-family:'DM Sans',sans-serif;font-weight:600;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:opacity .18s}
-.sb-post:hover{opacity:.85}
-.sb-sec{padding:14px 10px 4px}
-.sb-lbl{font-size:10px;font-weight:600;letter-spacing:.12em;color:var(--t3);text-transform:uppercase;padding:0 8px 8px}
-.sb-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:9px;color:var(--t2);font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;text-decoration:none}
-.sb-item:hover{background:rgba(124,92,252,.09);color:var(--t1)}
-.sb-item.active{background:rgba(124,92,252,.16);color:var(--purple2)}
-.badge{margin-left:auto;background:var(--purple);color:#fff;font-size:10px;font-weight:700;padding:1px 7px;border-radius:99px}
-.sb-foot{margin-top:auto;padding:12px 10px;border-top:1px solid var(--border)}
-.user-chip{display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:9px;cursor:pointer;transition:background .15s}
-.user-chip:hover{background:var(--card2)}
-.av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#5c4fcf,var(--purple2));display:grid;place-items:center;font-size:10px;font-weight:700;flex-shrink:0;color:#fff}
-.u-name{font-size:12.5px;font-weight:600}
-.u-role{font-size:11px;color:var(--t3)}
-.more{margin-left:auto;color:var(--t3);font-size:16px}
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
 
-/* ── MAIN ── */
-.main{margin-left:185px;flex:1;display:flex;flex-direction:column}
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--navy);
+      display: flex;
+      min-height: 100vh;
+      font-size: 14px;
+      background-image:
+        radial-gradient(ellipse at 5% 0%, rgba(255, 140, 0, 0.04) 0%, transparent 55%),
+        radial-gradient(ellipse at 95% 100%, rgba(46, 204, 113, 0.04) 0%, transparent 55%);
+    }
 
-/* topbar */
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid var(--border);background:rgba(13,15,26,.9);position:sticky;top:0;z-index:40;backdrop-filter:blur(10px)}
-.breadcrumb{font-size:12px;color:var(--t2)}
-.breadcrumb a{color:var(--t2);text-decoration:none}
-.breadcrumb a:hover{color:var(--purple2)}
-.breadcrumb span{color:var(--t1);font-weight:500}
-.top-right{display:flex;align-items:center;gap:12px}
-.search-box{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);border-radius:9px;padding:8px 13px}
-.search-box input{background:none;border:none;outline:none;color:var(--t1);font-family:'DM Sans',sans-serif;font-size:13px;width:160px}
-.search-box input::placeholder{color:var(--t3)}
-.icon-btn{width:34px;height:34px;border-radius:9px;background:var(--card);border:1px solid var(--border);display:grid;place-items:center;cursor:pointer;font-size:15px;color:var(--t2);transition:all .15s;position:relative}
-.icon-btn:hover{border-color:var(--purple);color:var(--purple2)}
-.ndot{position:absolute;top:5px;right:5px;width:6px;height:6px;border-radius:50%;background:var(--amber);border:2px solid var(--bg)}
-.avbtn{display:flex;align-items:center;gap:7px;cursor:pointer}
-.avbtn .av{width:32px;height:32px;font-size:11px}
-.avbtn span{font-size:13px;font-weight:600}
+    /* ── SIDEBAR (Glassmorphism) ── */
+    .sb {
+      width: 185px;
+      min-height: 100vh;
+      background: var(--sb-bg);
+      backdrop-filter: blur(20px) saturate(1.4);
+      -webkit-backdrop-filter: blur(20px) saturate(1.4);
+      border-right: 1px solid rgba(232, 229, 223, 0.9);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      z-index: 50;
+      box-shadow: 2px 0 24px rgba(26, 26, 46, 0.05);
+    }
 
-/* page header */
-.page-header{padding:26px 28px 0;display:flex;align-items:flex-start;justify-content:space-between}
-.page-title{font-family:'Syne',sans-serif;font-weight:800;font-size:24px}
-.page-sub{font-size:13px;color:var(--t2);margin-top:4px}
-.back-btn{display:flex;align-items:center;gap:6px;padding:8px 16px;background:var(--card);border:1px solid var(--border);border-radius:9px;color:var(--t2);font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;text-decoration:none;white-space:nowrap}
-.back-btn:hover{border-color:var(--purple);color:var(--purple2)}
+    .sb-logo {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 18px 16px 20px;
+      border-bottom: 1px solid var(--border)
+    }
 
-/* content grid */
-.content{display:grid;grid-template-columns:1fr 300px;gap:20px;padding:22px 28px 40px;align-items:start}
+    .sb-logo-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, var(--orange), #FFA040);
+      display: grid;
+      place-items: center;
+      font-size: 17px;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(255, 140, 0, 0.3);
+    }
 
-/* ── CARDS ── */
-.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px 24px;margin-bottom:16px}
-.card:last-child{margin-bottom:0}
-.card-head{display:flex;align-items:center;gap:9px;margin-bottom:4px}
-.card-icon{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;font-size:14px;flex-shrink:0}
-.card-icon.g{background:rgba(0,214,122,.12)}
-.card-icon.p{background:rgba(124,92,252,.12)}
-.card-icon.a{background:rgba(245,166,35,.12)}
-.card-icon.b{background:rgba(77,166,255,.12)}
-.card-title{font-family:'Syne',sans-serif;font-weight:700;font-size:15px}
-.card-sub{font-size:12.5px;color:var(--t2);margin-bottom:18px;margin-left:39px}
-.divider{border:none;border-top:1px solid var(--border);margin:16px 0}
+    .sb-logo-text {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      font-size: 14px;
+      line-height: 1.2;
+      color: var(--navy)
+    }
 
-/* ── FORM FIELDS ── */
-.field{margin-bottom:14px}
-.field:last-child{margin-bottom:0}
-label{display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--t2);margin-bottom:6px}
-.fi{position:relative;display:flex;align-items:center}
-.fi .ico{position:absolute;left:11px;font-size:13px;pointer-events:none;z-index:1}
-.fi input,.fi select,.fi textarea{width:100%;background:var(--card2);border:1px solid var(--border);border-radius:9px;padding:10px 11px 10px 34px;color:var(--t1);font-family:'DM Sans',sans-serif;font-size:13.5px;outline:none;transition:border-color .18s,box-shadow .18s;-webkit-appearance:none;appearance:none}
-.fi input:focus,.fi select:focus,.fi textarea:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(124,92,252,.12)}
-.fi input::placeholder,.fi textarea::placeholder{color:var(--t3)}
-.fi select option{background:var(--card2)}
-.fi textarea{padding-left:34px;resize:vertical;min-height:70px}
-.no-ico input,.no-ico select,.no-ico textarea{padding-left:11px}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:13px}
-.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:13px}
-.hint{font-size:11.5px;color:var(--t3);margin-top:5px}
+    .sb-logo-text em {
+      font-style: normal;
+      font-family: 'Rozha One', 'Noto Sans Devanagari', serif;
+      color: var(--orange);
+      font-weight: 400;
+      font-size: 15px;
+    }
 
-/* seats picker */
-.seat-row{display:flex;gap:8px;flex-wrap:wrap}
-.s-btn{width:44px;height:44px;border-radius:9px;border:1.5px solid var(--border);background:var(--card2);color:var(--t2);font-family:'Syne',sans-serif;font-size:15px;font-weight:700;cursor:pointer;display:grid;place-items:center;transition:all .15s}
-.s-btn:hover{border-color:var(--purple);color:var(--purple2)}
-.s-btn.on{background:rgba(124,92,252,.18);border-color:var(--purple);color:var(--purple2);box-shadow:0 0 0 3px rgba(124,92,252,.1)}
+    .sb-post {
+      margin: 14px 12px;
+      padding: 11px;
+      background: linear-gradient(135deg, var(--orange), var(--orange-deep));
+      border: none;
+      border-radius: 12px;
+      color: #fff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      box-shadow: var(--shadow-orange);
+      transition: all .2s;
+    }
 
-/* amenity chips */
-.chips{display:flex;flex-wrap:wrap;gap:7px}
-.chip{padding:6px 12px;border-radius:99px;border:1.5px solid var(--border);background:var(--card2);font-size:12px;font-weight:500;color:var(--t2);cursor:pointer;user-select:none;transition:all .15s}
-.chip:hover{border-color:var(--green);color:var(--green)}
-.chip.on{background:rgba(0,214,122,.1);border-color:var(--green);color:var(--green)}
+    .sb-post:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-orange-hover)
+    }
 
-/* price slider */
-.price-display{font-family:'Syne',sans-serif;font-weight:800;font-size:34px;color:var(--amber);margin-bottom:10px;display:flex;align-items:baseline;gap:3px}
-.price-display span{font-size:18px}
-input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:99px;border:none;outline:none;cursor:pointer;padding:0}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;cursor:pointer}
-input[type=range].amber-r{background:linear-gradient(to right,var(--amber) 20%,var(--card2) 20%)}
-input[type=range].amber-r::-webkit-slider-thumb{background:var(--amber);box-shadow:0 0 0 3px rgba(245,166,35,.25)}
-input[type=range]:focus{box-shadow:none}
+    .sb-sec {
+      padding: 14px 10px 4px
+    }
 
-/* ── RIGHT SIDEBAR ── */
-.right-col{display:flex;flex-direction:column;gap:16px;position:sticky;top:70px}
+    .sb-lbl {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      color: var(--t3);
+      text-transform: uppercase;
+      padding: 0 8px 8px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
 
-/* summary */
-.sum-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px}
-.sum-row:last-child{border-bottom:none}
-.sum-lbl{color:var(--t2)}
-.sum-val{font-weight:600}
-.sum-val.g{color:var(--green)}
-.sum-val.a{color:var(--amber)}
-.sum-val.p{color:var(--purple2)}
+    .sb-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      color: var(--t2);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all .15s;
+      text-decoration: none;
+    }
 
-/* route vis */
-.rvis{padding:10px 0 14px}
-.rstop{display:flex;align-items:center;gap:10px;padding:3px 0;position:relative}
-.rdot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-.rdot.f{background:var(--purple);box-shadow:0 0 0 3px rgba(124,92,252,.2)}
-.rdot.t{background:var(--green);box-shadow:0 0 0 3px rgba(0,214,122,.2)}
-.rline{position:absolute;left:4.5px;top:13px;bottom:-4px;width:1px;background:var(--border)}
-.rgap{height:14px}
-.rname{font-size:13px;font-weight:600}
-.rsub{font-size:11px;color:var(--t3)}
+    .sb-item:hover {
+      background: var(--orange-light);
+      color: var(--orange)
+    }
 
-/* verify strip */
-.vstrip{display:flex;align-items:flex-start;gap:10px;background:rgba(0,214,122,.07);border:1px solid rgba(0,214,122,.2);border-radius:10px;padding:11px 13px;margin-top:4px}
-.vstrip p{font-size:12px;color:var(--t2);line-height:1.55}
-.vstrip p strong{color:var(--green)}
+    .sb-item.active {
+      background: var(--orange-light);
+      color: var(--orange);
+      font-weight: 700;
+      box-shadow: inset 3px 0 0 var(--orange);
+    }
 
-/* buttons */
-.btn-post{width:100%;padding:13px;background:linear-gradient(135deg,var(--purple),#5740e8);border:none;border-radius:11px;color:#fff;font-family:'Syne',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all .2s;box-shadow:0 5px 22px rgba(124,92,252,.3);display:flex;align-items:center;justify-content:center;gap:7px;margin-top:14px}
-.btn-post:hover{transform:translateY(-2px);box-shadow:0 9px 30px rgba(124,92,252,.45)}
-.btn-cancel{width:100%;padding:11px;background:transparent;border:1.5px solid var(--border);border-radius:11px;color:var(--t2);font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:500;cursor:pointer;transition:all .15s;margin-top:8px}
-.btn-cancel:hover{border-color:var(--red);color:var(--red)}
+    .badge {
+      margin-left: auto;
+      background: var(--orange);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 99px;
+      box-shadow: 0 2px 6px rgba(255, 140, 0, 0.3);
+    }
 
-/* tips */
-.tip-item{display:flex;gap:8px;font-size:12.5px;color:var(--t2);line-height:1.5;margin-bottom:9px}
-.tip-item:last-child{margin-bottom:0}
+    .sb-foot {
+      margin-top: auto;
+      padding: 12px 10px;
+      border-top: 1px solid var(--border);
+      background: rgba(250, 250, 248, 0.6)
+    }
 
-/* toast */
-.toast{position:fixed;bottom:26px;right:26px;background:rgba(0,214,122,.1);border:1px solid rgba(0,214,122,.35);border-radius:13px;padding:13px 18px;display:flex;align-items:center;gap:10px;transform:translateY(70px);opacity:0;transition:all .4s cubic-bezier(.34,1.56,.64,1);z-index:300;pointer-events:none;max-width:300px}
-.toast.show{transform:translateY(0);opacity:1}
-.toast-t{font-weight:700;font-size:13px;color:var(--green)}
-.toast-m{font-size:12px;color:var(--t2);margin-top:2px}
+    .user-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 9px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background .15s
+    }
 
-/* section label */
-.sec-lbl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:10px}
+    .user-chip:hover {
+      background: var(--bg2)
+    }
 
-::-webkit-scrollbar{width:5px}
-::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px}
-</style>
+    .av {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--orange), var(--orange-deep));
+      display: grid;
+      place-items: center;
+      font-size: 10px;
+      font-weight: 700;
+      flex-shrink: 0;
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(255, 140, 0, 0.3);
+    }
+
+    .u-name {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--navy)
+    }
+
+    .u-role {
+      font-size: 11px;
+      color: var(--t3)
+    }
+
+    .more {
+      margin-left: auto;
+      color: var(--t3);
+      font-size: 16px
+    }
+
+    /* ── MAIN ── */
+    .main {
+      margin-left: 185px;
+      flex: 1;
+      display: flex;
+      flex-direction: column
+    }
+
+    /* topbar */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 28px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(250, 250, 248, 0.9);
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 1px 0 var(--border);
+    }
+
+    .breadcrumb {
+      font-size: 12px;
+      color: var(--t2)
+    }
+
+    .breadcrumb a {
+      color: var(--t2);
+      text-decoration: none
+    }
+
+    .breadcrumb a:hover {
+      color: var(--orange)
+    }
+
+    .breadcrumb span {
+      color: var(--navy);
+      font-weight: 600
+    }
+
+    .top-right {
+      display: flex;
+      align-items: center;
+      gap: 12px
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 8px 13px;
+      box-shadow: var(--shadow-sm);
+      transition: border-color .2s;
+    }
+
+    .search-box:focus-within {
+      border-color: var(--orange)
+    }
+
+    .search-box input {
+      background: none;
+      border: none;
+      outline: none;
+      color: var(--navy);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13px;
+      width: 160px;
+    }
+
+    .search-box input::placeholder {
+      color: var(--t3)
+    }
+
+    .icon-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      font-size: 15px;
+      color: var(--t2);
+      transition: all .15s;
+      position: relative;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .icon-btn:hover {
+      border-color: var(--orange);
+      color: var(--orange)
+    }
+
+    .ndot {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--amber);
+      border: 2px solid var(--bg);
+    }
+
+    .avbtn {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      cursor: pointer
+    }
+
+    .avbtn .av {
+      width: 32px;
+      height: 32px;
+      font-size: 11px
+    }
+
+    .avbtn span {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--navy)
+    }
+
+    /* page header */
+    .page-header {
+      padding: 26px 28px 0;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+
+    .page-title {
+      font-family: 'Rozha One', serif;
+      font-weight: 400;
+      font-size: 26px;
+      color: var(--navy);
+      letter-spacing: -0.3px;
+    }
+
+    .page-sub {
+      font-size: 13px;
+      color: var(--t2);
+      margin-top: 5px;
+      font-weight: 400
+    }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--t2);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all .15s;
+      text-decoration: none;
+      white-space: nowrap;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .back-btn:hover {
+      border-color: var(--orange);
+      color: var(--orange)
+    }
+
+    /* content grid */
+    .content {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 20px;
+      padding: 22px 28px 40px;
+      align-items: start
+    }
+
+    /* ── CARDS (Bento Style) ── */
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 22px 24px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-card);
+      transition: box-shadow .2s;
+    }
+
+    .card:last-child {
+      margin-bottom: 0
+    }
+
+    .card:hover {
+      box-shadow: 0 8px 28px rgba(26, 26, 46, 0.08)
+    }
+
+    .card-head {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 4px
+    }
+
+    .card-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .card-icon.g {
+      background: var(--emerald-light)
+    }
+
+    .card-icon.p {
+      background: var(--orange-light)
+    }
+
+    .card-icon.a {
+      background: #FFF8EC;
+      border: 1px solid rgba(232, 134, 10, 0.15)
+    }
+
+    .card-icon.b {
+      background: #EFF9FF;
+      border: 1px solid rgba(14, 165, 233, 0.15)
+    }
+
+    .card-title {
+      font-family: 'Rozha One', serif;
+      font-weight: 400;
+      font-size: 16px;
+      color: var(--navy);
+      letter-spacing: -0.2px;
+    }
+
+    .card-sub {
+      font-size: 12.5px;
+      color: var(--t2);
+      margin-bottom: 18px;
+      margin-left: 41px
+    }
+
+    .divider {
+      border: none;
+      border-top: 1.5px dashed var(--border);
+      margin: 16px 0
+    }
+
+    /* ── FORM FIELDS ── */
+    .field {
+      margin-bottom: 14px
+    }
+
+    .field:last-child {
+      margin-bottom: 0
+    }
+
+    label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--t2);
+      margin-bottom: 6px;
+    }
+
+    .fi {
+      position: relative;
+      display: flex;
+      align-items: center
+    }
+
+    .fi .ico {
+      position: absolute;
+      left: 11px;
+      font-size: 13px;
+      pointer-events: none;
+      z-index: 1
+    }
+
+    .fi input,
+    .fi select,
+    .fi textarea {
+      width: 100%;
+      background: var(--bg2);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 11px 10px 34px;
+      color: var(--navy);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13.5px;
+      font-weight: 500;
+      outline: none;
+      transition: border-color .2s, box-shadow .2s, background .2s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .fi input:focus,
+    .fi select:focus,
+    .fi textarea:focus {
+      border-color: var(--orange);
+      background: var(--white);
+      box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.10);
+    }
+
+    .fi input::placeholder,
+    .fi textarea::placeholder {
+      color: var(--t3);
+      font-weight: 400
+    }
+
+    .fi select option {
+      background: var(--white);
+      color: var(--navy)
+    }
+
+    .fi textarea {
+      padding-left: 34px;
+      resize: vertical;
+      min-height: 70px
+    }
+
+    .no-ico input,
+    .no-ico select,
+    .no-ico textarea {
+      padding-left: 12px
+    }
+
+    .g2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 13px
+    }
+
+    .g3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 13px
+    }
+
+    .hint {
+      font-size: 11.5px;
+      color: var(--t3);
+      margin-top: 5px
+    }
+
+    /* seats picker */
+    .seat-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap
+    }
+
+    .s-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      border: 1.5px solid var(--border);
+      background: var(--bg2);
+      color: var(--t2);
+      font-family: 'Rozha One', serif;
+      font-size: 16px;
+      font-weight: 400;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: all .18s;
+    }
+
+    .s-btn:hover {
+      border-color: var(--orange);
+      color: var(--orange);
+      background: var(--orange-light)
+    }
+
+    .s-btn.on {
+      background: linear-gradient(135deg, var(--orange), var(--orange-deep));
+      border-color: var(--orange);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(255, 140, 0, 0.3);
+      transform: translateY(-1px);
+    }
+
+    /* amenity chips */
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px
+    }
+
+    .chip {
+      padding: 6px 13px;
+      border-radius: 99px;
+      border: 1.5px solid var(--border);
+      background: var(--bg2);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--t2);
+      cursor: pointer;
+      user-select: none;
+      transition: all .15s;
+    }
+
+    .chip:hover {
+      border-color: var(--emerald);
+      color: var(--emerald-dark);
+      background: var(--emerald-light)
+    }
+
+    .chip.on {
+      background: var(--emerald-light);
+      border-color: rgba(46, 204, 113, 0.4);
+      color: var(--emerald-dark);
+    }
+
+    /* price slider */
+    .price-display {
+      font-family: 'Rozha One', serif;
+      font-weight: 400;
+      font-size: 36px;
+      color: var(--amber);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: baseline;
+      gap: 3px;
+    }
+
+    .price-display span {
+      font-size: 20px
+    }
+
+    input[type=range] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 5px;
+      border-radius: 99px;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    input[type=range].amber-r {
+      background: linear-gradient(to right, var(--orange) 20%, var(--border) 20%)
+    }
+
+    input[type=range].amber-r::-webkit-slider-thumb {
+      background: var(--orange);
+      box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.2), 0 2px 6px rgba(255, 140, 0, 0.3);
+    }
+
+    input[type=range]:focus {
+      box-shadow: none
+    }
+
+    /* ── RIGHT SIDEBAR ── */
+    .right-col {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      position: sticky;
+      top: 70px
+    }
+
+    /* summary — ticket / invoice feel */
+    .sum-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 9px 0;
+      border-bottom: 1.5px dashed var(--border);
+      font-size: 13px;
+    }
+
+    .sum-row:last-child {
+      border-bottom: none
+    }
+
+    .sum-lbl {
+      color: var(--t2);
+      font-weight: 500
+    }
+
+    .sum-val {
+      font-weight: 700;
+      color: var(--navy)
+    }
+
+    .sum-val.g {
+      color: var(--emerald-dark)
+    }
+
+    .sum-val.a {
+      color: var(--amber)
+    }
+
+    .sum-val.p {
+      color: var(--orange)
+    }
+
+    /* route vis */
+    .rvis {
+      padding: 10px 0 14px
+    }
+
+    .rstop {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 3px 0;
+      position: relative
+    }
+
+    .rdot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0
+    }
+
+    .rdot.f {
+      background: var(--orange);
+      box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.2)
+    }
+
+    .rdot.t {
+      background: var(--emerald);
+      box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.2)
+    }
+
+    .rline {
+      position: absolute;
+      left: 4.5px;
+      top: 13px;
+      bottom: -4px;
+      width: 1px;
+      background: var(--border)
+    }
+
+    .rgap {
+      height: 14px
+    }
+
+    .rname {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--navy)
+    }
+
+    .rsub {
+      font-size: 11px;
+      color: var(--t3)
+    }
+
+    /* verify strip */
+    .vstrip {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background: var(--emerald-light);
+      border: 1px solid rgba(46, 204, 113, 0.25);
+      border-radius: 12px;
+      padding: 11px 13px;
+      margin-top: 4px;
+    }
+
+    .vstrip p {
+      font-size: 12px;
+      color: var(--t2);
+      line-height: 1.55
+    }
+
+    .vstrip p strong {
+      color: var(--emerald-dark)
+    }
+
+    /* buttons */
+    .btn-post {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--orange), var(--orange-deep));
+      border: none;
+      border-radius: 14px;
+      color: #fff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all .22s;
+      box-shadow: var(--shadow-orange);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      margin-top: 14px;
+      letter-spacing: 0.2px;
+    }
+
+    .btn-post:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-orange-hover)
+    }
+
+    .btn-cancel {
+      width: 100%;
+      padding: 11px;
+      background: var(--bg2);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      color: var(--t2);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13.5px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all .15s;
+      margin-top: 8px;
+    }
+
+    .btn-cancel:hover {
+      border-color: var(--red);
+      color: var(--red);
+      background: #FFF5F5
+    }
+
+    /* tips */
+    .tip-item {
+      display: flex;
+      gap: 8px;
+      font-size: 12.5px;
+      color: var(--t2);
+      line-height: 1.55;
+      margin-bottom: 9px;
+      font-weight: 400;
+    }
+
+    .tip-item:last-child {
+      margin-bottom: 0
+    }
+
+    /* toast */
+    .toast {
+      position: fixed;
+      bottom: 26px;
+      right: 26px;
+      background: var(--white);
+      border: 1px solid rgba(46, 204, 113, 0.35);
+      border-radius: 16px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transform: translateY(70px);
+      opacity: 0;
+      transition: all .4s cubic-bezier(.34, 1.56, .64, 1);
+      z-index: 300;
+      pointer-events: none;
+      max-width: 300px;
+      box-shadow: 0 12px 40px rgba(46, 204, 113, 0.12), 0 4px 16px rgba(0, 0, 0, 0.06);
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1
+    }
+
+    .toast-t {
+      font-weight: 800;
+      font-size: 13px;
+      color: var(--emerald-dark)
+    }
+
+    .toast-m {
+      font-size: 12px;
+      color: var(--t2);
+      margin-top: 2px
+    }
+
+    /* section label */
+    .sec-lbl {
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--t3);
+      margin-bottom: 10px;
+    }
+
+    /* ticket summary card top decoration */
+    .ticket-top-bar {
+      height: 5px;
+      margin: -22px -24px 20px;
+      background: linear-gradient(90deg, var(--orange), #FFB347, var(--emerald));
+      border-radius: 24px 24px 0 0;
+    }
+
+    ::-webkit-scrollbar {
+      width: 5px
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--orange-mid);
+      border-radius: 99px
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg2)
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- SIDEBAR -->
-<aside class="sb">
-  <div class="sb-logo">
-    <div class="sb-logo-icon">🛣️</div>
-    <div class="sb-logo-text">Mitra<br/><em>Ride</em></div>
-  </div>
-  <button class="sb-post">+ Post a Ride</button>
-  <div class="sb-sec">
-    <div class="sb-lbl">Main</div>
-    <a class="sb-item" href="#">📊 Dashboard</a>
-    <a class="sb-item" href="#">🔍 Find a Ride <span class="badge">3</span></a>
-    <a class="sb-item active" href="#">🚗 My Rides</a>
-    <a class="sb-item" href="#">💳 Payments</a>
-  </div>
-  <div class="sb-sec">
-    <div class="sb-lbl">Account</div>
-    <a class="sb-item" href="#">👤 Profile</a>
-    <a class="sb-item" href="#">⭐ My Reviews</a>
-    <a class="sb-item" href="#">🔔 Notifications</a>
-    <a class="sb-item" href="#">⚙️ Settings</a>
-  </div>
-  <div class="sb-foot">
-    <div class="user-chip">
-      <div class="av">JD</div>
-      <div><div class="u-name">John Doe</div><div class="u-role">Passenger</div></div>
-      <div class="more">···</div>
+  <!-- SIDEBAR -->
+  <aside class="sb">
+    <div class="sb-logo">
+      <div class="sb-logo-icon">🚗</div>
+      <div class="sb-logo-text">Ride&nbsp;<em>मित्र</em></div>
     </div>
-  </div>
-</aside>
+    <button class="sb-post"><a href="post_ride.html">＋ &nbsp;Post a Ride</a></button>
+    <div class="sb-sec">
+      <div class="sb-lbl">Main</div>
+      <a class="sb-item" href="Dashboard.html">📊 Dashboard</a>
+      <a class="sb-item" href="find_ride.html">🔍 Find a Ride <span class="badge">3</span></a>
+      <a class="sb-item active" href="find_ride.html">🚗 My Rides</a>
+      <a class="sb-item" href="#">💳 Payments</a>
 
-<!-- MAIN -->
-<div class="main">
-
-  <!-- TOPBAR -->
-  <div class="topbar">
-    <div class="breadcrumb">
-      <a href="#">Home</a> / <a href="#">Dashboard</a> / <span>Post a Ride</span>
     </div>
-    <div class="top-right">
-      <div class="search-box">🔍 <input type="text" placeholder="Search…"/></div>
-      <div class="icon-btn">🔔<span class="ndot"></span></div>
-      <div class="avbtn"><div class="av">SC</div><span>Shelly C.</span></div>
+    <div class="sb-sec">
+      <div class="sb-lbl">Account</div>
+      <a class="sb-item" href="#">👤 Profile</a>
+      <a class="sb-item" href="#">⭐ My Reviews</a>
+      <a class="sb-item" href="#">🔔 Notifications</a>
+      <a class="sb-item" href="#">⚙️ Settings</a>
+      <a class="sb-item" href="login.html">🔐 Logout</a>
     </div>
-  </div>
+    <div class="sb-foot">
+      <div class="user-chip">
+        <div class="av">JD</div>
+        <div>
+          <div class="u-name">John Doe</div>
+          <div class="u-role">Passenger</div>
+        </div>
+        <div class="more">···</div>
+      </div>
+    </div>
+  </aside>
 
-  <!-- PAGE HEADER -->
-  <div class="page-header">
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="breadcrumb">
+        <a href="#">Home</a> / <a href="Dashboard.html">Dashboard</a> / <span>Post a Ride</span>
+      </div>
+      <div class="top-right">
+        <div class="search-box">🔍 <input type="text" placeholder="Search…" /></div>
+        <div class="icon-btn">🔔<span class="ndot"></span></div>
+        <div class="avbtn">
+          <div class="av">SC</div><span>Shelly C.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+      <div>
+        <div class="page-title">Post a Ride 🚗</div>
+        <div class="page-sub">Share your journey and split the fuel cost with verified passengers.</div>
+      </div>
+      <a class="back-btn" href="Dashboard.html">← Back to Dashboard</a>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- LEFT FORM COL -->
+      <div>
+
+        <!-- ROUTE CARD -->
+        <div class="card">
+          <div class="card-head">
+            <div class="card-icon g">🗺️</div>
+            <div class="card-title">Route Details</div>
+          </div>
+          <div class="card-sub">Set your departure and destination</div>
+
+          <div class="g2">
+            <div class="field">
+              <label>Pickup Location</label>
+              <div class="fi"><span class="ico">📍</span><input type="text" id="f-from"
+                  placeholder="e.g. Sector 18, Noida" oninput="sync()" /></div>
+            </div>
+            <div class="field">
+              <label>Drop-off Location</label>
+              <div class="fi"><span class="ico">🏁</span><input type="text" id="f-to" placeholder="e.g. Connaught Place"
+                  oninput="sync()" /></div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Stops Along the Way <span
+                style="text-transform:none;font-weight:400;color:var(--t3)">(optional)</span></label>
+            <div class="fi"><span class="ico">🔵</span><input type="text"
+                placeholder="e.g. Lajpat Nagar, INA Market — comma separated" /></div>
+          </div>
+
+          <div class="g3">
+            <div class="field">
+              <label>Date</label>
+              <div class="fi"><span class="ico">📅</span><input type="date" id="f-date" oninput="sync()" /></div>
+            </div>
+            <div class="field">
+              <label>Departure Time</label>
+              <div class="fi"><span class="ico">🕐</span><input type="time" id="f-time" value="08:00"
+                  oninput="sync()" /></div>
+            </div>
+            <div class="field">
+              <label>Est. Duration</label>
+              <div class="fi"><span class="ico">⏱</span>
+                <select>
+                  <option>~30 min</option>
+                  <option>~45 min</option>
+                  <option selected>~1 hr</option>
+                  <option>~1.5 hrs</option>
+                  <option>~2 hrs</option>
+                  <option>~3+ hrs</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VEHICLE CARD -->
+        <div class="card">
+          <div class="card-head">
+            <div class="card-icon p">🚙</div>
+            <div class="card-title">Vehicle Details</div>
+          </div>
+          <div class="card-sub">Help passengers identify your vehicle</div>
+
+          <div class="g2">
+            <div class="field">
+              <label>Vehicle Type</label>
+              <div class="fi"><span class="ico">🚙</span>
+                <select id="f-vtype" onchange="sync()">
+                  <option>Sedan</option>
+                  <option>Hatchback</option>
+                  <option>SUV</option>
+                  <option>MUV / Van</option>
+                  <option>Bike</option>
+                  <option>Auto</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label>Vehicle Model</label>
+              <div class="fi"><span class="ico">🏷️</span><input type="text" placeholder="e.g. Swift Dzire" /></div>
+            </div>
+            <div class="field">
+              <label>Registration No.</label>
+              <div class="fi"><span class="ico">🪪</span><input type="text" placeholder="DL 01 AB 1234" /></div>
+            </div>
+            <div class="field">
+              <label>Color</label>
+              <div class="fi"><span class="ico">🎨</span><input type="text" placeholder="e.g. White, Silver" /></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SEATS & PRICE CARD -->
+        <div class="card">
+          <div class="card-head">
+            <div class="card-icon a">🪑</div>
+            <div class="card-title">Seats & Price</div>
+          </div>
+          <div class="card-sub">Set available seats and fare per passenger</div>
+
+          <div class="field">
+            <label>Available Seats</label>
+            <div class="seat-row" id="seatRow">
+              <button class="s-btn" onclick="pickSeat(this,1)" type="button">1</button>
+              <button class="s-btn" onclick="pickSeat(this,2)" type="button">2</button>
+              <button class="s-btn on" onclick="pickSeat(this,3)" type="button">3</button>
+              <button class="s-btn" onclick="pickSeat(this,4)" type="button">4</button>
+              <button class="s-btn" onclick="pickSeat(this,5)" type="button">5</button>
+              <button class="s-btn" onclick="pickSeat(this,6)" type="button">6</button>
+            </div>
+            <p class="hint">Tap to select how many seats are available for passengers</p>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="field">
+            <label>Price per Seat</label>
+            <div class="price-display"><span>₹</span><span id="priceLbl">250</span></div>
+            <input type="range" class="amber-r" id="priceRange" min="50" max="1000" value="250" step="10"
+              oninput="document.getElementById('priceLbl').textContent=this.value;syncRange(this);calcEarn()" />
+            <div style="display:flex;justify-content:space-between;font-size:11.5px;color:var(--t3);margin-top:5px">
+              <span>₹50</span><span>₹1000</span></div>
+            <p class="hint">💡 Suggested ₹150–₹400 for Delhi NCR routes</p>
+          </div>
+        </div>
+
+        <!-- AMENITIES CARD -->
+        <div class="card">
+          <div class="card-head">
+            <div class="card-icon b">✨</div>
+            <div class="card-title">Amenities & Preferences</div>
+          </div>
+          <div class="card-sub">Let passengers know what to expect</div>
+
+          <div class="sec-lbl">Amenities Offered</div>
+          <div class="chips">
+            <div class="chip on" onclick="this.classList.toggle('on')">❄️ AC</div>
+            <div class="chip" onclick="this.classList.toggle('on')">🎵 Music</div>
+            <div class="chip on" onclick="this.classList.toggle('on')">🚭 No Smoking</div>
+            <div class="chip" onclick="this.classList.toggle('on')">🐾 Pets OK</div>
+            <div class="chip" onclick="this.classList.toggle('on')">🎒 Luggage OK</div>
+            <div class="chip" onclick="this.classList.toggle('on')">🔌 USB Charger</div>
+            <div class="chip" onclick="this.classList.toggle('on')">💬 Chatty</div>
+            <div class="chip" onclick="this.classList.toggle('on')">🤫 Quiet Ride</div>
+            <div class="chip" onclick="this.classList.toggle('on')">🧴 Sanitizer</div>
+            <div class="chip" onclick="this.classList.toggle('on')">🚺 Women Only</div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="field">
+            <label>Notes for Passengers</label>
+            <div class="fi no-ico"><textarea
+                placeholder="e.g. Leaving sharp at 8am. Can drop slightly off route if needed."></textarea></div>
+          </div>
+
+          <div class="g2" style="margin-top:12px">
+            <div class="field">
+              <label>Luggage Allowed</label>
+              <div class="fi"><span class="ico">🧳</span>
+                <select>
+                  <option>Small bag</option>
+                  <option>Medium bag</option>
+                  <option>Large bag</option>
+                  <option>No luggage</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label>Gender Preference</label>
+              <div class="fi"><span class="ico">👥</span>
+                <select>
+                  <option>Any</option>
+                  <option>Men only</option>
+                  <option>Women only</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- end left col -->
+
+      <!-- RIGHT SUMMARY COL -->
+      <div class="right-col">
+
+        <!-- SUMMARY / TICKET CARD -->
+        <div class="card" style="margin-bottom:0;padding-top:0;overflow:hidden">
+          <div class="ticket-top-bar"></div>
+          <div class="card-head">
+            <div class="card-icon b">📋</div>
+            <div class="card-title">Ride Summary</div>
+          </div>
+          <div style="margin-bottom:4px;margin-left:41px;font-size:12.5px;color:var(--t2)">Live preview of your listing
+          </div>
+
+          <div class="rvis">
+            <div class="rstop">
+              <div class="rdot f"></div>
+              <div class="rline"></div>
+              <div>
+                <div class="rname" id="s-from">—</div>
+                <div class="rsub">Pickup</div>
+              </div>
+            </div>
+            <div class="rgap"></div>
+            <div class="rstop">
+              <div class="rdot t"></div>
+              <div>
+                <div class="rname" id="s-to">—</div>
+                <div class="rsub">Drop-off</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="divider" style="margin-top:0"></div>
+
+          <div class="sum-row"><span class="sum-lbl">📅 Date & Time</span><span class="sum-val" id="s-dt">—</span></div>
+          <div class="sum-row"><span class="sum-lbl">🪑 Seats</span><span class="sum-val p" id="s-seats">3</span></div>
+          <div class="sum-row"><span class="sum-lbl">🚙 Vehicle</span><span class="sum-val" id="s-veh">Sedan</span>
+          </div>
+          <div class="sum-row"><span class="sum-lbl">💰 Per Seat</span><span class="sum-val a">₹<span
+                id="s-price">250</span></span></div>
+          <div class="sum-row"><span class="sum-lbl">💸 Max Earn</span><span class="sum-val g">₹<span
+                id="s-earn">750</span></span></div>
+
+          <div class="vstrip">
+            <span style="font-size:18px">✅</span>
+            <p><strong>Verified only</strong> — only ID-verified passengers can book your ride.</p>
+          </div>
+
+          <button class="btn-post" onclick="postRide()">🚀 Post My Ride</button>
+          <button class="btn-cancel" onclick="history.back()">Cancel</button>
+        </div>
+
+        <!-- TIPS CARD -->
+        <div class="card" style="background:var(--orange-light);border-color:rgba(255,140,0,0.18);margin-bottom:0">
+          <div class="card-head">
+            <div class="card-icon p">💡</div>
+            <div class="card-title" style="color:var(--orange)">Driver Tips</div>
+          </div>
+          <div style="margin-top:10px">
+            <div class="tip-item"><span>🕐</span> Post rides at least 12 hrs in advance for more bookings.</div>
+            <div class="tip-item"><span>📸</span> A profile photo increases bookings by 60%.</div>
+            <div class="tip-item"><span>💬</span> Respond quickly to requests to maintain your rating.</div>
+            <div class="tip-item"><span>⭐</span> Drivers with 4.5+ ratings get priority in search results.</div>
+          </div>
+        </div>
+
+      </div><!-- end right col -->
+    </div><!-- end content -->
+  </div><!-- end main -->
+
+  <!-- TOAST -->
+  <div class="toast" id="toast">
+    <span style="font-size:22px">🎉</span>
     <div>
-      <div class="page-title">Post a Ride 🚗</div>
-      <div class="page-sub">Share your journey and split the fuel cost with verified passengers.</div>
+      <div class="toast-t">Ride Posted!</div>
+      <div class="toast-m">Passengers can now find and book your ride.</div>
     </div>
-    <a class="back-btn" href="#">← Back to Dashboard</a>
   </div>
 
-  <!-- CONTENT -->
-  <div class="content">
+  <script>
+    // Global variable to track seats (Syllabus 21: UI State)
+    let seats = 3;
 
-    <!-- LEFT FORM COL -->
-    <div>
+    // Function to handle seat selection
+    function pickSeat(btn, count) {
+      // 1. Remove 'on' class from all buttons
+      const buttons = document.querySelectorAll('.s-btn');
+      buttons.forEach(b => b.classList.remove('on'));
 
-      <!-- ROUTE CARD -->
-      <div class="card">
-        <div class="card-head"><div class="card-icon g">🗺️</div><div class="card-title">Route Details</div></div>
-        <div class="card-sub">Set your departure and destination</div>
+      // 2. Add 'on' class to the clicked button
+      btn.classList.add('on');
 
-        <div class="g2">
-          <div class="field">
-            <label>Pickup Location</label>
-            <div class="fi"><span class="ico">📍</span><input type="text" id="f-from" placeholder="e.g. Sector 18, Noida" oninput="sync()"/></div>
-          </div>
-          <div class="field">
-            <label>Drop-off Location</label>
-            <div class="fi"><span class="ico">🏁</span><input type="text" id="f-to" placeholder="e.g. Connaught Place" oninput="sync()"/></div>
-          </div>
-        </div>
+      // 3. Update global variable and UI
+      seats = count;
+      document.getElementById('s-seats').textContent = count;
 
-        <div class="field">
-          <label>Stops Along the Way <span style="text-transform:none;font-weight:400;color:var(--t3)">(optional)</span></label>
-          <div class="fi"><span class="ico">🔵</span><input type="text" placeholder="e.g. Lajpat Nagar, INA Market — comma separated"/></div>
-        </div>
+      // 4. Recalculate earnings
+      calcEarn();
+    }
 
-        <div class="g3">
-          <div class="field">
-            <label>Date</label>
-            <div class="fi"><span class="ico">📅</span><input type="date" id="f-date" oninput="sync()"/></div>
-          </div>
-          <div class="field">
-            <label>Departure Time</label>
-            <div class="fi"><span class="ico">🕐</span><input type="time" id="f-time" value="08:00" oninput="sync()"/></div>
-          </div>
-          <div class="field">
-            <label>Est. Duration</label>
-            <div class="fi"><span class="ico">⏱</span>
-              <select>
-                <option>~30 min</option><option>~45 min</option>
-                <option selected>~1 hr</option><option>~1.5 hrs</option>
-                <option>~2 hrs</option><option>~3+ hrs</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
+    // Function to sync inputs with the Right Summary Sidebar (Syllabus 21: Serving Static Data)
+    function sync() {
+      document.getElementById('s-from').textContent = document.getElementById('f-from').value || '—';
+      document.getElementById('s-to').textContent = document.getElementById('f-to').value || '—';
 
-      <!-- VEHICLE CARD -->
-      <div class="card">
-        <div class="card-head"><div class="card-icon p">🚙</div><div class="card-title">Vehicle Details</div></div>
-        <div class="card-sub">Help passengers identify your vehicle</div>
+      const date = document.getElementById('f-date').value;
+      const time = document.getElementById('f-time').value;
+      document.getElementById('s-dt').textContent = (date || time) ? `${date} ${time}` : '—';
 
-        <div class="g2">
-          <div class="field">
-            <label>Vehicle Type</label>
-            <div class="fi"><span class="ico">🚙</span>
-              <select id="f-vtype" onchange="sync()">
-                <option>Sedan</option><option>Hatchback</option><option>SUV</option>
-                <option>MUV / Van</option><option>Bike</option><option>Auto</option>
-              </select>
-            </div>
-          </div>
-          <div class="field">
-            <label>Vehicle Model</label>
-            <div class="fi"><span class="ico">🏷️</span><input type="text" placeholder="e.g. Swift Dzire"/></div>
-          </div>
-          <div class="field">
-            <label>Registration No.</label>
-            <div class="fi"><span class="ico">🪪</span><input type="text" placeholder="DL 01 AB 1234"/></div>
-          </div>
-          <div class="field">
-            <label>Color</label>
-            <div class="fi"><span class="ico">🎨</span><input type="text" placeholder="e.g. White, Silver"/></div>
-          </div>
-        </div>
-      </div>
+      document.getElementById('s-veh').textContent = document.getElementById('f-vtype').value;
+      document.getElementById('s-price').textContent = document.getElementById('priceRange').value;
+    }
 
-      <!-- SEATS & PRICE CARD -->
-      <div class="card">
-        <div class="card-head"><div class="card-icon a">🪑</div><div class="card-title">Seats & Price</div></div>
-        <div class="card-sub">Set available seats and fare per passenger</div>
+    // Sync the range slider color and price label
+    function syncRange(el) {
+      const val = (el.value - el.min) / (el.max - el.min) * 100;
+      el.style.background = `linear-gradient(to right, var(--orange) ${val}%, var(--border) ${val}%)`;
+      document.getElementById('s-price').textContent = el.value;
+    }
 
-        <div class="field">
-          <label>Available Seats</label>
-          <div class="seat-row" id="seatRow">
-            <button class="s-btn" onclick="pickSeat(this,1)" type="button">1</button>
-            <button class="s-btn" onclick="pickSeat(this,2)" type="button">2</button>
-            <button class="s-btn on" onclick="pickSeat(this,3)" type="button">3</button>
-            <button class="s-btn" onclick="pickSeat(this,4)" type="button">4</button>
-            <button class="s-btn" onclick="pickSeat(this,5)" type="button">5</button>
-            <button class="s-btn" onclick="pickSeat(this,6)" type="button">6</button>
-          </div>
-          <p class="hint">Tap to select how many seats are available for passengers</p>
-        </div>
+    // Calculate potential earnings
+    function calcEarn() {
+      const price = parseInt(document.getElementById('priceRange').value);
+      const total = price * seats;
+      document.getElementById('s-earn').textContent = total;
+    }
 
-        <div class="divider"></div>
-
-        <div class="field">
-          <label>Price per Seat</label>
-          <div class="price-display"><span>₹</span><span id="priceLbl">250</span></div>
-          <input type="range" class="amber-r" id="priceRange" min="50" max="1000" value="250" step="10"
-            oninput="document.getElementById('priceLbl').textContent=this.value;syncRange(this);calcEarn()"/>
-          <div style="display:flex;justify-content:space-between;font-size:11.5px;color:var(--t3);margin-top:5px"><span>₹50</span><span>₹1000</span></div>
-          <p class="hint">💡 Suggested ₹150–₹400 for Delhi NCR routes</p>
-        </div>
-      </div>
-
-      <!-- AMENITIES CARD -->
-      <div class="card">
-        <div class="card-head"><div class="card-icon b">✨</div><div class="card-title">Amenities & Preferences</div></div>
-        <div class="card-sub">Let passengers know what to expect</div>
-
-        <div class="sec-lbl">Amenities Offered</div>
-        <div class="chips">
-          <div class="chip on" onclick="this.classList.toggle('on')">❄️ AC</div>
-          <div class="chip" onclick="this.classList.toggle('on')">🎵 Music</div>
-          <div class="chip on" onclick="this.classList.toggle('on')">🚭 No Smoking</div>
-          <div class="chip" onclick="this.classList.toggle('on')">🐾 Pets OK</div>
-          <div class="chip" onclick="this.classList.toggle('on')">🎒 Luggage OK</div>
-          <div class="chip" onclick="this.classList.toggle('on')">🔌 USB Charger</div>
-          <div class="chip" onclick="this.classList.toggle('on')">💬 Chatty</div>
-          <div class="chip" onclick="this.classList.toggle('on')">🤫 Quiet Ride</div>
-          <div class="chip" onclick="this.classList.toggle('on')">🧴 Sanitizer</div>
-          <div class="chip" onclick="this.classList.toggle('on')">🚺 Women Only</div>
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="field">
-          <label>Notes for Passengers</label>
-          <div class="fi no-ico"><textarea placeholder="e.g. Leaving sharp at 8am. Can drop slightly off route if needed."></textarea></div>
-        </div>
-
-        <div class="g2" style="margin-top:12px">
-          <div class="field">
-            <label>Luggage Allowed</label>
-            <div class="fi"><span class="ico">🧳</span>
-              <select><option>Small bag</option><option>Medium bag</option><option>Large bag</option><option>No luggage</option></select>
-            </div>
-          </div>
-          <div class="field">
-            <label>Gender Preference</label>
-            <div class="fi"><span class="ico">👥</span>
-              <select><option>Any</option><option>Men only</option><option>Women only</option></select>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div><!-- end left col -->
-
-    <!-- RIGHT SUMMARY COL -->
-    <div class="right-col">
-
-      <!-- PRICE CARD -->
-      <div class="card" style="margin-bottom:0">
-        <div class="card-head"><div class="card-icon b">📋</div><div class="card-title">Ride Summary</div></div>
-        <div style="margin-bottom:4px;margin-left:39px;font-size:12.5px;color:var(--t2)">Live preview of your listing</div>
-
-        <div class="rvis">
-          <div class="rstop"><div class="rdot f"></div><div class="rline"></div><div><div class="rname" id="s-from">—</div><div class="rsub">Pickup</div></div></div>
-          <div class="rgap"></div>
-          <div class="rstop"><div class="rdot t"></div><div><div class="rname" id="s-to">—</div><div class="rsub">Drop-off</div></div></div>
-        </div>
-
-        <div class="divider" style="margin-top:0"></div>
-
-        <div class="sum-row"><span class="sum-lbl">📅 Date & Time</span><span class="sum-val" id="s-dt">—</span></div>
-        <div class="sum-row"><span class="sum-lbl">🪑 Seats</span><span class="sum-val p" id="s-seats">3</span></div>
-        <div class="sum-row"><span class="sum-lbl">🚙 Vehicle</span><span class="sum-val" id="s-veh">Sedan</span></div>
-        <div class="sum-row"><span class="sum-lbl">💰 Per Seat</span><span class="sum-val a">₹<span id="s-price">250</span></span></div>
-        <div class="sum-row"><span class="sum-lbl">💸 Max Earn</span><span class="sum-val g">₹<span id="s-earn">750</span></span></div>
-
-        <div class="vstrip">
-          <span style="font-size:18px">✅</span>
-          <p><strong>Verified only</strong> — only ID-verified passengers can book your ride.</p>
-        </div>
-
-        <button class="btn-post" onclick="postRide()">🚀 Post My Ride</button>
-        <button class="btn-cancel" onclick="history.back()">Cancel</button>
-      </div>
-
-      <!-- TIPS CARD -->
-      <div class="card" style="background:rgba(124,92,252,.05);border-color:rgba(124,92,252,.15);margin-bottom:0">
-        <div class="card-head"><div class="card-icon p">💡</div><div class="card-title" style="color:var(--purple2)">Driver Tips</div></div>
-        <div style="margin-top:10px">
-          <div class="tip-item"><span>🕐</span> Post rides at least 12 hrs in advance for more bookings.</div>
-          <div class="tip-item"><span>📸</span> A profile photo increases bookings by 60%.</div>
-          <div class="tip-item"><span>💬</span> Respond quickly to requests to maintain your rating.</div>
-          <div class="tip-item"><span>⭐</span> Drivers with 4.5+ ratings get priority in search results.</div>
-        </div>
-      </div>
-
-    </div><!-- end right col -->
-  </div><!-- end content -->
-</div><!-- end main -->
-
-<!-- TOAST -->
-<div class="toast" id="toast">
-  <span style="font-size:22px">🎉</span>
-  <div><div class="toast-t">Ride Posted!</div><div class="toast-m">Passengers can now find and book your ride.</div></div>
-</div>
-
-<script>
-  // Global variable to track seats (Syllabus 21: UI State)
-  let seats = 3; 
-
-  // Function to handle seat selection
-  function pickSeat(btn, count) {
-    // 1. Remove 'on' class from all buttons
-    const buttons = document.querySelectorAll('.s-btn');
-    buttons.forEach(b => b.classList.remove('on'));
-    
-    // 2. Add 'on' class to the clicked button
-    btn.classList.add('on');
-    
-    // 3. Update global variable and UI
-    seats = count;
-    document.getElementById('s-seats').textContent = count;
-    
-    // 4. Recalculate earnings
-    calcEarn();
-  }
-
-  // Function to sync inputs with the Right Summary Sidebar (Syllabus 21: Serving Static Data)
-  function sync() {
-    document.getElementById('s-from').textContent = document.getElementById('f-from').value || '—';
-    document.getElementById('s-to').textContent = document.getElementById('f-to').value || '—';
-    
-    const date = document.getElementById('f-date').value;
-    const time = document.getElementById('f-time').value;
-    document.getElementById('s-dt').textContent = (date || time) ? `${date} ${time}` : '—';
-    
-    document.getElementById('s-veh').textContent = document.getElementById('f-vtype').value;
-    document.getElementById('s-price').textContent = document.getElementById('priceRange').value;
-  }
-
-  // Sync the range slider color and price label
-  function syncRange(el) {
-    const val = (el.value - el.min) / (el.max - el.min) * 100;
-    el.style.background = `linear-gradient(to right, var(--amber) ${val}%, var(--card2) ${val}%)`;
-    document.getElementById('s-price').textContent = el.value;
-  }
-
-  // Calculate potential earnings
-  function calcEarn() {
-    const price = parseInt(document.getElementById('priceRange').value);
-    const total = price * seats;
-    document.getElementById('s-earn').textContent = total;
-  }
-
-  // THE BACKEND CALL (Syllabus 13 & 24)
-  async function postRide() {
-    const rideData = {
+    // THE BACKEND CALL (Syllabus 13 & 24)
+    async function postRide() {
+      const rideData = {
         pickup: document.getElementById('f-from').value,
         dropoff: document.getElementById('f-to').value,
         date: document.getElementById('f-date').value,
         time: document.getElementById('f-time').value,
         vehicleType: document.getElementById('f-vtype').value,
-        seats: seats, 
+        seats: seats,
         price: parseInt(document.getElementById('priceRange').value),
         amenities: Array.from(document.querySelectorAll('.chip.on')).map(c => c.innerText.trim())
-    };
+      };
 
-    // Validation (Handling Exceptions)
-    if (!rideData.pickup || !rideData.dropoff || !rideData.date) {
+      // Validation (Handling Exceptions)
+      if (!rideData.pickup || !rideData.dropoff || !rideData.date) {
         alert("Please fill in the pickup, drop-off, and date!");
         return;
-    }
+      }
 
-    try {
+      try {
         const response = await fetch('http://localhost:3000/api/v4/rides/post-ride', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(rideData)
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(rideData)
         });
 
         const result = await response.json();
 
         if (response.ok) {
-            // Show Success Toast
-            const t = document.getElementById('toast');
-            t.classList.add('show');
-            setTimeout(() => t.classList.remove('show'), 4000);
+          // Show Success Toast
+          const t = document.getElementById('toast');
+          t.classList.add('show');
+          setTimeout(() => t.classList.remove('show'), 4000);
         } else {
-            alert("Error: " + result.message);
+          alert("Error: " + result.message);
         }
-    } catch (error) {
+      } catch (error) {
         console.error("Fetch error:", error);
         alert("Check your console. Ensure the Backend server is running!");
+      }
     }
-  }
 
-  // Initialize display on load
-  window.onload = () => {
-    sync();
-    calcEarn();
-  };
-</script>
+    // Initialize display on load
+    window.onload = () => {
+      sync();
+      calcEarn();
+    };
+  </script>
 
 </body>
+
 </html>

@@ -3,11 +3,10 @@ import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
 
-// Import your routes (Ensure these files use 'export default')
+// Import routes
 import userRoutes from "./routes/userAuthRoute.js";
 import rideRouter from "./routes/rideRoute.js"; 
 
-// Recreate __dirname for ES Modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -18,8 +17,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve Frontend Static Files
+// Static Files
 app.use(express.static(path.join(__dirname, "../Frontend")));
+app.use(express.static('public'));
 
 // Routes
 app.use("/api/v4/user", userRoutes);
