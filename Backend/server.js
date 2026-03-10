@@ -16,6 +16,6 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../Frontend/login.html"));
 });
 
-app.listen(3000, () => {
-  console.log("Server running on port 3000");
+app.listen(3001, () => {
+  console.log("Server running on port 3001");
 });
