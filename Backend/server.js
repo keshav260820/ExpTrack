@@ -30,7 +30,17 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../Frontend/login.html"));
 });
 
-const PORT = 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+
+app.listen(3000, () => {
+  console.log("Server running on port 3000");
+});
+
+
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send({
+        error: 'Something went wrong!',
+        message: err.message
+    });
+
 });

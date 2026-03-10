@@ -1,6 +1,9 @@
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
+
+const fs = require("fs");
+const path = require("path");
+const fetch = require('node-fetch'); 
+const { OAuth2Client } = require('google-auth-library');
+
 
 // 1. Recreate __dirname for ES Modules
 const __filename = fileURLToPath(import.meta.url);
@@ -54,4 +57,50 @@ export const loginUser = (req, res) => {
         message: "Login successful",
         user
     });
+};
+
+
+const client = new OAuth2Client("173008253506-rk60rbs422nng2hvuis23addl1378k84.apps.googleusercontent.com");
+
+exports.googleLogin = async (req, res) => {
+  const { token } = req.body;
+
+  try {
+    const googleRes = await fetch(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=${token}`);
+    const userData = await googleRes.json();
+
+    if (!userData.email) {
+      return res.status(400).json({ success: false, message: "Google Auth Failed" });
+    }
+
+    const { name, email, picture } = userData;
+
+    // Read your user.json file
+    const data = JSON.parse(fs.readFileSync(filePath));
+
+    // Check if user exists in the JSON array
+    let user = data.users.find(u => u.email === email);
+
+    if (!user) {
+      console.log("New Google user detected. Adding to user.json...");
+      
+      user = {
+        id: Date.now(),
+        name,
+        email,
+        password: "", 
+        role: "Passenger",
+        profilePicture: picture
+      };
+
+      data.users.push(user);
+      fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+    }
+
+    res.status(200).json({ success: true, message: "Login successful", user });
+
+  } catch (error) {
+    console.error("Backend Error:", error);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
 };

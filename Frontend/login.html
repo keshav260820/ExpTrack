@@ -57,9 +57,6 @@
       user-select: none;
     }
 
-    /* ═══════════════════════════════════════
-       AMBIENT BACKGROUND
-    ═══════════════════════════════════════ */
     .bg-grid {
       position: fixed;
       inset: 0;
@@ -117,9 +114,6 @@
       }
     }
 
-    /* ═══════════════════════════════════════
-       NAVBAR
-    ═══════════════════════════════════════ */
     .navbar {
       position: fixed;
       top: 0;
@@ -240,9 +234,6 @@
       transform: translateY(0);
     }
 
-    /* ═══════════════════════════════════════
-       HERO
-    ═══════════════════════════════════════ */
     .hero {
       position: relative;
       z-index: 1;
@@ -255,7 +246,6 @@
       padding: 120px 40px 80px;
     }
 
-    /* Pill badge */
     .hero-badge {
       display: inline-flex;
       align-items: center;
@@ -322,7 +312,6 @@
       font-weight: 400;
     }
 
-    /* ── Hero Search Bar ── */
     .hero-search {
       width: 100%;
       max-width: 680px;
@@ -423,7 +412,6 @@
       transform: translateY(0);
     }
 
-    /* Trust strip */
     .trust-strip {
       display: flex;
       align-items: center;
@@ -450,9 +438,6 @@
       background: var(--border);
     }
 
-    /* ═══════════════════════════════════════
-       STATS BAR
-    ═══════════════════════════════════════ */
     .stats-bar {
       position: relative;
       z-index: 1;
@@ -487,9 +472,7 @@
       color: var(--muted);
     }
 
-    /* ═══════════════════════════════════════
-       HOW IT WORKS
-    ═══════════════════════════════════════ */
+
     .section {
       position: relative;
       z-index: 1;
@@ -592,9 +575,6 @@
       line-height: 1.7;
     }
 
-    /* ═══════════════════════════════════════
-       FEATURES
-    ═══════════════════════════════════════ */
     .features-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -671,9 +651,6 @@
       line-height: 1.7;
     }
 
-    /* ═══════════════════════════════════════
-       CTA BANNER
-    ═══════════════════════════════════════ */
     .cta-banner {
       position: relative;
       z-index: 1;
@@ -782,9 +759,6 @@
       background: rgba(79, 142, 255, 0.05);
     }
 
-    /* ═══════════════════════════════════════
-       FOOTER
-    ═══════════════════════════════════════ */
     .footer {
       position: relative;
       z-index: 1;
@@ -852,9 +826,6 @@
       }
     }
 
-    /* ═══════════════════════════════════════
-       MODAL OVERLAY
-    ═══════════════════════════════════════ */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -876,7 +847,6 @@
       pointer-events: all;
     }
 
-    /* ── Modal Card ── */
     .modal-card {
       width: 100%;
       max-width: 460px;
@@ -900,7 +870,6 @@
       opacity: 1;
     }
 
-    /* decorative top line */
     .modal-card::after {
       content: '';
       position: absolute;
@@ -911,7 +880,6 @@
       background: linear-gradient(90deg, transparent, rgba(79, 142, 255, 0.5), rgba(124, 58, 237, 0.4), transparent);
     }
 
-    /* decorative glow */
     .modal-card::before {
       content: '';
       position: absolute;
@@ -920,7 +888,6 @@
       pointer-events: none;
     }
 
-    /* close btn */
     .modal-close {
       position: absolute;
       top: 18px;
@@ -947,7 +914,6 @@
       background: rgba(79, 142, 255, 0.08);
     }
 
-    /* modal brand */
     .modal-brand {
       display: flex;
       align-items: center;
@@ -976,7 +942,6 @@
       color: #fff;
     }
 
-    /* tabs */
     .modal-tabs {
       display: flex;
       background: var(--surface2);
@@ -1009,7 +974,6 @@
       box-shadow: 0 4px 14px rgba(79, 142, 255, 0.3);
     }
 
-    /* panel */
     .modal-panel {
       display: none;
       position: relative;
@@ -1047,7 +1011,6 @@
       line-height: 1.6;
     }
 
-    /* social btn */
     .btn-google {
       width: 100%;
       display: flex;
@@ -1079,7 +1042,6 @@
       flex-shrink: 0;
     }
 
-    /* divider */
     .or-divider {
       display: flex;
       align-items: center;
@@ -1101,7 +1063,6 @@
       font-weight: 600;
     }
 
-    /* form */
     .form-group {
       margin-bottom: 14px;
     }
@@ -1174,7 +1135,6 @@
       gap: 12px;
     }
 
-    /* password eye */
     .pwd-eye {
       position: absolute;
       right: 13px;
@@ -1194,7 +1154,6 @@
       color: var(--accent);
     }
 
-    /* extras row */
     .extras-row {
       display: flex;
       align-items: center;
@@ -1254,7 +1213,6 @@
       opacity: 0.7;
     }
 
-    /* submit */
     .btn-submit {
       width: 100%;
       padding: 14px;
@@ -1291,7 +1249,6 @@
       transform: translateY(0);
     }
 
-    /* switch */
     .switch-row {
       text-align: center;
       font-size: 13px;
@@ -1310,7 +1267,6 @@
       opacity: 0.75;
     }
 
-    /* user type cards */
     .type-cards {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -1358,7 +1314,6 @@
       margin-top: 2px;
     }
 
-    /* strength bars */
     .pwd-bars {
       display: flex;
       gap: 4px;
@@ -1402,21 +1357,16 @@
 
 <body>
 
-  <!-- ══════════════════════════════════════════════
-       MODAL OVERLAY
-  ══════════════════════════════════════════════ -->
   <div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
     <div class="modal-card" id="modal-card">
 
       <button class="modal-close" onclick="closeModal()">✕</button>
 
-      <!-- Brand -->
       <div class="modal-brand">
         <div class="modal-brand-icon">🚗</div>
         <span class="modal-brand-name">Mitra Ride</span>
       </div>
 
-      <!-- Tabs -->
       <div class="modal-tabs">
         <button class="modal-tab active" id="mtab-signin" onclick="switchModalTab('signin')">Sign In</button>
         <button class="modal-tab" id="mtab-signup" onclick="switchModalTab('signup')">Create Account</button>
@@ -1427,7 +1377,7 @@
         <div class="modal-heading">Welcome back 👋</div>
         <div class="modal-sub">Sign in to manage your rides and track your journey.</div>
 
-        <button class="btn-google">
+        <button type="button" class="btn-google" id="custom-google-btn">
           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -1490,7 +1440,7 @@
         <div class="modal-heading">Join Mitra Ride ✦</div>
         <div class="modal-sub">Create your account and start your journey today.</div>
 
-        <button class="btn-google">
+        <button type="button" class="btn-google" id="custom-google-btn">
           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -1507,6 +1457,7 @@
           </svg>
           Continue with Google
         </button>
+
 
         <div class="or-divider">
           <div class="or-line"></div>
@@ -1568,18 +1519,13 @@
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════════════
-       PAGE CONTENT
-  ══════════════════════════════════════════════ -->
   <div id="page-content">
 
-    <!-- Ambient BG -->
     <div class="bg-grid"></div>
     <div class="bg-blob blob-1"></div>
     <div class="bg-blob blob-2"></div>
     <div class="bg-blob blob-3"></div>
 
-    <!-- ── NAVBAR ── -->
     <nav class="navbar" id="navbar">
       <a class="nav-logo" href="#">
         <div class="nav-logo-icon">🚗</div>
@@ -1614,7 +1560,6 @@
         enjoyable — every single day.
       </p>
 
-      <!-- Search Bar -->
       <div class="hero-search">
         <div class="search-field-group">
           <span class="search-input-label">From</span>
@@ -1647,7 +1592,6 @@
         <button class="btn-hero-search" onclick="openModal('signup')">Find a Ride →</button>
       </div>
 
-      <!-- Trust strip -->
       <div class="trust-strip">
         <div class="trust-item">
           <span class="trust-icon">✅</span>
@@ -1671,7 +1615,6 @@
       </div>
     </section>
 
-    <!-- ── STATS BAR ── -->
     <div class="stats-bar">
       <div class="stat-cell">
         <div class="stat-val">2.4M+</div>
@@ -1691,7 +1634,6 @@
       </div>
     </div>
 
-    <!-- ── HOW IT WORKS ── -->
     <div class="section">
       <div class="section-tag">How It Works</div>
       <h2 class="section-title">Three steps to your<br>perfect commute.</h2>
@@ -1722,7 +1664,6 @@
       </div>
     </div>
 
-    <!-- ── FEATURES ── -->
     <div class="section" style="padding-top: 0;">
       <div class="section-tag">Features</div>
       <h2 class="section-title">Everything you need<br>in one place.</h2>
@@ -1764,7 +1705,6 @@
       </div>
     </div>
 
-    <!-- ── CTA BANNER ── -->
     <div class="cta-banner">
       <div class="cta-blob-l"></div>
       <div class="cta-blob-r"></div>
@@ -1790,10 +1730,10 @@
       </div>
     </footer>
 
-  </div><!-- /#page-content -->
+  </div>
 
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script>
-    /* ── Modal ── */
     function openModal(tab) {
       document.body.classList.add('modal-open');
       document.getElementById('modal-overlay').classList.add('visible');
@@ -1903,6 +1843,47 @@
         alert(result.message);
       }
     }
+
+    let tokenClient;
+
+window.onload = function () {
+  // 1. Initialize the Token Client
+  tokenClient = google.accounts.oauth2.initTokenClient({
+    client_id: '173008253506-rk60rbs422nng2hvuis23addl1378k84.apps.googleusercontent.com',
+    scope: 'openid email profile',
+    callback: (response) => {
+      if (response.access_token) {
+        // Send the access_token to your backend
+        handleGoogleAuth(response.access_token);
+      }
+    },
+  });
+
+  // 2. Attach to all Google buttons (Sign In and Sign Up)
+  const googleBtns = document.querySelectorAll('.btn-google');
+  googleBtns.forEach(btn => {
+    btn.onclick = () => tokenClient.requestAccessToken();
+  });
+};
+
+async function handleGoogleAuth(accessToken) {
+  try {
+    const res = await fetch("http://localhost:3000/api/v4/user/google-login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token: accessToken }) // Sending token instead of code
+    });
+
+    const result = await res.json();
+    if (res.ok) {
+      window.location.href = "/dashboard.html";
+    } else {
+      alert(result.message || "Auth Failed");
+    }
+  } catch (err) {
+    console.error("Login Error:", err);
+  }
+}
   </script>
 </body>
 
