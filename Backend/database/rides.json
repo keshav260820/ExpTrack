@@ -12,5 +12,19 @@
       "❄️ AC",
       "🚭 No Smoking"
     ]
+  },
+  {
+    "id": 1773153817004,
+    "pickup": "Noida",
+    "dropoff": "Delhi",
+    "date": "2026-03-11",
+    "time": "21:00",
+    "vehicleType": "Sedan",
+    "seats": 3,
+    "price": 300,
+    "amenities": [
+      "❄️ AC",
+      "🚭 No Smoking"
+    ]
   }
 ]
