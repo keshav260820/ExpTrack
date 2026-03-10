@@ -20,7 +20,7 @@
     "date": "2026-03-11",
     "time": "21:00",
     "vehicleType": "Sedan",
-    "seats": 3,
+    "seats": 1,
     "price": 300,
     "amenities": [
       "❄️ AC",
@@ -34,7 +34,7 @@
     "date": "2026-03-14",
     "time": "08:00",
     "vehicleType": "Sedan",
-    "seats": 3,
+    "seats": 2,
     "price": 250,
     "amenities": [
       "❄️ AC",
@@ -48,7 +48,7 @@
     "date": "2026-03-11",
     "time": "08:00",
     "vehicleType": "Sedan",
-    "seats": 3,
+    "seats": 2,
     "price": 250,
     "amenities": [
       "❄️ AC",
