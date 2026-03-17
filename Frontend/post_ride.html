@@ -1303,27 +1303,20 @@
   </div>
 
   <script>
-    // Global variable to track seats (Syllabus 21: UI State)
     let seats = 3;
 
-    // Function to handle seat selection
     function pickSeat(btn, count) {
-      // 1. Remove 'on' class from all buttons
       const buttons = document.querySelectorAll('.s-btn');
       buttons.forEach(b => b.classList.remove('on'));
 
-      // 2. Add 'on' class to the clicked button
       btn.classList.add('on');
 
-      // 3. Update global variable and UI
       seats = count;
       document.getElementById('s-seats').textContent = count;
 
-      // 4. Recalculate earnings
       calcEarn();
     }
 
-    // Function to sync inputs with the Right Summary Sidebar (Syllabus 21: Serving Static Data)
     function sync() {
       document.getElementById('s-from').textContent = document.getElementById('f-from').value || '—';
       document.getElementById('s-to').textContent = document.getElementById('f-to').value || '—';
@@ -1336,21 +1329,18 @@
       document.getElementById('s-price').textContent = document.getElementById('priceRange').value;
     }
 
-    // Sync the range slider color and price label
     function syncRange(el) {
       const val = (el.value - el.min) / (el.max - el.min) * 100;
       el.style.background = `linear-gradient(to right, var(--orange) ${val}%, var(--border) ${val}%)`;
       document.getElementById('s-price').textContent = el.value;
     }
 
-    // Calculate potential earnings
     function calcEarn() {
       const price = parseInt(document.getElementById('priceRange').value);
       const total = price * seats;
       document.getElementById('s-earn').textContent = total;
     }
 
-    // THE BACKEND CALL (Syllabus 13 & 24)
     async function postRide() {
       const rideData = {
         pickup: document.getElementById('f-from').value,
@@ -1363,7 +1353,6 @@
         amenities: Array.from(document.querySelectorAll('.chip.on')).map(c => c.innerText.trim())
       };
 
-      // Validation (Handling Exceptions)
       if (!rideData.pickup || !rideData.dropoff || !rideData.date) {
         alert("Please fill in the pickup, drop-off, and date!");
         return;
@@ -1371,7 +1360,7 @@
 
       try {
         const response = await fetch('http://localhost:3000/api/v4/rides/post-ride', {
-          method: 'POST',
+          method: 'POST', //HTTP method
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(rideData)
         });
@@ -1379,7 +1368,7 @@
         const result = await response.json();
 
         if (response.ok) {
-          // Show Success Toast
+         
           const t = document.getElementById('toast');
           t.classList.add('show');
           setTimeout(() => t.classList.remove('show'), 4000);
@@ -1392,7 +1381,7 @@
       }
     }
 
-    // Initialize display on load
+   
     window.onload = () => {
       sync();
       calcEarn();

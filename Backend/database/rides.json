@@ -6,7 +6,7 @@
     "date": "2026-03-11",
     "time": "08:00",
     "vehicleType": "Sedan",
-    "seats": 3,
+    "seats": 2,
     "price": 250,
     "amenities": [
       "❄️ AC",
@@ -50,6 +50,20 @@
     "vehicleType": "Sedan",
     "seats": 2,
     "price": 250,
+    "amenities": [
+      "❄️ AC",
+      "🚭 No Smoking"
+    ]
+  },
+  {
+    "id": 1773211048076,
+    "pickup": "AGRA",
+    "dropoff": "MUMBAI",
+    "date": "2026-03-12",
+    "time": "08:00",
+    "vehicleType": "Sedan",
+    "seats": 4,
+    "price": 700,
     "amenities": [
       "❄️ AC",
       "🚭 No Smoking"
