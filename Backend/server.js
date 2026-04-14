@@ -2,45 +2,53 @@ import express from "express";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
+import dotenv from "dotenv";
+dotenv.config();
 
-// Import routes
+import connectDB from "./database/dbConnection.js";
 import userRoutes from "./routes/userAuthRoute.js";
-import rideRouter from "./routes/rideRoute.js"; 
+import rideRouter from "./routes/rideRoute.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
 
-// Middleware
+// middleware
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Static Files
+// static
 app.use(express.static(path.join(__dirname, "../Frontend")));
-app.use(express.static('public'));
+app.use(express.static("public"));
 
-// Routes
+// routes
 app.use("/api/v4/user", userRoutes);
 app.use("/api/v4/rides", rideRouter);
 
-// Default Route
+// frontend route
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../Frontend/login.html"));
 });
 
-
-app.listen(3000, () => {
-  console.log("Server running on port 3000");
-});
-
-
+// error handler
 app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send({
-        error: 'Something went wrong!',
-        message: err.message
-    });
-
+  console.error(err.stack);
+  res.status(500).send({
+    error: "Something went wrong!",
+    message: err.message
+  });
 });
+
+const startServer = async () => {
+  await connectDB();
+
+  const PORT = process.env.PORT || 3000;
+
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+};
+
+startServer();

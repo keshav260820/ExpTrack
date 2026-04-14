@@ -30,8 +30,8 @@
       --yellow: #F1C40F;
       --text: #1A1A1A;
       --muted: #7A7567;
-      --card-shadow: 0 2px 16px rgba(0,0,0,0.07), 0 1px 3px rgba(0,0,0,0.04);
-      --card-shadow-hover: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
+      --card-shadow: 0 2px 16px rgba(0, 0, 0, 0.07), 0 1px 3px rgba(0, 0, 0, 0.04);
+      --card-shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
     }
 
     html {
@@ -108,8 +108,13 @@
     }
 
     @keyframes float {
-      from { transform: translate(0, 0); }
-      to { transform: translate(40px, 30px); }
+      from {
+        transform: translate(0, 0);
+      }
+
+      to {
+        transform: translate(40px, 30px);
+      }
     }
 
     /* ═══════════════════════════════════════
@@ -135,7 +140,7 @@
 
     .navbar.scrolled {
       background: rgba(250, 250, 248, 0.97);
-      box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+      box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
     }
 
     .nav-logo {
@@ -284,8 +289,17 @@
     }
 
     @keyframes pulse-dot {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.7); }
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.5;
+        transform: scale(0.7);
+      }
     }
 
     .hero-heading {
@@ -348,10 +362,10 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      box-shadow: 
+      box-shadow:
         0 8px 32px rgba(255, 140, 0, 0.10),
-        0 24px 60px rgba(0,0,0,0.08),
-        0 2px 8px rgba(0,0,0,0.04);
+        0 24px 60px rgba(0, 0, 0, 0.08),
+        0 2px 8px rgba(0, 0, 0, 0.04);
       animation: fadeUp 0.7s ease 0.3s both;
       position: relative;
       backdrop-filter: blur(20px);
@@ -729,7 +743,7 @@
       padding: 60px;
       text-align: center;
       overflow: hidden;
-      box-shadow: 0 4px 24px rgba(255, 140, 0, 0.08), 0 1px 4px rgba(0,0,0,0.04);
+      box-shadow: 0 4px 24px rgba(255, 140, 0, 0.08), 0 1px 4px rgba(0, 0, 0, 0.04);
     }
 
     .cta-banner::before {
@@ -896,8 +910,15 @@
     }
 
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     /* ═══════════════════════════════════════
@@ -1069,8 +1090,15 @@
     }
 
     @keyframes panelIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .modal-heading {
@@ -1633,7 +1661,8 @@
       </h1>
 
       <p class="hero-sub">
-        Share rides with verified people going your way — college, work, market, or anywhere across the city. Split costs, skip the traffic, and travel smarter every single day.
+        Share rides with verified people going your way — college, work, market, or anywhere across the city. Split
+        costs, skip the traffic, and travel smarter every single day.
       </p>
 
       <div class="hero-search">
@@ -1713,26 +1742,30 @@
     <div class="section">
       <div class="section-tag">How It Works</div>
       <h2 class="section-title">Three Easy Steps ,<br> and start your JOURNEY</h2>
-      <p class="section-sub">Getting started with Ride मित्र takes less than two minutes — whether you're a student, a daily traveler, or going on a weekend trip.</p>
+      <p class="section-sub">Getting started with Ride मित्र takes less than two minutes — whether you're a student, a
+        daily traveler, or going on a weekend trip.</p>
 
       <div class="steps-grid">
         <div class="step-card">
           <div class="step-num">Step 01</div>
           <div class="step-icon">🔍</div>
           <div class="step-title">Search Your Route</div>
-          <p class="step-desc">Enter your pickup and drop-off location. We instantly show you available rides that match your route — for daily commutes, college runs, or one-off trips.</p>
+          <p class="step-desc">Enter your pickup and drop-off location. We instantly show you available rides that match
+            your route — for daily commutes, college runs, or one-off trips.</p>
         </div>
         <div class="step-card">
           <div class="step-num">Step 02</div>
           <div class="step-icon">🤝</div>
           <div class="step-title">Pick Your मित्र</div>
-          <p class="step-desc">Browse verified traveler profiles, check ratings and past reviews, then book your seat in just two taps. No calls, no hassle.</p>
+          <p class="step-desc">Browse verified traveler profiles, check ratings and past reviews, then book your seat in
+            just two taps. No calls, no hassle.</p>
         </div>
         <div class="step-card">
           <div class="step-num">Step 03</div>
           <div class="step-icon">🚀</div>
           <div class="step-title">Ride, Save, Repeat</div>
-          <p class="step-desc">Meet your travel partner, enjoy the journey, and pay automatically. Safe, affordable, and reliable — every single trip.</p>
+          <p class="step-desc">Meet your travel partner, enjoy the journey, and pay automatically. Safe, affordable, and
+            reliable — every single trip.</p>
         </div>
       </div>
     </div>
@@ -1740,35 +1773,40 @@
     <div class="section" style="padding-top: 0;">
       <div class="section-tag">Features</div>
       <h2 class="section-title">Everything built for<br>every kind of traveler.</h2>
-      <p class="section-sub">Ride मित्र is designed around your safety, savings, and the freedom to go wherever you need.</p>
+      <p class="section-sub">Ride मित्र is designed around your safety, savings, and the freedom to go wherever you
+        need.</p>
 
       <div class="features-grid">
         <div class="feature-card">
           <div class="feature-icon-wrap bg-blue">🛡️</div>
           <div class="feature-content">
             <h3>Verified Profiles</h3>
-            <p>Every driver and passenger is identity-verified with Aadhaar or PAN. Safety and trust for every traveler, on every trip.</p>
+            <p>Every driver and passenger is identity-verified with Aadhaar or PAN. Safety and trust for every traveler,
+              on every trip.</p>
           </div>
         </div>
         <div class="feature-card accent-green">
           <div class="feature-icon-wrap bg-green">💸</div>
           <div class="feature-content">
             <h3>Smart Cost Splitting</h3>
-            <p>Our algorithm calculates the fairest fare split based on distance, fuel prices, and route overlap. The right price, every time.</p>
+            <p>Our algorithm calculates the fairest fare split based on distance, fuel prices, and route overlap. The
+              right price, every time.</p>
           </div>
         </div>
         <div class="feature-card accent-purple">
           <div class="feature-icon-wrap bg-purple">📍</div>
           <div class="feature-content">
             <h3>Live Ride Tracking</h3>
-            <p>Share your live location with family or friends. Real-time GPS tracking and a one-tap SOS button keep you safe on every journey.</p>
+            <p>Share your live location with family or friends. Real-time GPS tracking and a one-tap SOS button keep you
+              safe on every journey.</p>
           </div>
         </div>
         <div class="feature-card accent-yellow">
           <div class="feature-icon-wrap bg-yellow">🔔</div>
           <div class="feature-content">
             <h3>Smart Notifications</h3>
-            <p>Get notified the moment a ride on your route becomes available. Never miss a match — whether it's your daily run or a one-time trip.</p>
+            <p>Get notified the moment a ride on your route becomes available. Never miss a match — whether it's your
+              daily run or a one-time trip.</p>
           </div>
         </div>
       </div>
@@ -1889,7 +1927,8 @@
       alert(result.message);
 
       if (response.ok) {
-        window.location.href = "/dashboard.html";
+        localStorage.setItem("token", result.token);
+        window.location.href = '/dashboard.html';
       }
     }
     async function handleLogin(event) {
@@ -1907,7 +1946,8 @@
       const result = await response.json();
 
       if (response.ok) {
-        window.location.href = '/dashboard.html';
+        localStorage.setItem("token", result.token);
+        window.location.href = "/dashboard.html";
       } else {
         alert(result.message);
       }
@@ -1915,44 +1955,45 @@
 
     let tokenClient;
 
-window.onload = function () {
-  // 1. Initialize the Token Client
-  tokenClient = google.accounts.oauth2.initTokenClient({
-    client_id: '173008253506-rk60rbs422nng2hvuis23addl1378k84.apps.googleusercontent.com',
-    scope: 'openid email profile',
-    callback: (response) => {
-      if (response.access_token) {
-        // Send the access_token to your backend
-        handleGoogleAuth(response.access_token);
+    window.onload = function () {
+      // 1. Initialize the Token Client
+      tokenClient = google.accounts.oauth2.initTokenClient({
+        client_id: '173008253506-rk60rbs422nng2hvuis23addl1378k84.apps.googleusercontent.com',
+        scope: 'openid email profile',
+        callback: (response) => {
+          if (response.access_token) {
+            // Send the access_token to your backend
+            handleGoogleAuth(response.access_token);
+          }
+        },
+      });
+
+      // 2. Attach to all Google buttons (Sign In and Sign Up)
+      const googleBtns = document.querySelectorAll('.btn-google');
+      googleBtns.forEach(btn => {
+        btn.onclick = () => tokenClient.requestAccessToken();
+      });
+    };
+
+    async function handleGoogleAuth(accessToken) {
+      try {
+        const res = await fetch("http://localhost:3000/api/v4/user/google-login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ token: accessToken }) // Sending token instead of code
+        });
+
+        const result = await res.json();
+        if (res.ok) {
+          localStorage.setItem("token", result.token); 
+          window.location.href = "/dashboard.html";
+        } else {
+          alert(result.message || "Auth Failed");
+        }
+      } catch (err) {
+        console.error("Login Error:", err);
       }
-    },
-  });
-
-  // 2. Attach to all Google buttons (Sign In and Sign Up)
-  const googleBtns = document.querySelectorAll('.btn-google');
-  googleBtns.forEach(btn => {
-    btn.onclick = () => tokenClient.requestAccessToken();
-  });
-};
-
-async function handleGoogleAuth(accessToken) {
-  try {
-    const res = await fetch("http://localhost:3000/api/v4/user/google-login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ token: accessToken }) // Sending token instead of code
-    });
-
-    const result = await res.json();
-    if (res.ok) {
-      window.location.href = "/dashboard.html";
-    } else {
-      alert(result.message || "Auth Failed");
     }
-  } catch (err) {
-    console.error("Login Error:", err);
-  }
-}
   </script>
 </body>
 
