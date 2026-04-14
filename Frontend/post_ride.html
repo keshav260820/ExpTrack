@@ -1371,6 +1371,7 @@
         },
         body: JSON.stringify(rideData)
       });
+ 
 
       const result = await response.json();
 
@@ -1380,6 +1381,7 @@
         alert(result.message);
       }
     }
+
     window.onload = () => {
       sync();
       calcEarn();

@@ -1913,7 +1913,7 @@
       const password = document.getElementById("signup-password").value;
 
       const response = await fetch("http://localhost:3000/api/v4/user/register", {
-        method: "POST",
+        method: "POST", //HTTP
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name,
@@ -1938,7 +1938,7 @@
       const password = document.getElementById('login-password').value;
 
       const response = await fetch('http://localhost:3000/api/v4/user/login', {
-        method: 'POST',
+        method: 'POST', //HTTP 
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
       });
@@ -1985,7 +1985,7 @@
 
         const result = await res.json();
         if (res.ok) {
-          localStorage.setItem("token", result.token); 
+          localStorage.setItem("token", result.token);
           window.location.href = "/dashboard.html";
         } else {
           alert(result.message || "Auth Failed");
@@ -1993,6 +1993,7 @@
       } catch (err) {
         console.error("Login Error:", err);
       }
+
     }
   </script>
 </body>
