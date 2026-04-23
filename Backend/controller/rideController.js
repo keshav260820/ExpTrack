@@ -15,7 +15,7 @@ export const postRide = async (req, res) => {
         } = req.body;
 
         const newRide = await Ride.create({
-            userId: req.userId, 
+            userId: req.user._id, 
             pickup,
             destination,
             date,
