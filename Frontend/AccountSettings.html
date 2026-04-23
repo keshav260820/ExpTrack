@@ -1345,8 +1345,12 @@
         <div class="nav-section">
             <div class="nav-label">Account</div>
             <div class="nav-item"><span class="icon">🔔</span> Notifications</div>
-            <a href="AccountSettings.html"><div class="nav-item"><span class="icon">⚙️</span> Settings</div></a>
-            <a href="login.html"><div class="nav-item"><span class="icon">👤</span> 🔐 &nbsp;Logout</div></a>
+            <a href="AccountSettings.html">
+                <div class="nav-item"><span class="icon">⚙️</span> Settings</div>
+            </a>
+            <a href="login.html">
+                <div class="nav-item"><span class="icon">👤</span> 🔐 &nbsp;Logout</div>
+            </a>
 
         </div>
 
@@ -1378,7 +1382,7 @@
                     <div class="profile-avatar-xl">SG</div>
                     <div class="change-photo-btn" title="Change photo">📷</div>
                 </div>
-                <div class="ov-name">Shubhi Govil</div>
+                <div class="ov-name"></div>
                 <div class="ov-role">Passenger · Member since 2023</div>
                 <div class="verified-pill">✓ &nbsp;Verified Account</div>
                 <div class="ov-divider"></div>
@@ -1497,24 +1501,111 @@
         </div>
 
         <script>
-            let isEditing = false;
+ let isEditing = false;
+    const editBtn = document.getElementById("editBtn");
+    const deleteBtn = document.querySelector(".btn-delete");
+    const inputs = document.querySelectorAll(".ride-input:not([type='email'])");
 
-            const editBtn = document.getElementById("editBtn");
-            const inputs = document.querySelectorAll(".ride-input:not([type='email'])"); 
+    // --- 1. LOAD PROFILE DATA ON PAGE START ---
+    async function initPage() {
+        try {
+            const response = await fetch('http://localhost:3000/api/v4/user/me', {
+                method: 'GET',
+                credentials: 'include'
+            });
+            const data = await response.json();
 
-            editBtn.addEventListener("click", () => {
-                isEditing = !isEditing;
+            if (data.success) {
+                const user = data.user;
+                // Map the data to the correct inputs
+                document.querySelector('input[placeholder="Your full name"]').value = user.name || "";
+                document.querySelector('input[type="tel"]').value = user.phone || "";
+                document.querySelector('input[type="email"]').value = user.email || "";
+                document.querySelector('textarea').value = user.bio || "";
+                
+                // Find the City input specifically (it is usually the second text input)
+                const cityInput = document.querySelector('input[placeholder="City"]') || document.querySelectorAll('.ride-input')[3];
+                if (cityInput) cityInput.value = user.city || "";
 
-                inputs.forEach(input => {
-                    input.disabled = !isEditing;
+                // Update UI Labels
+                document.querySelector('.ov-name').innerText = user.name;
+                document.querySelectorAll('.user-name').forEach(el => el.innerText = user.name);
+                
+                // Set Initials for Avatar
+                const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
+                document.querySelectorAll('.avatar, .profile-avatar-xl').forEach(el => el.innerText = initials);
+            } else {
+                window.location.href = "login.html";
+            }
+        } catch (err) {
+            console.error("Failed to load profile:", err);
+        }
+    }
+
+    // --- 2. TOGGLE EDIT AND SAVE CHANGES ---
+    editBtn.addEventListener("click", async () => {
+        if (!isEditing) {
+            isEditing = true;
+            inputs.forEach(input => input.disabled = false);
+            editBtn.innerHTML = "💾 Save Changes";
+        } else {
+            const cityInput = document.querySelector('input[placeholder="City"]') || document.querySelectorAll('.ride-input')[3];
+            
+            const updatedData = {
+                fullName: document.querySelector('input[placeholder="Your full name"]').value,
+                phoneNumber: document.querySelector('input[type="tel"]').value,
+                city: cityInput.value,
+                bio: document.querySelector('textarea').value
+            };
+
+            try {
+                const response = await fetch('http://localhost:3000/api/v4/user/update-profile', {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include', // Important for cookies
+                    body: JSON.stringify(updatedData)
                 });
 
-                if (isEditing) {
-                    editBtn.innerText = "💾 Save Changes";
+                const result = await response.json();
+
+                if (result.success) {
+                    alert("Profile updated successfully!");
+                    isEditing = false;
+                    inputs.forEach(input => input.disabled = true);
+                    editBtn.innerHTML = "✏️ Edit";
+                    // Refresh labels
+                    document.querySelector('.ov-name').innerText = updatedData.fullName;
+                    document.querySelectorAll('.user-name').forEach(el => el.innerText = updatedData.fullName);
                 } else {
-                    editBtn.innerText = "✏️ Edit";
+                    alert("Update failed: " + result.message);
                 }
-            });
+            } catch (error) {
+                console.error("Error:", error);
+                alert("Server error. Please log in again.");
+            }
+        }
+    });
+
+    // --- 3. DELETE ACCOUNT ---
+    deleteBtn.addEventListener("click", async () => {
+        if (confirm("Permanently delete your Ride मित्र account?")) {
+            try {
+                const response = await fetch('http://localhost:3000/api/v4/user/delete-user', {
+                    method: 'DELETE',
+                    credentials: 'include'
+                });
+                const result = await response.json();
+                if (result.success) {
+                    window.location.href = "login.html";
+                }
+            } catch (err) {
+                console.error("Delete failed:", err);
+            }
+        }
+    });
+
+    // Initialize page on load
+    window.onload = initPage;
         </script>
 
     </main>

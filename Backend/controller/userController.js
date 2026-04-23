@@ -2,8 +2,47 @@ import User from "../models/User.js";
 import fetch from "node-fetch";
 import { OAuth2Client } from "google-auth-library";
 import { v4 as uuidv4 } from "uuid";
-import bcrypt from "bcrypt"; 
+import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+
+/**
+ * Helper: Generates JWT, sets it in a Cookie, and sends JSON response
+ * This satisfies your requirement to use BOTH JWT and Cookies.
+ */
+const sendTokenResponse = (user, statusCode, res, message) => {
+    // 1. Create JWT
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+        expiresIn: "7d",
+    });
+
+    // 2. Define Cookie Options
+    const cookieOptions = {
+        expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+        httpOnly: true,
+        secure: false, // Set to false for localhost/development
+        sameSite: "Lax",
+        path: "/" // <--- CRITICAL: This allows the cookie to be sent from any page
+    };
+
+    // 3. Send Response with Cookie and JSON
+    res.status(statusCode)
+        .cookie("token", token, cookieOptions)
+        .json({
+            success: true,
+            message,
+            token, // Returning token in JSON too for flexibility
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role,
+                profilePicture: user.profilePicture,
+                phone: user.phone || "",
+                city: user.city || "",
+                bio: user.bio || ""
+            },
+        });
+};
 
 // ================= REGISTER =================
 export const registerUser = async (req, res) => {
@@ -11,9 +50,8 @@ export const registerUser = async (req, res) => {
         const { name, email, password, role } = req.body;
 
         const existingUser = await User.findOne({ email });
-
         if (existingUser) {
-            return res.status(400).json({ message: "User already exists" });
+            return res.status(400).json({ success: false, message: "User already exists" });
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -23,23 +61,13 @@ export const registerUser = async (req, res) => {
             name,
             email,
             password: hashedPassword,
-            role
+            role: role || "Passenger"
         });
 
-        const token = jwt.sign(
-            { id: newUser._id },
-            process.env.JWT_SECRET,
-            { expiresIn: "7d" }
-        );
-
-        res.status(201).json({
-            message: "User registered successfully",
-            token,
-            user: newUser
-        });
+        sendTokenResponse(newUser, 201, res, "User registered successfully");
 
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, message: error.message });
     }
 };
 
@@ -49,80 +77,62 @@ export const loginUser = async (req, res) => {
         const { email, password } = req.body;
 
         const user = await User.findOne({ email });
-
         if (!user) {
-            return res.status(401).json({ message: "Invalid email or password" });
+            return res.status(401).json({ success: false, message: "Invalid email or password" });
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
-
         if (!isMatch) {
-            return res.status(401).json({ message: "Invalid email or password" });
+            return res.status(401).json({ success: false, message: "Invalid email or password" });
         }
 
-        const token = jwt.sign(
-            { id: user._id },
-            process.env.JWT_SECRET,
-            { expiresIn: "7d" }
-        );
-
-        res.status(200).json({
-            message: "Login successful",
-            token, 
-            user
-        });
+        sendTokenResponse(user, 200, res, "Login successful");
 
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ success: false, message: error.message });
     }
 };
 
 // ================= GOOGLE LOGIN =================
-const client = new OAuth2Client("173008253506-rk60rbs422nng2hvuis23addl1378k84.apps.googleusercontent.com");
-
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 export const googleLogin = async (req, res) => {
     try {
         const { token } = req.body;
+
+        if (!token) {
+            return res.status(400).json({ success: false, message: "No Google token provided" });
+        }
 
         const googleRes = await fetch(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=${token}`);
         const userData = await googleRes.json();
 
         if (!userData.email) {
-            return res.status(400).json({
-                success: false,
-                message: "Google Auth Failed"
-            });
+            console.error("Google Auth Error:", userData);
+            return res.status(400).json({ success: false, message: "Google Authentication failed" });
         }
 
         const { name, email, picture } = userData;
-
         let user = await User.findOne({ email });
 
         if (!user) {
             user = await User.create({
+                userId: uuidv4(),
                 name,
                 email,
-                password: "",
+                password: "", 
                 role: "Passenger",
-                profilePicture: picture
+                profilePicture: picture,
+                phone: "",
+                city: "",
+                bio: ""
             });
         }
 
-        const jwtToken = jwt.sign(
-            { id: user._id },
-            process.env.JWT_SECRET,
-            { expiresIn: "7d" }
-        );
-
-        res.status(200).json({
-            success: true,
-            message: "Login successful",
-            token: jwtToken, 
-            user
-        });
+  
+        sendTokenResponse(user, 200, res, "Login successful via Google");
 
     } catch (error) {
-        console.error("Backend Error:", error);
+        console.error("CRITICAL GOOGLE LOGIN ERROR:", error.message);
         res.status(500).json({
             success: false,
             message: "Server Error"

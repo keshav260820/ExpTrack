@@ -1,7 +1,6 @@
 import express from "express";
 import { postRide, getAllRides, updateRideSeats } from "../controller/rideController.js";
-import authMiddleware from "../middlewares/authMiddleware.js";
-
+import { authMiddleware } from "../middlewares/authMiddleware.js";
 const rideRouter = express.Router();
 
 rideRouter.post("/post-ride", authMiddleware, postRide);

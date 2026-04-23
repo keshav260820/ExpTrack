@@ -5,10 +5,36 @@ const userSchema = new mongoose.Schema({
         type: String,
         unique: true
     },
-    name: String,
-    email: String,
-    password: String,
-    role: String,
+    name: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    password: {
+        type: String,
+        required: false
+    },
+    phone: {
+        type: String,
+        default: ""
+    },
+    city: {
+        type: String,
+        default: ""
+    },
+    bio: {
+        type: String,
+        default: ""
+    },
+    role: {
+        type: String,
+        enum: ["Passenger", "Driver"], 
+        default: "Passenger"
+    },
     profilePicture: String
 }, { timestamps: true });
 
