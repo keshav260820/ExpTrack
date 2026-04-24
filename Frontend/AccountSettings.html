@@ -1488,7 +1488,6 @@
             </div>
         </div>
 
-        <!-- Bottom Action Bar -->
         <div class="action-row">
             <div class="action-row-left">
                 <div class="action-row-label">Ready to update your profile?</div>
@@ -1506,7 +1505,6 @@
     const deleteBtn = document.querySelector(".btn-delete");
     const inputs = document.querySelectorAll(".ride-input:not([type='email'])");
 
-    // --- 1. LOAD PROFILE DATA ON PAGE START ---
     async function initPage() {
         try {
             const response = await fetch('http://localhost:3000/api/v4/user/me', {
@@ -1517,21 +1515,17 @@
 
             if (data.success) {
                 const user = data.user;
-                // Map the data to the correct inputs
                 document.querySelector('input[placeholder="Your full name"]').value = user.name || "";
                 document.querySelector('input[type="tel"]').value = user.phone || "";
                 document.querySelector('input[type="email"]').value = user.email || "";
                 document.querySelector('textarea').value = user.bio || "";
                 
-                // Find the City input specifically (it is usually the second text input)
                 const cityInput = document.querySelector('input[placeholder="City"]') || document.querySelectorAll('.ride-input')[3];
                 if (cityInput) cityInput.value = user.city || "";
 
-                // Update UI Labels
                 document.querySelector('.ov-name').innerText = user.name;
                 document.querySelectorAll('.user-name').forEach(el => el.innerText = user.name);
                 
-                // Set Initials for Avatar
                 const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
                 document.querySelectorAll('.avatar, .profile-avatar-xl').forEach(el => el.innerText = initials);
             } else {
@@ -1542,7 +1536,6 @@
         }
     }
 
-    // --- 2. TOGGLE EDIT AND SAVE CHANGES ---
     editBtn.addEventListener("click", async () => {
         if (!isEditing) {
             isEditing = true;
@@ -1562,7 +1555,7 @@
                 const response = await fetch('http://localhost:3000/api/v4/user/update-profile', {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
-                    credentials: 'include', // Important for cookies
+                    credentials: 'include',
                     body: JSON.stringify(updatedData)
                 });
 
@@ -1586,7 +1579,6 @@
         }
     });
 
-    // --- 3. DELETE ACCOUNT ---
     deleteBtn.addEventListener("click", async () => {
         if (confirm("Permanently delete your Ride मित्र account?")) {
             try {
@@ -1604,7 +1596,6 @@
         }
     });
 
-    // Initialize page on load
     window.onload = initPage;
         </script>
 
