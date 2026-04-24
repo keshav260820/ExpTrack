@@ -1,30 +1,28 @@
 import User from "../models/User.js";
+import bcrypt from "bcrypt";
 
 export const updateUser = async (req, res) => {
     try {
-        const userId = req.user._id; 
-        const { fullName, phoneNumber, city, bio } = req.body;
+        const { id } = req.params;
+        let updates = req.body;
+
+        if (updates.password) {
+            const salt = await bcrypt.genSalt(10);
+            updates.password = await bcrypt.hash(updates.password, salt);
+        }
 
         const updatedUser = await User.findByIdAndUpdate(
-            userId,
-            { 
-                $set: { 
-                    name: fullName, 
-                    phone: phoneNumber, 
-                    city: city, 
-                    bio: bio 
-                } 
-            },
-            { new: true, runValidators: true, upsert: true } 
+            id,
+            { $set: updates },
+            { returnDocument: 'after', runValidators: true }
         ).select("-password");
 
-        res.status(200).json({
-            success: true,
-            message: "Profile updated successfully!",
-            user: updatedUser
-        });
+        if (!updatedUser) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+
+        res.status(200).json({ success: true, message: "Updated successfully", user: updatedUser });
     } catch (error) {
-        console.error("Update Error:", error);
         res.status(500).json({ success: false, message: error.message });
     }
 };

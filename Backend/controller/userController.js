@@ -5,32 +5,25 @@ import { v4 as uuidv4 } from "uuid";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-/**
- * Helper: Generates JWT, sets it in a Cookie, and sends JSON response
- * This satisfies your requirement to use BOTH JWT and Cookies.
- */
 const sendTokenResponse = (user, statusCode, res, message) => {
-    // 1. Create JWT
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
         expiresIn: "7d",
     });
 
-    // 2. Define Cookie Options
     const cookieOptions = {
         expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
         httpOnly: true,
-        secure: false, // Set to false for localhost/development
+        secure: false, 
         sameSite: "Lax",
-        path: "/" // <--- CRITICAL: This allows the cookie to be sent from any page
+        path: "/" 
     };
 
-    // 3. Send Response with Cookie and JSON
     res.status(statusCode)
         .cookie("token", token, cookieOptions)
         .json({
             success: true,
             message,
-            token, // Returning token in JSON too for flexibility
+            token, 
             user: {
                 id: user._id,
                 name: user.name,
@@ -119,7 +112,7 @@ export const googleLogin = async (req, res) => {
                 userId: uuidv4(),
                 name,
                 email,
-                password: "", 
+                password: "",
                 role: "Passenger",
                 profilePicture: picture,
                 phone: "",
@@ -128,7 +121,7 @@ export const googleLogin = async (req, res) => {
             });
         }
 
-  
+
         sendTokenResponse(user, 200, res, "Login successful via Google");
 
     } catch (error) {
